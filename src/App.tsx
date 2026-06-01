@@ -8,12 +8,18 @@ import Login from './pages/admin/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
         <Route path="/" element={<Home />} />
         <Route path="/meny" element={<Menu />} />
         <Route path="/booking" element={<Booking />} />
