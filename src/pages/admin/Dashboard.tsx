@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import logo from '../../assets/logo-kokeliko.png'
 import { supabase } from '../../lib/supabase'
 import MenuSection from './menu/MenuSection'
 import HoursSection from './hours/HoursSection'
@@ -26,8 +27,9 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-stone-50 pb-12">
       <header className="sticky top-0 z-10 flex items-center justify-between px-6 h-14 bg-white border-b border-stone-200">
-        <div className="text-[17px] font-bold tracking-tight text-stone-800">
-          Kokeliko <span className="font-normal text-stone-400">admin</span>
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="Kokeliko" className="h-8" />
+          <span className="text-[25px] text-stone-400">admin</span>
         </div>
         <button
           onClick={handleLogout}
