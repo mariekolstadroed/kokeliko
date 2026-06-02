@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
 import Booking from './pages/Booking'
@@ -10,25 +10,35 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 
-function App() {
+function AppLayout() {
+  const location = useLocation()
+  const isAdmin = location.pathname.startsWith('/admin')
+
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!isAdmin && <Navbar />}
       <Routes>
-        <Route path="/admin" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
         <Route path="/" element={<Home />} />
         <Route path="/meny" element={<Menu />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/om-oss" element={<About />} />
         <Route path="/arrangementer" element={<Events />} />
-        <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
-      <Footer />
+      {!isAdmin && <Footer />}
+    </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppLayout />
     </BrowserRouter>
   )
 }
