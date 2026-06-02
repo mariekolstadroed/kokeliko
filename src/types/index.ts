@@ -1,3 +1,28 @@
+export type OpeningHour = {
+  id: string
+  day: number
+  open_time: string | null
+  close_time: string | null
+  closed: boolean
+}
+
+export type SpecialHoursGroup = {
+  id: string
+  title: string
+  theme: string | null
+  published: boolean
+}
+
+export type SpecialHour = {
+  id: string
+  group_id: string
+  date: string
+  description: string | null
+  open_time: string | null
+  close_time: string | null
+  closed: boolean
+}
+
 export type Category = {
   id: string
   name: string

@@ -1,3 +1,9 @@
+import logo from '../../assets/logo-kokeliko.png'
+
 export default function Navbar() {
-  return <div>Navbar</div>
+  return (
+    <nav>
+      <img src={logo} alt="Kokeliko" className="h-12" />
+    </nav>
+  )
 }
