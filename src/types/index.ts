@@ -23,6 +23,26 @@ export type SpecialHour = {
   closed: boolean
 }
 
+export type Event = {
+  id: string
+  title: string
+  description: string | null
+  image_url: string | null
+  event_date: string
+  event_start_time: string
+  event_end_time: string | null
+  max_capacity: number | null
+  published: boolean
+}
+
+export type EventRegistration = {
+  id: string
+  event_id: string
+  name: string
+  email: string
+  phone: string | null
+}
+
 export type Category = {
   id: string
   name: string
