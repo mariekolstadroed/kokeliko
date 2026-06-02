@@ -1,9 +1,174 @@
+import { useEffect, useState } from 'react'
+import { supabase } from '../../../lib/supabase'
+import type { Event } from '../../../types'
+import EventModal from './EventModal'
+import RegistrationsModal from './RegistrationsModal'
+import {
+  IconPlus, IconCalendar, IconClock, IconUsers,
+  IconEdit, IconTrash, IconEye, IconEyeOff, IconPhoto,
+} from '@tabler/icons-react'
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })
+}
+
+function formatTime(t: string) {
+  return t.slice(0, 5)
+}
+
 export default function EventsSection() {
-  return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-white border border-stone-200 rounded-xl shadow-sm p-8 text-sm text-stone-400 text-center italic">
-        Arrangementer kommer snart
+  const [events, setEvents] = useState<Event[]>([])
+  const [counts, setCounts] = useState<Record<string, number>>({})
+  const [loading, setLoading] = useState(true)
+  const [eventModal, setEventModal] = useState<{ open: boolean; event?: Event }>({ open: false })
+  const [registrationsEvent, setRegistrationsEvent] = useState<Event | null>(null)
+
+  useEffect(() => { fetchAll() }, [])
+
+  async function fetchAll() {
+    setLoading(true)
+    const [{ data: evts }, { data: regs }] = await Promise.all([
+      supabase.from('events').select('*').order('event_date'),
+      supabase.from('event_registrations').select('event_id'),
+    ])
+    setEvents(evts ?? [])
+    const c: Record<string, number> = {}
+    ;(regs ?? []).forEach(r => { c[r.event_id] = (c[r.event_id] ?? 0) + 1 })
+    setCounts(c)
+    setLoading(false)
+  }
+
+  async function togglePublished(event: Event) {
+    setEvents(prev => prev.map(e => e.id === event.id ? { ...e, published: !e.published } : e))
+    await supabase.from('events').update({ published: !event.published }).eq('id', event.id)
+  }
+
+  async function deleteEvent(id: string) {
+    if (!confirm('Slette dette arrangementet? Alle påmeldinger slettes også.')) return
+    setEvents(prev => prev.filter(e => e.id !== id))
+    await supabase.from('events').delete().eq('id', id)
+  }
+
+  if (loading) {
+    return (
+      <div className="max-w-3xl mx-auto p-6">
+        <div className="text-sm text-stone-400 text-center py-8">Laster…</div>
       </div>
+    )
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto p-6 flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <div className="text-[13px] text-stone-400">{events.length} arrangementer</div>
+        <button
+          onClick={() => setEventModal({ open: true })}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+        >
+          <IconPlus size={14} /> Nytt arrangement
+        </button>
+      </div>
+
+      {events.length === 0 ? (
+        <div className="bg-white border border-stone-200 rounded-xl shadow-sm p-8 text-sm text-stone-400 text-center italic">
+          Ingen arrangementer ennå
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4">
+          {events.map(event => (
+            <div key={event.id} className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+
+              {/* Image */}
+              <div className="relative aspect-video bg-stone-100 overflow-hidden">
+                {event.image_url ? (
+                  <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-stone-300">
+                    <IconPhoto size={28} />
+                  </div>
+                )}
+                <span className={`absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[11px] font-semibold ${event.published ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'}`}>
+                  {event.published ? 'Publisert' : 'Utkast'}
+                </span>
+              </div>
+
+              {/* Info */}
+              <div className="p-3.5 flex flex-col gap-2 flex-1">
+                <div className="text-[14px] font-semibold text-stone-800 leading-snug">{event.title}</div>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-stone-500">
+                  <span className="flex items-center gap-1">
+                    <IconCalendar size={12} /> {formatDate(event.event_date)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <IconClock size={12} />
+                    {formatTime(event.event_start_time)}
+                    {event.event_end_time ? ` – ${formatTime(event.event_end_time)}` : ''}
+                  </span>
+                </div>
+
+                <div className="border-t border-stone-200 pt-2.5 mt-auto flex items-center justify-between gap-2">
+                  <span className="flex items-center gap-1.5 text-[12px] text-stone-700 shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />
+                    {counts[event.id] ?? 0} påmeldte
+                  </span>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      onClick={() => setRegistrationsEvent(event)}
+                      className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+                    >
+                      <IconUsers size={11} /> Liste
+                    </button>
+                    {!event.published ? (
+                      <button
+                        onClick={() => togglePublished(event)}
+                        className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+                      >
+                        <IconEye size={11} /> Publiser
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => togglePublished(event)}
+                        className="inline-flex items-center p-1 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+                        title="Avpubliser"
+                      >
+                        <IconEyeOff size={13} />
+                      </button>
+                    )}
+                    <button
+                      onClick={() => setEventModal({ open: true, event })}
+                      className="inline-flex items-center p-1 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+                    >
+                      <IconEdit size={13} />
+                    </button>
+                    <button
+                      onClick={() => deleteEvent(event.id)}
+                      className="inline-flex items-center p-1 rounded-md text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                      <IconTrash size={13} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      )}
+
+      {eventModal.open && (
+        <EventModal
+          event={eventModal.event}
+          onClose={() => setEventModal({ open: false })}
+          onSaved={fetchAll}
+        />
+      )}
+
+      {registrationsEvent && (
+        <RegistrationsModal
+          event={registrationsEvent}
+          onClose={() => setRegistrationsEvent(null)}
+        />
+      )}
     </div>
   )
 }

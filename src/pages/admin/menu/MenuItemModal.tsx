@@ -53,14 +53,14 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
 
     if (selectedFile) {
       const ext = selectedFile.name.split('.').pop()
-      const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const { data, error } = await supabase.storage.from('menu-images').upload(path, selectedFile)
+      const path = `menu/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+      const { data, error } = await supabase.storage.from('images').upload(path, selectedFile)
       if (error) {
         setUploadError(`Bildeopplasting feilet: ${error.message}`)
         setSaving(false)
         return
       }
-      const { data: { publicUrl } } = supabase.storage.from('menu-images').getPublicUrl(data.path)
+      const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(data.path)
       finalImageUrl = publicUrl
     }
 
