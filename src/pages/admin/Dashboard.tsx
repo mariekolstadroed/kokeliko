@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/logo-kokeliko.png'
+import logo from '../../assets/logo-svart.png'
 import { supabase } from '../../lib/supabase'
 import MenuSection from './menu/MenuSection'
 import HoursSection from './hours/HoursSection'
