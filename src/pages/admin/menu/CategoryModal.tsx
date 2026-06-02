@@ -1,0 +1,79 @@
+import { useState } from 'react'
+import { supabase } from '../../../lib/supabase'
+import type { Category } from '../../../types'
+import { IconX } from '@tabler/icons-react'
+
+type Props = {
+  category?: Category
+  onClose: () => void
+  onSaved: () => void
+}
+
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
+
+function toSlug(name: string) {
+  return name
+    .toLowerCase()
+    .replace(/æ/g, 'ae').replace(/ø/g, 'o').replace(/å/g, 'a')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+export default function CategoryModal({ category, onClose, onSaved }: Props) {
+  const [name, setName] = useState(category?.name ?? '')
+  const [saving, setSaving] = useState(false)
+
+  async function handleSave() {
+    if (!name.trim()) return
+    setSaving(true)
+    const data = { name: name.trim(), slug: toSlug(name) }
+    if (category) {
+      await supabase.from('categories').update(data).eq('id', category.id)
+    } else {
+      await supabase.from('categories').insert(data)
+    }
+    setSaving(false)
+    onSaved()
+    onClose()
+  }
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-6"
+      onClick={e => e.target === e.currentTarget && onClose()}
+    >
+      <div className="bg-white rounded-xl w-full max-w-sm shadow-2xl">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-stone-200">
+          <div className="text-[15px] font-semibold text-stone-800">
+            {category ? 'Rediger kategori' : 'Ny kategori'}
+          </div>
+          <button onClick={onClose} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors">
+            <IconX size={16} />
+          </button>
+        </div>
+
+        <div className="p-5">
+          <label className={labelClass}>Navn *</label>
+          <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
+        </div>
+
+        <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200">
+          <button
+            onClick={onClose}
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+          >
+            Avbryt
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={saving || !name.trim()}
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {saving ? 'Lagrer…' : category ? 'Lagre' : 'Opprett'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
