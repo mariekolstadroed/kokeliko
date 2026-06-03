@@ -17,19 +17,21 @@ function AppLayout() {
   return (
     <>
       {!isAdmin && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/meny" element={<Menu />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/om-oss" element={<About />} />
-        <Route path="/arrangementer" element={<Events />} />
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-      </Routes>
+      <main className={!isAdmin ? 'min-h-screen' : undefined}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/meny" element={<Menu />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/om-oss" element={<About />} />
+          <Route path="/arrangementer" element={<Events />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </main>
       {!isAdmin && <Footer />}
     </>
   )

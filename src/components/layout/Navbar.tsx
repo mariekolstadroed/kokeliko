@@ -4,14 +4,14 @@ import logo from '../../assets/logo-svart.png'
 const links = [
   { to: '/meny', label: 'Meny' },
   { to: '/arrangementer', label: 'Arrangementer' },
+  { to: '/booking', label: 'Booking' },
   { to: '/om-oss', label: 'Om oss' },
-  { to: '/booking', label: 'Book bord' },
 ]
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 px-6 pt-4 pb-2 bg-[#f0e8d8]">
-      <nav className="flex items-center justify-between bg-[#f7f1e6] rounded-full px-6 py-2.5 shadow-sm max-w-5xl mx-auto">
+    <header className="sticky top-0 z-50 px-6 pt-4 pb-2">
+      <nav className="flex items-center justify-between bg-[#f7f1e6]/75 backdrop-blur-sm rounded-full px-6 py-2.5 shadow-sm max-w-5xl mx-auto">
         <NavLink to="/">
           <img src={logo} alt="Kokeliko" className="h-9" />
         </NavLink>
@@ -21,7 +21,7 @@ export default function Navbar() {
               key={label}
               to={to}
               className={({ isActive }) =>
-                `text-[#3d1f08] text-sm transition-opacity ${isActive ? 'font-semibold' : 'font-medium hover:opacity-60'}`
+                `text-[#3d1f08] text-base transition-opacity ${isActive ? 'font-semibold' : 'font-medium hover:opacity-60'}`
               }
             >
               {label}
