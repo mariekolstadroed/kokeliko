@@ -3,19 +3,19 @@ import logo from '../../assets/logo-svart.png'
 
 const links = [
   { to: '/meny', label: 'Meny' },
-  { to: '/arrangementer', label: 'Arrangementer' },
   { to: '/booking', label: 'Booking' },
+  { to: '/arrangementer', label: 'Arrangementer' },
   { to: '/om-oss', label: 'Om oss' },
 ]
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 px-6 pt-4 pb-2">
-      <nav className="flex items-center justify-between bg-[#f7f1e6]/75 backdrop-blur-sm rounded-full px-6 py-2.5 shadow-sm max-w-5xl mx-auto">
+    <header className="sticky top-0 z-50 px-6 pt-5 pb-2">
+      <nav className="flex items-center justify-between bg-[#faf7f2]/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-sm max-w-7xl mx-auto">
         <NavLink to="/">
           <img src={logo} alt="Kokeliko" className="h-9" />
         </NavLink>
-        <div className="flex items-center gap-7">
+        <div className="flex items-center gap-20">
           {links.map(({ to, label }) => (
             <NavLink
               key={label}

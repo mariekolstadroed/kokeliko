@@ -16,7 +16,7 @@ const contact = [
 export default function Footer() {
   return (
     <footer className="bg-[#2e1608]">
-      <div className="max-w-5xl mx-auto px-6 py-14 grid grid-cols-3 items-center gap-8">
+      <div className="px-6 py-14 grid grid-cols-3 items-center gap-8 max-w-7xl mx-auto">
 
         <img src={logo} alt="Kokeliko" className="h-14 brightness-90" />
 
