@@ -103,7 +103,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
         </div>
 
         {/* Body */}
-        <div className="p-5 flex flex-col gap-3.5">
+        <div className="p-5 flex flex-col gap-4">
           <div>
             <label className={labelClass}>Navn *</label>
             <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
@@ -112,7 +112,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           <div>
             <label className={labelClass}>Innhold</label>
             <textarea
-              className={inputClass + ' resize-y min-h-[68px]'}
+              className={inputClass + ' block resize-y min-h-[68px]'}
               value={description ?? ''}
               onChange={e => setDescription(e.target.value)}
             />
@@ -127,55 +127,55 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
             />
           </div>
 
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <label className={labelClass}>Pris (kr) *</label>
-              <input className={inputClass} type="number" min="0" value={price} onChange={e => setPrice(e.target.value)} />
-            </div>
-            <div className="flex-1">
-              <label className={labelClass}>Kategori *</label>
-              <select className={inputClass} value={categoryId} onChange={e => setCategoryId(e.target.value)}>
-                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
-            </div>
-          </div>
-
-          {/* Image upload */}
-          <div>
-            <label className={labelClass}>Bilde</label>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-            {previewSrc ? (
-              <div className="relative rounded-lg overflow-hidden border border-stone-200 h-28">
-                <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+          {/* Image + Pris/Kategori side by side */}
+          <div className="flex gap-3 items-start">
+            <div>
+              <label className={labelClass}>Bilde</label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              {previewSrc ? (
+                <div className="relative rounded-lg overflow-hidden border border-stone-200 aspect-square w-40">
+                  <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+                  <button
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"
+                  >
+                    <IconX size={13} />
+                  </button>
+                </div>
+              ) : (
                 <button
-                  onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-40 aspect-square flex flex-col items-center justify-center gap-2 border border-dashed border-stone-300 rounded-lg text-[13px] text-stone-400 hover:bg-stone-50 hover:border-stone-400 transition-colors"
                 >
-                  <IconX size={13} />
+                  <IconUpload size={15} />
+                  Last opp bilde
                 </button>
+              )}
+            </div>
+            <div className="flex-1 flex flex-col gap-3.5">
+              <div>
+                <label className={labelClass}>Pris (kr) *</label>
+                <input className={inputClass} type="number" min="0" value={price} onChange={e => setPrice(e.target.value)} />
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 px-3 py-3 border border-dashed border-stone-300 rounded-lg text-[13px] text-stone-400 hover:bg-stone-50 hover:border-stone-400 transition-colors"
-              >
-                <IconUpload size={15} />
-                Last opp bilde
-              </button>
-            )}
+              <div>
+                <label className={labelClass}>Kategori *</label>
+                <select className={inputClass} value={categoryId} onChange={e => setCategoryId(e.target.value)}>
+                  {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </div>
+              <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
+                <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} />
+                Synlig på menyen
+              </label>
+            </div>
           </div>
-
-          <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
-            <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} />
-            Synlig på menyen
-          </label>
         </div>
 
         {/* Footer */}

@@ -22,12 +22,13 @@ function toSlug(name: string) {
 
 export default function CategoryModal({ category, onClose, onSaved }: Props) {
   const [name, setName] = useState(category?.name ?? '')
+  const [description, setDescription] = useState(category?.description ?? '')
   const [saving, setSaving] = useState(false)
 
   async function handleSave() {
     if (!name.trim()) return
     setSaving(true)
-    const data = { name: name.trim(), slug: toSlug(name) }
+    const data = { name: name.trim(), slug: toSlug(name), description: description.trim() || null }
     if (category) {
       await supabase.from('categories').update(data).eq('id', category.id)
     } else {
@@ -53,9 +54,20 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
           </button>
         </div>
 
-        <div className="p-5">
-          <label className={labelClass}>Navn *</label>
-          <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
+        <div className="p-5 flex flex-col gap-4">
+          <div>
+            <label className={labelClass}>Navn *</label>
+            <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
+          </div>
+          <div>
+            <label className={labelClass}>Beskrivelse</label>
+            <textarea
+              className={inputClass + ' block resize-y min-h-[68px]'}
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="Vises på menysiden under kategorinavnet"
+            />
+          </div>
         </div>
 
         <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200">

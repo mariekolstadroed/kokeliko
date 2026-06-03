@@ -14,10 +14,10 @@ export default function Booking() {
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold text-stone-900 mb-4">Booking</h1>
       <p className="text-stone-600 leading-relaxed">
-        Her kan du booke bord hos Kokeliko. Vi har åpent for booking alle dager utenom helger. Du kan booke
+        Her kan du reservere bord hos oss. Vi har åpent for reservasjon alle dager utenom helger. Du kan booke
         bord innenfor vanlig åpningstid, eller onsdag- og torsdagskveld. Vi tilbyr også catering med eller uten
-        levering til selskap — perfekt til konfirmasjon eller 50-årslag. Det er også mulig å ha lukket selskap
-        her i lokalet med mat fra Kokeliko.
+        levering til selskap, som er perfekt til konfirmasjon eller bursdag. Det er også mulig å ha lukket selskap
+        her i lokalet med mat fra oss.
       </p>
 
       <div className="grid grid-cols-3 gap-6 mt-12">

@@ -28,10 +28,6 @@ export default function Menu() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold text-stone-900 mb-1">Meny</h1>
-      <p className="text-stone-600 leading-relaxed mt-4">
-        Kjøkkenet stenger én time før stengetid.<br />
-        Alt kan tilpasses glutenfritt. Bare spør oss om allergier eller spesielle ønsker.
-      </p>
 
       {loading ? (
         <div className="mt-16 text-center text-stone-400 text-sm">Laster…</div>
@@ -53,6 +49,13 @@ export default function Menu() {
               </button>
             ))}
           </div>
+
+          {/* Category description */}
+          {categories.find(c => c.id === activeCategory)?.description && (
+            <p className="text-stone-600 leading-relaxed mt-4 whitespace-pre-line">
+              {categories.find(c => c.id === activeCategory)!.description}
+            </p>
+          )}
 
           {/* Items */}
           <div className="mt-2">
