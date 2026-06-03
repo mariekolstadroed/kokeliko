@@ -4,6 +4,9 @@ import Menu from './pages/Menu'
 import Booking from './pages/Booking'
 import About from './pages/About'
 import Events from './pages/Events'
+import BordDagtid from './pages/booking/BordDagtid'
+import BookingCatering from './pages/booking/Catering'
+import LukketSelskap from './pages/booking/LukketSelskap'
 import Login from './pages/admin/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Navbar from './components/layout/Navbar'
@@ -24,6 +27,9 @@ function AppLayout() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/om-oss" element={<About />} />
           <Route path="/arrangementer" element={<Events />} />
+          <Route path="/booking/bord-dagtid" element={<BordDagtid />} />
+          <Route path="/booking/catering" element={<BookingCatering />} />
+          <Route path="/booking/lukket-selskap" element={<LukketSelskap />} />
           <Route path="/admin/login" element={<Login />} />
           <Route path="/admin" element={
             <ProtectedRoute>

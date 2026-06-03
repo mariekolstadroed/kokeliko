@@ -57,20 +57,12 @@ export default function MenuSection() {
         <div className="text-[13px] text-stone-400">
           {categories.length} kategorier · {items.length} elementer
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setCategoryModal({ open: true })}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
-          >
-            <IconCategory size={14} aria-hidden /> Ny kategori
-          </button>
-          <button
-            onClick={() => setItemModal({ open: true })}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
-          >
-            <IconPlus size={14} aria-hidden /> Nytt element
-          </button>
-        </div>
+        <button
+          onClick={() => setCategoryModal({ open: true })}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+        >
+          <IconCategory size={14} aria-hidden /> Ny kategori
+        </button>
       </div>
 
       {categories.length === 0 ? (

@@ -26,9 +26,9 @@ export default function Menu() {
   const visibleItems = items.filter(i => i.category_id === activeCategory)
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="max-w-6xl mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold text-stone-900 mb-1">Meny</h1>
-      <p className="text-stone-500 text-sm mt-4">
+      <p className="text-stone-600 leading-relaxed mt-4">
         Kjøkkenet stenger én time før stengetid.<br />
         Alt kan tilpasses glutenfritt. Bare spør oss om allergier eller spesielle ønsker.
       </p>
@@ -43,7 +43,7 @@ export default function Menu() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 pb-3 text-sm whitespace-nowrap border-b-2 -mb-px transition-colors ${
+                className={`px-5 pb-4 text-base whitespace-nowrap border-b-2 -mb-px transition-colors ${
                   activeCategory === cat.id
                     ? 'border-stone-900 font-semibold text-stone-900'
                     : 'border-transparent font-medium text-stone-400 hover:text-stone-700'
@@ -59,21 +59,21 @@ export default function Menu() {
             {visibleItems.length === 0 ? (
               <p className="py-12 text-center text-stone-400 text-sm italic">Ingen elementer i denne kategorien</p>
             ) : visibleItems.map(item => (
-              <div key={item.id} className="flex gap-5 py-6 border-b border-stone-200 last:border-b-0">
-                <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-stone-100">
+              <div key={item.id} className="flex gap-7 py-8 border-b border-stone-200 last:border-b-0">
+                <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 bg-stone-100">
                   {item.image_url && (
                     <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
                   )}
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h3 className="font-semibold text-stone-900">{item.name}</h3>
+                  <h3 className="font-semibold text-xl text-stone-900">{item.name}</h3>
                   {item.description && (
-                    <p className="text-stone-600 text-sm mt-0.5">{item.description}</p>
+                    <p className="text-stone-600 mt-1">{item.description}</p>
                   )}
                   {item.allergens && (
-                    <p className="text-stone-400 text-sm mt-1">Allergener: {item.allergens}</p>
+                    <p className="text-stone-400 mt-1.5">Allergener: {item.allergens}</p>
                   )}
-                  <p className="font-semibold text-stone-900 mt-2">{item.price} kr</p>
+                  <p className="font-semibold text-lg text-stone-900 mt-3">{item.price} kr</p>
                 </div>
               </div>
             ))}
