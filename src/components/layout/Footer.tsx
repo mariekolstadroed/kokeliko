@@ -46,7 +46,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-[#c9a882]/20 py-5 text-center text-[#c9a882]/60 text-xs">
-        © {new Date().getFullYear()} Kokeliko · Alle rettigheter forbeholdt
+        © {new Date().getFullYear()} Kokeliko
       </div>
     </footer>
   )
