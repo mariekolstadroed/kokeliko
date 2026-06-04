@@ -3,7 +3,7 @@ import { supabase } from '../../../lib/supabase'
 import type { Category, MenuItem } from '../../../types'
 import MenuItemModal from './MenuItemModal'
 import CategoryModal from './CategoryModal'
-import { IconCategory, IconPlus, IconEdit, IconTrash } from '@tabler/icons-react'
+import { IconCategory, IconPlus, IconEdit, IconTrash, IconChevronUp, IconChevronDown } from '@tabler/icons-react'
 
 export default function MenuSection() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -18,11 +18,46 @@ export default function MenuSection() {
     setLoading(true)
     const [{ data: cats }, { data: its }] = await Promise.all([
       supabase.from('categories').select('*').order('name'),
-      supabase.from('menu_items').select('*').order('name'),
+      supabase.from('menu_items').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
     ])
     setCategories(cats ?? [])
     setItems(its ?? [])
     setLoading(false)
+  }
+
+  function sortedCatItems(categoryId: string) {
+    return items
+      .filter(i => i.category_id === categoryId)
+      .sort((a, b) => {
+        if (a.sort_order === null && b.sort_order === null) return a.name.localeCompare(b.name)
+        if (a.sort_order === null) return 1
+        if (b.sort_order === null) return -1
+        return a.sort_order - b.sort_order
+      })
+  }
+
+  async function moveItem(item: MenuItem, direction: 'up' | 'down') {
+    const catItems = sortedCatItems(item.category_id)
+    const idx = catItems.findIndex(i => i.id === item.id)
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1
+    if (swapIdx < 0 || swapIdx >= catItems.length) return
+
+    const current = { ...catItems[idx], sort_order: catItems[idx].sort_order ?? idx }
+    const other = { ...catItems[swapIdx], sort_order: catItems[swapIdx].sort_order ?? swapIdx }
+
+    const newCurrentOrder = other.sort_order
+    const newOtherOrder = current.sort_order
+
+    setItems(prev => prev.map(i => {
+      if (i.id === current.id) return { ...i, sort_order: newCurrentOrder }
+      if (i.id === other.id) return { ...i, sort_order: newOtherOrder }
+      return i
+    }))
+
+    await Promise.all([
+      supabase.from('menu_items').update({ sort_order: newCurrentOrder }).eq('id', current.id),
+      supabase.from('menu_items').update({ sort_order: newOtherOrder }).eq('id', other.id),
+    ])
   }
 
   async function toggleAvailable(item: MenuItem) {
@@ -70,7 +105,7 @@ export default function MenuSection() {
           Ingen kategorier ennå. Legg til en kategori for å komme i gang.
         </div>
       ) : categories.map(cat => {
-        const catItems = items.filter(i => i.category_id === cat.id)
+        const catItems = sortedCatItems(cat.id)
         return (
           <div key={cat.id} className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
             <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-stone-200">
@@ -113,7 +148,7 @@ export default function MenuSection() {
                       Ingen elementer ennå
                     </td>
                   </tr>
-                ) : catItems.map(item => (
+                ) : catItems.map((item, idx) => (
                   <tr key={item.id} className="border-b border-stone-200 last:border-b-0">
                     <td className="px-[18px] py-2.5 text-stone-800">{item.name}</td>
                     <td className="px-[18px] py-2.5 text-stone-800">{item.price} kr</td>
@@ -128,6 +163,22 @@ export default function MenuSection() {
                     </td>
                     <td className="px-[18px] py-2.5">
                       <div className="flex items-center gap-1 justify-end">
+                        <div className="flex flex-col">
+                          <button
+                            onClick={() => moveItem(item, 'up')}
+                            disabled={idx === 0}
+                            className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                          >
+                            <IconChevronUp size={13} aria-hidden />
+                          </button>
+                          <button
+                            onClick={() => moveItem(item, 'down')}
+                            disabled={idx === catItems.length - 1}
+                            className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                          >
+                            <IconChevronDown size={13} aria-hidden />
+                          </button>
+                        </div>
                         <button
                           onClick={() => setItemModal({ open: true, item })}
                           className="inline-flex items-center p-1.5 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"

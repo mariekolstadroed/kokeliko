@@ -12,7 +12,7 @@ export default function Menu() {
     async function fetchData() {
       const [{ data: cats }, { data: its }] = await Promise.all([
         supabase.from('categories').select('*').order('name'),
-        supabase.from('menu_items').select('*').eq('available', true).order('name'),
+        supabase.from('menu_items').select('*').eq('available', true).order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
       ])
       const fetchedCats = cats ?? []
       setCategories(fetchedCats)
@@ -58,25 +58,25 @@ export default function Menu() {
           )}
 
           {/* Items */}
-          <div className="mt-2">
+          <div className="mt-4 flex flex-col gap-3">
             {visibleItems.length === 0 ? (
               <p className="py-12 text-center text-stone-400 text-sm italic">Ingen elementer i denne kategorien</p>
             ) : visibleItems.map(item => (
-              <div key={item.id} className="flex gap-7 py-8 border-b border-stone-200 last:border-b-0">
-                <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 bg-stone-100">
+              <div key={item.id} className="flex gap-6 p-5 bg-white rounded-2xl">
+                <div className="w-32 h-32 rounded-xl overflow-hidden shrink-0 bg-stone-100">
                   {item.image_url && (
                     <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
                   )}
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h3 className="font-semibold text-xl text-stone-900">{item.name}</h3>
+                  <h3 className="font-semibold text-lg text-stone-900">{item.name}</h3>
                   {item.description && (
-                    <p className="text-stone-600 mt-1">{item.description}</p>
+                    <p className="text-sm text-stone-600 mt-1">{item.description}</p>
                   )}
                   {item.allergens && (
-                    <p className="text-stone-400 mt-1.5">Allergener: {item.allergens}</p>
+                    <p className="text-sm text-stone-400 mt-1">Allergener: {item.allergens}</p>
                   )}
-                  <p className="font-semibold text-lg text-stone-900 mt-3">{item.price} kr</p>
+                  <p className="font-semibold text-base text-pink-500 mt-2">{item.price} kr</p>
                 </div>
               </div>
             ))}

@@ -5,8 +5,8 @@ import imgSelskap from '../assets/booking/selskap.png'
 
 const cards = [
   { to: '/booking/bord-dagtid', title: 'Bordreservasjon', sub: 'Mandag – fredag', img: imgBord },
-  { to: '/booking/catering', title: 'Catering', sub: 'Med eller uten levering', img: imgCatering },
-  { to: '/booking/lukket-selskap', title: 'Lukket selskap', sub: 'Lei hele lokalet', img: imgSelskap },
+  { to: '/booking/catering', title: 'Catering', sub: 'Sett sammen din egen tapas', img: imgCatering },
+  { to: '/booking/lukket-selskap', title: 'Lukket selskap', sub: 'Hele lokalet for deg selv', img: imgSelskap },
 ]
 
 export default function Booking() {
