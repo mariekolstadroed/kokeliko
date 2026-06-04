@@ -48,6 +48,7 @@ export type Category = {
   name: string
   slug: string
   description: string | null
+  sort_order: number | null
 }
 
 export type MenuItem = {

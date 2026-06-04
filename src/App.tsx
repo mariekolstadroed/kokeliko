@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
-import Booking from './pages/Booking'
+import Booking from './pages/booking/Booking'
 import About from './pages/About'
 import Events from './pages/Events'
-import BordDagtid from './pages/booking/BordDagtid'
+import BordReservasjon from './pages/booking/BordReservasjon'
 import BookingCatering from './pages/booking/Catering'
 import LukketSelskap from './pages/booking/LukketSelskap'
 import Login from './pages/admin/Login'
@@ -27,7 +27,7 @@ function AppLayout() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/om-oss" element={<About />} />
           <Route path="/arrangementer" element={<Events />} />
-          <Route path="/booking/bord-dagtid" element={<BordDagtid />} />
+          <Route path="/booking/bordreservasjon" element={<BordReservasjon />} />
           <Route path="/booking/catering" element={<BookingCatering />} />
           <Route path="/booking/lukket-selskap" element={<LukketSelskap />} />
           <Route path="/admin/login" element={<Login />} />
