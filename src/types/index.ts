@@ -59,4 +59,5 @@ export type MenuItem = {
   image_url: string | null
   available: boolean
   allergens: string | null
+  sort_order: number | null
 }
