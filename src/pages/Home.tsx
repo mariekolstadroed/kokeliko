@@ -46,15 +46,15 @@ export default function Home() {
       <div className="h-[70vh] rounded-3xl bg-stone-200 mt-6 mb-16" />
 
       {/* Opening hours */}
-      <div className="grid grid-cols-2 gap-8 mb-16">
+      <div className="flex justify-center gap-80 mb-16">
 
         {/* Regular hours */}
         <div>
-          <h2 className="text-xl font-bold text-stone-900 mb-5">Åpningstider</h2>
-          <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold text-stone-900 mb-7">Åpningstider</h2>
+          <div className="flex flex-col gap-4">
             {regularHours.map(h => (
-              <div key={h.id} className="flex justify-between text-sm">
-                <span className="text-stone-700 font-medium">{DAY_NAMES[h.day]}</span>
+              <div key={h.id} className="flex gap-10 text-lg">
+                <span className="text-stone-700 font-medium w-28 shrink-0">{DAY_NAMES[h.day]}</span>
                 <span className="text-stone-500">
                   {h.closed ? 'Stengt' : `${formatTime(h.open_time)} – ${formatTime(h.close_time)}`}
                 </span>
@@ -69,14 +69,14 @@ export default function Home() {
             {specialGroups.map(group => (
               <div
                 key={group.id}
-                className="border-2 rounded-2xl p-5"
+                className="border-4 rounded-2xl p-6 bg-white"
                 style={{ borderColor: group.theme ?? '#e2d9cc' }}
               >
-                <h3 className="font-bold text-stone-900 mb-3">{group.title}</h3>
-                <div className="flex flex-col gap-2">
+                <h3 className="text-lg font-bold text-stone-900 mb-4">{group.title}</h3>
+                <div className="flex flex-col gap-3">
                   {group.hours.map(h => (
-                    <div key={h.id} className="flex justify-between text-sm">
-                      <span className="text-stone-700 font-medium">
+                    <div key={h.id} className="flex gap-8 text-base">
+                      <span className="text-stone-700 font-medium w-36 shrink-0">
                         {h.description ?? formatDate(h.date)}
                       </span>
                       <span className="text-stone-500">

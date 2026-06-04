@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../../../lib/supabase'
 import type { Category, MenuItem } from '../../../types'
 import MenuItemModal from './MenuItemModal'
@@ -11,11 +11,12 @@ export default function MenuSection() {
   const [loading, setLoading] = useState(true)
   const [itemModal, setItemModal] = useState<{ open: boolean; item?: MenuItem; categoryId?: string }>({ open: false })
   const [categoryModal, setCategoryModal] = useState<{ open: boolean; category?: Category }>({ open: false })
+  const initialLoad = useRef(true)
 
   useEffect(() => { fetchAll() }, [])
 
   async function fetchAll() {
-    setLoading(true)
+    if (initialLoad.current) setLoading(true)
     const [{ data: cats }, { data: its }] = await Promise.all([
       supabase.from('categories').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
       supabase.from('menu_items').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
@@ -23,6 +24,7 @@ export default function MenuSection() {
     setCategories(cats ?? [])
     setItems(its ?? [])
     setLoading(false)
+    initialLoad.current = false
   }
 
   function sortedCatItems(categoryId: string) {
@@ -181,7 +183,13 @@ export default function MenuSection() {
                 </button>
               </div>
             </div>
-            <table className="w-full border-collapse text-[13.5px]">
+            <table className="w-full table-fixed border-collapse text-[13.5px]">
+              <colgroup>
+                <col />
+                <col className="w-28" />
+                <col className="w-24" />
+                <col className="w-24" />
+              </colgroup>
               <thead>
                 <tr>
                   {['Navn', 'Pris', 'Synlig', ''].map(h => (
@@ -201,7 +209,7 @@ export default function MenuSection() {
                 ) : catItems.map((item, idx) => (
                   <tr key={item.id} className="border-b border-stone-200 last:border-b-0">
                     <td className="px-[18px] py-2.5 text-stone-800">{item.name}</td>
-                    <td className="px-[18px] py-2.5 text-stone-800">{item.price} kr</td>
+                    <td className="px-[18px] py-2.5 text-stone-800">{item.price != null ? `${item.price} kr` : '—'}</td>
                     <td className="px-[18px] py-2.5">
                       <button
                         onClick={() => toggleAvailable(item)}

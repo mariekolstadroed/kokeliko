@@ -21,7 +21,7 @@ type DateRow = {
 const THEMES = [
   '#50c05a', '#3ab5a8', '#4a90d9', '#7b6ad9',
   '#d54587', '#e8799a', '#d94a4a', '#d2704c',
-  '#cdb872', '#a0845a',
+  '#e7b81e', '#735932',
 ]
 
 const inputClass = 'px-2 py-1.5 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'

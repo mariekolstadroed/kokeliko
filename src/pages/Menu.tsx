@@ -76,7 +76,7 @@ export default function Menu() {
                   {item.allergens && (
                     <p className="text-sm text-stone-400 mt-1">Allergener: {item.allergens}</p>
                   )}
-                  <p className="font-semibold text-base text-pink-500 mt-2">{item.price} kr</p>
+                  {item.price != null && <p className="font-semibold text-base text-pink-500 mt-2">{item.price} kr</p>}
                 </div>
               </div>
             ))}
