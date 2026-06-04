@@ -28,11 +28,11 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
   async function handleSave() {
     if (!name.trim()) return
     setSaving(true)
-    const data = { name: name.trim(), slug: toSlug(name), description: description.trim() || null }
+    const base = { name: name.trim(), slug: toSlug(name), description: description.trim() || null }
     if (category) {
-      await supabase.from('categories').update(data).eq('id', category.id)
+      await supabase.from('categories').update(base).eq('id', category.id)
     } else {
-      await supabase.from('categories').insert(data)
+      await supabase.from('categories').insert(base)
     }
     setSaving(false)
     onSaved()

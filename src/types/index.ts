@@ -55,7 +55,7 @@ export type MenuItem = {
   id: string
   name: string
   description: string | null
-  price: number
+  price: number | null
   category_id: string
   image_url: string | null
   available: boolean

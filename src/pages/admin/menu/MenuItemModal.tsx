@@ -46,7 +46,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
   }
 
   async function handleSave() {
-    if (!name.trim() || !price || !categoryId) return
+    if (!name.trim() || !categoryId) return
     setSaving(true)
 
     let finalImageUrl: string | null = existingImageUrl
@@ -68,7 +68,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
       name: name.trim(),
       description: description.trim() || null,
       allergens: allergens.trim() || null,
-      price: Number(price),
+      price: price ? Number(price) : null,
       category_id: categoryId,
       image_url: finalImageUrl,
       available,
@@ -161,7 +161,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
             </div>
             <div className="flex-1 flex flex-col gap-3.5">
               <div>
-                <label className={labelClass}>Pris (kr) *</label>
+                <label className={labelClass}>Pris (kr)</label>
                 <input className={inputClass} type="number" min="0" value={price} onChange={e => setPrice(e.target.value)} />
               </div>
               <div>
@@ -193,7 +193,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           </button>
           <button
             onClick={handleSave}
-            disabled={saving || !name.trim() || !price}
+            disabled={saving || !name.trim()}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (
