@@ -11,7 +11,7 @@ export default function Menu() {
   useEffect(() => {
     async function fetchData() {
       const [{ data: cats }, { data: its }] = await Promise.all([
-        supabase.from('categories').select('*').order('name'),
+        supabase.from('categories').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
         supabase.from('menu_items').select('*').eq('available', true).order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
       ])
       const fetchedCats = cats ?? []

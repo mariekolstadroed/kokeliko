@@ -17,7 +17,7 @@ export default function MenuSection() {
   async function fetchAll() {
     setLoading(true)
     const [{ data: cats }, { data: its }] = await Promise.all([
-      supabase.from('categories').select('*').order('name'),
+      supabase.from('categories').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
       supabase.from('menu_items').select('*').order('sort_order', { ascending: true, nullsFirst: false }).order('name'),
     ])
     setCategories(cats ?? [])
@@ -36,28 +36,59 @@ export default function MenuSection() {
       })
   }
 
+  function sortedCategories() {
+    return [...categories].sort((a, b) => {
+      if (a.sort_order === null && b.sort_order === null) return a.name.localeCompare(b.name)
+      if (a.sort_order === null) return 1
+      if (b.sort_order === null) return -1
+      return a.sort_order - b.sort_order
+    })
+  }
+
+  async function moveCategory(cat: Category, direction: 'up' | 'down') {
+    const sorted = sortedCategories()
+    const idx = sorted.findIndex(c => c.id === cat.id)
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1
+    if (swapIdx < 0 || swapIdx >= sorted.length) return
+
+    const normalized = sorted.map((c, i) => ({ id: c.id, sort_order: i }))
+    const tmp = normalized[idx].sort_order
+    normalized[idx].sort_order = normalized[swapIdx].sort_order
+    normalized[swapIdx].sort_order = tmp
+
+    setCategories(prev => prev.map(c => {
+      const n = normalized.find(n => n.id === c.id)
+      return n ? { ...c, sort_order: n.sort_order } : c
+    }))
+
+    await Promise.all(
+      normalized.map(({ id, sort_order }) =>
+        supabase.from('categories').update({ sort_order }).eq('id', id)
+      )
+    )
+  }
+
   async function moveItem(item: MenuItem, direction: 'up' | 'down') {
     const catItems = sortedCatItems(item.category_id)
     const idx = catItems.findIndex(i => i.id === item.id)
     const swapIdx = direction === 'up' ? idx - 1 : idx + 1
     if (swapIdx < 0 || swapIdx >= catItems.length) return
 
-    const current = { ...catItems[idx], sort_order: catItems[idx].sort_order ?? idx }
-    const other = { ...catItems[swapIdx], sort_order: catItems[swapIdx].sort_order ?? swapIdx }
-
-    const newCurrentOrder = other.sort_order
-    const newOtherOrder = current.sort_order
+    const normalized = catItems.map((i, pos) => ({ id: i.id, sort_order: pos }))
+    const tmp = normalized[idx].sort_order
+    normalized[idx].sort_order = normalized[swapIdx].sort_order
+    normalized[swapIdx].sort_order = tmp
 
     setItems(prev => prev.map(i => {
-      if (i.id === current.id) return { ...i, sort_order: newCurrentOrder }
-      if (i.id === other.id) return { ...i, sort_order: newOtherOrder }
-      return i
+      const n = normalized.find(n => n.id === i.id)
+      return n ? { ...i, sort_order: n.sort_order } : i
     }))
 
-    await Promise.all([
-      supabase.from('menu_items').update({ sort_order: newCurrentOrder }).eq('id', current.id),
-      supabase.from('menu_items').update({ sort_order: newOtherOrder }).eq('id', other.id),
-    ])
+    await Promise.all(
+      normalized.map(({ id, sort_order }) =>
+        supabase.from('menu_items').update({ sort_order }).eq('id', id)
+      )
+    )
   }
 
   async function toggleAvailable(item: MenuItem) {
@@ -104,12 +135,31 @@ export default function MenuSection() {
         <div className="bg-white border border-stone-200 rounded-xl shadow-sm p-8 text-sm text-stone-400 text-center italic">
           Ingen kategorier ennå. Legg til en kategori for å komme i gang.
         </div>
-      ) : categories.map(cat => {
+      ) : sortedCategories().map((cat, catIdx) => {
         const catItems = sortedCatItems(cat.id)
+        const totalCats = categories.length
         return (
           <div key={cat.id} className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
             <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-stone-200">
-              <div className="text-[15px] font-semibold text-stone-800">{cat.name}</div>
+              <div className="flex items-center gap-1">
+                <div className="flex flex-col mr-1">
+                  <button
+                    onClick={() => moveCategory(cat, 'up')}
+                    disabled={catIdx === 0}
+                    className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                  >
+                    <IconChevronUp size={13} aria-hidden />
+                  </button>
+                  <button
+                    onClick={() => moveCategory(cat, 'down')}
+                    disabled={catIdx === totalCats - 1}
+                    className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                  >
+                    <IconChevronDown size={13} aria-hidden />
+                  </button>
+                </div>
+                <div className="text-[15px] font-semibold text-stone-800">{cat.name}</div>
+              </div>
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => setCategoryModal({ open: true, category: cat })}

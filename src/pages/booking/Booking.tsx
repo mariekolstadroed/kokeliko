@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import imgBord from '../assets/booking/bord.png'
-import imgCatering from '../assets/booking/catering.png'
-import imgSelskap from '../assets/booking/selskap.png'
+import imgBord from '../../assets/booking/bord.png'
+import imgCatering from '../../assets/booking/catering.png'
+import imgSelskap from '../../assets/booking/selskap.png'
 
 const cards = [
-  { to: '/booking/bord-dagtid', title: 'Bordreservasjon', sub: 'Mandag – fredag', img: imgBord },
+  { to: '/booking/bordreservasjon', title: 'Bordreservasjon', sub: 'Mandag – fredag', img: imgBord },
   { to: '/booking/catering', title: 'Catering', sub: 'Sett sammen din egen tapas', img: imgCatering },
   { to: '/booking/lukket-selskap', title: 'Lukket selskap', sub: 'Hele lokalet for deg selv', img: imgSelskap },
 ]
