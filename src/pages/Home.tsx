@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import type { OpeningHour, SpecialHoursGroup, SpecialHour } from '../types'
+import type { GalleryItem, OpeningHour, SpecialHoursGroup, SpecialHour } from '../types'
 
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
 
@@ -16,19 +16,79 @@ function formatDate(d: string) {
 
 type SpecialGroupWithHours = SpecialHoursGroup & { hours: SpecialHour[] }
 
+const ITEM_W = 256
+const ITEM_GAP = 20
+
+function StepCarousel({ items }: { items: GalleryItem[] }) {
+  const [step, setStep] = useState(0)
+  const [noTransition, setNoTransition] = useState(false)
+
+  const shouldLoop = items.length > 4
+
+  useEffect(() => {
+    if (!shouldLoop) return
+    const id = setInterval(() => setStep(s => s + 1), 3000)
+    return () => clearInterval(id)
+  }, [shouldLoop])
+
+  useEffect(() => {
+    if (step < items.length) return
+    const id = setTimeout(() => {
+      setNoTransition(true)
+      setStep(0)
+    }, 650)
+    return () => clearTimeout(id)
+  }, [step, items.length])
+
+  useEffect(() => {
+    if (!noTransition) return
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setNoTransition(false)))
+    return () => cancelAnimationFrame(id)
+  }, [noTransition])
+
+  return (
+    <div className="overflow-hidden">
+      <div
+        className="flex"
+        style={{
+          gap: ITEM_GAP,
+          transform: `translateX(-${step * (ITEM_W + ITEM_GAP)}px)`,
+          transition: noTransition ? 'none' : 'transform 0.6s ease',
+        }}
+      >
+        {(shouldLoop ? [...items, ...items] : items).map((item, i) => (
+          <div key={i} className="shrink-0 w-64">
+            <div className="w-64 h-64 rounded-2xl overflow-hidden bg-stone-100">
+              {item.image_url && (
+                <img src={item.image_url} alt={item.title ?? ''} className="w-full h-full object-cover" />
+              )}
+            </div>
+            {item.title && (
+              <p className="mt-3 text-stone-700 text-sm font-medium">{item.title}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [regularHours, setRegularHours] = useState<OpeningHour[]>([])
   const [specialGroups, setSpecialGroups] = useState<SpecialGroupWithHours[]>([])
+  const [gallery, setGallery] = useState<GalleryItem[]>([])
 
   useEffect(() => {
     async function fetchData() {
-      const [{ data: regular }, { data: groups }, { data: special }] = await Promise.all([
+      const [{ data: regular }, { data: groups }, { data: special }, { data: galleryData }] = await Promise.all([
         supabase.from('opening_hours').select('*').order('day'),
         supabase.from('special_hours_groups').select('*').eq('published', true),
         supabase.from('special_hours').select('*').order('date'),
+        supabase.from('gallery_items').select('*').eq('published', true).order('sort_order', { ascending: true, nullsFirst: false }),
       ])
 
       setRegularHours(regular ?? [])
+      setGallery(galleryData ?? [])
 
       const grouped = (groups ?? []).map(g => ({
         ...g,
@@ -91,6 +151,20 @@ export default function Home() {
         )}
 
       </div>
+
+      {/* Gallery carousels */}
+      {(['bestselgere', 'nyheter'] as const).map(section => {
+        const sectionItems = gallery.filter(i => i.section === section)
+        if (sectionItems.length === 0) return null
+        return (
+          <div key={section} className="mb-16">
+            <h2 className="text-3xl font-bold text-stone-900 mb-8">
+              {section === 'bestselgere' ? 'Våre bestselgere' : 'Nyheter i hyllene'}
+            </h2>
+            <StepCarousel items={sectionItems} />
+          </div>
+        )
+      })}
 
     </div>
   )

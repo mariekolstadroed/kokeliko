@@ -5,14 +5,16 @@ import { supabase } from '../../lib/supabase'
 import MenuSection from './menu/MenuSection'
 import HoursSection from './hours/HoursSection'
 import EventsSection from './events/EventsSection'
-import { IconLogout, IconToolsKitchen2, IconClock, IconCalendarEvent } from '@tabler/icons-react'
+import GallerySection from './gallery/GallerySection'
+import { IconLogout, IconToolsKitchen2, IconClock, IconCalendarEvent, IconPhoto } from '@tabler/icons-react'
 
-type Tab = 'menu' | 'hours' | 'events'
+type Tab = 'menu' | 'hours' | 'events' | 'gallery'
 
 const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'menu', label: 'Meny', icon: <IconToolsKitchen2 size={15} /> },
   { id: 'hours', label: 'Åpningstider', icon: <IconClock size={15} /> },
   { id: 'events', label: 'Arrangementer', icon: <IconCalendarEvent size={15} /> },
+  { id: 'gallery', label: 'Galleri', icon: <IconPhoto size={15} /> },
 ]
 
 export default function Dashboard() {
@@ -58,6 +60,7 @@ export default function Dashboard() {
       {tab === 'menu' && <MenuSection />}
       {tab === 'hours' && <HoursSection />}
       {tab === 'events' && <EventsSection />}
+      {tab === 'gallery' && <GallerySection />}
     </div>
   )
 }
