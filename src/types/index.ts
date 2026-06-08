@@ -51,6 +51,15 @@ export type Category = {
   sort_order: number | null
 }
 
+export type GalleryItem = {
+  id: string
+  section: 'bestselgere' | 'nyheter'
+  title: string | null
+  image_url: string | null
+  sort_order: number | null
+  published: boolean
+}
+
 export type MenuItem = {
   id: string
   name: string

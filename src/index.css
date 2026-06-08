@@ -5,3 +5,8 @@
 body {
   background-color: #f0e8d8;
 }
+
+@keyframes gallery-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

@@ -7,7 +7,7 @@ const inputErrorClass = 'w-full px-3 py-2.5 border border-red-300 rounded-lg tex
 const labelClass = 'block text-sm font-medium text-stone-700 mb-1.5'
 
 export default function BordReservasjon() {
-  const [form, setForm] = useState({ navn: '', epost: '', telefon: '', dato: '', klokkeslett: '', antall: '', melding: '' })
+  const [form, setForm] = useState({ navn: '', epost: '', telefon: '', dato: '', klokkeslett: '', antall: '', onsket_mat: '', melding: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle')
   const { forDate } = useOpeningHours()
@@ -31,6 +31,7 @@ export default function BordReservasjon() {
     if (dato) e.dato = dato
     if (!e.dato && dayHours?.closed) e.dato = 'Stengt denne dagen'
     if (!form.antall || Number(form.antall) < 1) e.antall = 'Antall må være større enn 0'
+    if (Number(form.antall) >= 10 && !form.onsket_mat.trim()) e.onsket_mat = 'Ved bordbestilling for over 10 personer må mat forhåndsbestilles'
     if (!e.dato && openTime && closeTime && form.klokkeslett) {
       if (form.klokkeslett < openTime || form.klokkeslett > closeTime)
         e.klokkeslett = `Åpent ${openTime}–${closeTime}`
@@ -123,6 +124,14 @@ export default function BordReservasjon() {
           <input className={f('antall')} type="number" min="1" required value={form.antall} onChange={e => set('antall', e.target.value)} />
           {err('antall')}
         </div>
+
+        {Number(form.antall) >= 10 && (
+          <div>
+            <label className={labelClass}>Ønsket mat *</label>
+            <textarea className={f('onsket_mat') + ' block resize-y min-h-[80px]'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+            {err('onsket_mat')}
+          </div>
+        )}
 
         <div>
           <label className={labelClass}>Melding</label>
