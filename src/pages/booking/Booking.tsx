@@ -12,7 +12,7 @@ const cards = [
 export default function Booking() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold text-stone-900 mb-4">Booking</h1>
+      <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-4">Booking</h1>
       <p className="text-stone-600 leading-relaxed">
         Her kan du reservere bord hos oss. Vi har åpent for reservasjon alle dager utenom helger. Du kan booke
         bord innenfor vanlig åpningstid, eller onsdag- og torsdagskveld. Vi tilbyr også catering med eller uten
@@ -30,7 +30,7 @@ export default function Booking() {
             <img src={img} alt={title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-white font-bold text-xl leading-snug">{title}</h3>
+              <h3 className="text-white font-bold font-special-elite text-xl leading-snug">{title}</h3>
               <p className="text-white/75 text-sm mt-1">{sub}</p>
             </div>
           </Link>

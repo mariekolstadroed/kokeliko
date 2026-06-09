@@ -69,7 +69,7 @@ export default function LukketSelskap() {
 
   return (
     <div className="max-w-lg mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold text-stone-900 mb-2">Lukket selskap</h1>
+      <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-2">Lukket selskap</h1>
       <p className="text-stone-600 leading-relaxed mb-10">
         Fyll ut skjemaet så hører du fra oss med mer informasjon.
       </p>

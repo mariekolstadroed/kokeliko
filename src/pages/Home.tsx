@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { GalleryItem, OpeningHour, SpecialHoursGroup, SpecialHour } from '../types'
+import kveld1 from '../assets/kveld/kveld1.jpg'
+import kveld2 from '../assets/kveld/kveld2.jpg'
+import kveld3 from '../assets/kveld/kveld3.jpg'
+import kunst1 from '../assets/kveld/kunst1.jpg'
+import kunst2 from '../assets/kveld/kunst2.jpg'
+
+const kveldImages = [kveld1, kveld2, kveld3]
 
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
 
@@ -77,6 +84,12 @@ export default function Home() {
   const [regularHours, setRegularHours] = useState<OpeningHour[]>([])
   const [specialGroups, setSpecialGroups] = useState<SpecialGroupWithHours[]>([])
   const [gallery, setGallery] = useState<GalleryItem[]>([])
+  const [kveldIdx, setKveldIdx] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setKveldIdx(i => (i + 1) % kveldImages.length), 3000)
+    return () => clearInterval(id)
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -100,6 +113,7 @@ export default function Home() {
   }, [])
 
   return (
+    <>
     <div className="max-w-6xl mx-auto px-6">
 
       {/* Hero */}
@@ -110,7 +124,7 @@ export default function Home() {
 
         {/* Regular hours */}
         <div>
-          <h2 className="text-3xl font-bold text-stone-900 mb-7">Åpningstider</h2>
+          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-7">Åpningstider</h2>
           <div className="flex flex-col gap-4">
             {regularHours.map(h => (
               <div key={h.id} className="flex gap-10 text-lg">
@@ -132,7 +146,7 @@ export default function Home() {
                 className="border-4 rounded-2xl p-6 bg-white"
                 style={{ borderColor: group.theme ?? '#e2d9cc' }}
               >
-                <h3 className="text-lg font-bold text-stone-900 mb-4">{group.title}</h3>
+                <h3 className="text-lg font-bold font-special-elite text-stone-900 mb-4">{group.title}</h3>
                 <div className="flex flex-col gap-3">
                   {group.hours.map(h => (
                     <div key={h.id} className="flex gap-8 text-base">
@@ -152,20 +166,67 @@ export default function Home() {
 
       </div>
 
-      {/* Gallery carousels */}
-      {(['bestselgere', 'nyheter'] as const).map(section => {
-        const sectionItems = gallery.filter(i => i.section === section)
-        if (sectionItems.length === 0) return null
-        return (
-          <div key={section} className="mb-16">
-            <h2 className="text-3xl font-bold text-stone-900 mb-8">
-              {section === 'bestselgere' ? 'Våre bestselgere' : 'Nyheter i hyllene'}
-            </h2>
-            <StepCarousel items={sectionItems} />
-          </div>
-        )
-      })}
+      {/* Våre bestselgere */}
+      {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Våre bestselgere</h2>
+          <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
+        </div>
+      )}
 
     </div>
+
+    {/* Onsdag og torsdagkvelder — full bredde */}
+    <div className="min-h-screen bg-[#543a3e] flex items-center">
+      <div className="max-w-6xl mx-auto px-6 w-full grid grid-cols-2 gap-16 items-center py-24">
+        <div>
+          <h2 className="text-5xl font-bold font-special-elite text-[#FBAF75] leading-tight mb-6">
+            Onsdag- og<br />torsdagskvelder<br />hos oss!
+          </h2>
+          <p className="text-[#f0e8d8]/80 leading-relaxed text-lg mb-10">
+            Kom og nyt en koselig kveld med pizza, vin og gode venner. Vi har nemlig kveldsåpent
+            helt til kl. 23 på onsdager og torsdager. Reserver bord til deg og din gjeng nå!
+          </p>
+          <a
+            href="/booking/bordreservasjon"
+            className="inline-block px-8 py-4 bg-white text-[#3d1f08] text-sm font-semibold rounded-full hover:bg-[#f0e8d8] transition-colors"
+          >
+            Reserver bord
+          </a>
+        </div>
+        <div className="relative px-16 py-20">
+          <div className="absolute -top-10 -right-10 w-56 h-56 rounded-full overflow-hidden z-20">
+            <img src={kunst2} alt="" className="w-full h-full object-cover" />
+          </div>
+          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full overflow-hidden z-0">
+            <img src={kunst1} alt="" className="w-full h-full object-cover" />
+          </div>
+          <div className="relative z-10 aspect-[3/4] overflow-hidden">
+            {kveldImages.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+                style={{ opacity: i === kveldIdx ? 1 : 0 }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="max-w-6xl mx-auto px-6">
+
+      {/* Nyheter i hyllene */}
+      {gallery.filter(i => i.section === 'nyheter').length > 0 && (
+        <div className="mt-16 mb-16">
+          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Nyheter i hyllene</h2>
+          <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
+        </div>
+      )}
+
+    </div>
+    </>
   )
 }

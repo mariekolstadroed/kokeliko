@@ -27,7 +27,7 @@ export default function Menu() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold text-stone-900 mb-1">Meny</h1>
+      <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-1">Meny</h1>
 
       {loading ? (
         <div className="mt-16 text-center text-stone-400 text-sm">Laster…</div>
@@ -69,7 +69,7 @@ export default function Menu() {
                   )}
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h3 className="font-semibold text-lg text-stone-900">{item.name}</h3>
+                  <h3 className="font-semibold font-special-elite text-lg text-stone-900">{item.name}</h3>
                   {item.description && (
                     <p className="text-sm text-stone-600 mt-1">{item.description}</p>
                   )}
