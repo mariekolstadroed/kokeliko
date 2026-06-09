@@ -136,6 +136,8 @@ export default function Home() {
         </defs>
         <image href={kakaoImg} x="145" y="190" width="620" height="620" clipPath="url(#leftBlobClip)" />
       </svg>
+      {/* Mørkt filter */}
+      <div className="absolute inset-0 -top-24 bg-black/20 z-[5]" />
       {/* Logo */}
       <div className="absolute inset-0 flex flex-col items-center justify-start pt-40 z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
         <img src={logoHvit} alt="Kokeliko" className="w-[65vw]" />
