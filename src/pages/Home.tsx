@@ -170,7 +170,7 @@ export default function Home() {
 
         {/* Regular hours */}
         <div>
-          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-7">Åpningstider</h2>
+          <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-7">Åpningstider</h2>
           <div className="flex flex-col gap-4">
             {regularHours.map(h => (
               <div key={h.id} className="flex gap-10 text-lg">
@@ -192,7 +192,7 @@ export default function Home() {
                 className="border-4 rounded-2xl p-6 bg-white"
                 style={{ borderColor: group.theme ?? '#e2d9cc' }}
               >
-                <h3 className="text-lg font-bold font-special-elite text-stone-900 mb-4">{group.title}</h3>
+                <h3 className="text-lg font-bold font-special-elite text-[#2E1608] mb-4">{group.title}</h3>
                 <div className="flex flex-col gap-3">
                   {group.hours.map(h => (
                     <div key={h.id} className="flex gap-8 text-base">
@@ -215,7 +215,7 @@ export default function Home() {
       {/* Våre bestselgere */}
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
         <div className="mb-16">
-          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Våre bestselgere</h2>
+          <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
           <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
         </div>
       )}
@@ -267,7 +267,7 @@ export default function Home() {
       {/* Nyheter i hyllene */}
       {gallery.filter(i => i.section === 'nyheter').length > 0 && (
         <div className="mt-16 mb-16">
-          <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Nyheter i hyllene</h2>
+          <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
           <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
         </div>
       )}
@@ -276,7 +276,7 @@ export default function Home() {
 
     {/* Finn oss */}
     <div className="max-w-6xl mx-auto px-6 mt-16 mb-16">
-      <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Finn oss</h2>
+      <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Finn oss</h2>
       <div className="grid grid-cols-2 gap-6">
         <iframe
           src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"

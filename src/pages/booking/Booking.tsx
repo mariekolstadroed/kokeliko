@@ -12,7 +12,7 @@ const cards = [
 export default function Booking() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-4">Booking</h1>
+      <h1 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-4">Booking</h1>
       <p className="text-stone-600 leading-relaxed">
         Her kan du reservere bord hos oss. Vi har åpent for reservasjon alle dager utenom helger. Du kan booke
         bord innenfor vanlig åpningstid, eller onsdag- og torsdagskveld. Vi tilbyr også catering med eller uten
