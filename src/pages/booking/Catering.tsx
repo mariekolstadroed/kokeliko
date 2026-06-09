@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IconArrowLeft } from '@tabler/icons-react'
-import cateringImg1 from '../../assets/booking/catering/catering1.png'
-import cateringImg2 from '../../assets/booking/catering/catering2.png'
+import cateringImg1 from '../../assets/booking/catering/catering1.jpg'
+import cateringImg2 from '../../assets/booking/catering/catering2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '../../lib/validation'
 import { useOpeningHours } from '../../hooks/useOpeningHours'
 

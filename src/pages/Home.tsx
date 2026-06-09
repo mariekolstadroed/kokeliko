@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import type { GalleryItem, OpeningHour, SpecialHoursGroup, SpecialHour } from '../types'
 import logoHvit from '../assets/logo-hvit.png'
 import utendorsImg from '../assets/home/utendors.jpg'
 import kakaoImg from '../assets/home/kakao.jpg'
-import marsipanImg from '../assets/home/marsipanboller.png'
+import marsipanImg from '../assets/home/marsipanboller.jpg'
 import kveld1 from '../assets/kveld/kveld1.jpg'
 import kveld2 from '../assets/kveld/kveld2.jpg'
 import kveld3 from '../assets/kveld/kveld3.jpg'
@@ -84,36 +85,34 @@ function StepCarousel({ items }: { items: GalleryItem[] }) {
   )
 }
 
+async function fetchHomeData() {
+  const [{ data: regular }, { data: groups }, { data: special }, { data: galleryData }] = await Promise.all([
+    supabase.from('opening_hours').select('*').order('day'),
+    supabase.from('special_hours_groups').select('*').eq('published', true),
+    supabase.from('special_hours').select('*').order('date'),
+    supabase.from('gallery_items').select('*').eq('published', true).order('sort_order', { ascending: true, nullsFirst: false }),
+  ])
+  return {
+    regularHours: (regular ?? []) as OpeningHour[],
+    gallery: (galleryData ?? []) as GalleryItem[],
+    specialGroups: ((groups ?? []) as SpecialHoursGroup[]).map(g => ({
+      ...g,
+      hours: ((special ?? []) as SpecialHour[]).filter(s => s.group_id === g.id),
+    })) as SpecialGroupWithHours[],
+  }
+}
+
 export default function Home() {
-  const [regularHours, setRegularHours] = useState<OpeningHour[]>([])
-  const [specialGroups, setSpecialGroups] = useState<SpecialGroupWithHours[]>([])
-  const [gallery, setGallery] = useState<GalleryItem[]>([])
+  const { data } = useQuery({ queryKey: ['home'], queryFn: fetchHomeData })
+  const regularHours = data?.regularHours ?? []
+  const specialGroups = data?.specialGroups ?? []
+  const gallery = data?.gallery ?? []
+
   const [kveldIdx, setKveldIdx] = useState(0)
 
   useEffect(() => {
     const id = setInterval(() => setKveldIdx(i => (i + 1) % kveldImages.length), 3000)
     return () => clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    async function fetchData() {
-      const [{ data: regular }, { data: groups }, { data: special }, { data: galleryData }] = await Promise.all([
-        supabase.from('opening_hours').select('*').order('day'),
-        supabase.from('special_hours_groups').select('*').eq('published', true),
-        supabase.from('special_hours').select('*').order('date'),
-        supabase.from('gallery_items').select('*').eq('published', true).order('sort_order', { ascending: true, nullsFirst: false }),
-      ])
-
-      setRegularHours(regular ?? [])
-      setGallery(galleryData ?? [])
-
-      const grouped = (groups ?? []).map(g => ({
-        ...g,
-        hours: (special ?? []).filter(s => s.group_id === g.id),
-      }))
-      setSpecialGroups(grouped)
-    }
-    fetchData()
   }, [])
 
   return (
@@ -166,7 +165,7 @@ export default function Home() {
     <div className="max-w-6xl mx-auto px-6">
 
       {/* Opening hours */}
-      <div className="flex justify-center gap-80 mb-16">
+      <div className="flex justify-center gap-80 mb-24">
 
         {/* Regular hours */}
         <div>
@@ -214,7 +213,7 @@ export default function Home() {
 
       {/* Våre bestselgere */}
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
-        <div className="mb-16">
+        <div className="mb-24">
           <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
           <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
         </div>
@@ -266,7 +265,7 @@ export default function Home() {
 
       {/* Nyheter i hyllene */}
       {gallery.filter(i => i.section === 'nyheter').length > 0 && (
-        <div className="mt-16 mb-16">
+        <div className="mt-24 mb-24">
           <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
           <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
         </div>
@@ -274,8 +273,30 @@ export default function Home() {
 
     </div>
 
+    {/* Kaffen vår */}
+    <div className="max-w-6xl mx-auto px-6 mt-24 mb-24">
+      <div className="grid grid-cols-2 gap-12 items-start">
+        <div className="bg-stone-200 rounded-2xl aspect-[3/4] w-full" />
+        <div>
+          <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-6">Kaffen vår</h2>
+          <p className="text-stone-600 leading-relaxed text-lg mb-6">
+            Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half, 
+            som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom 
+            både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og 
+            fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
+          </p>
+          <p className="text-stone-600 leading-relaxed text-lg">
+            Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil. 
+            Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet, 
+            og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår, 
+            og det er takket være disse bønnene.
+          </p>
+        </div>
+      </div>
+    </div>
+
     {/* Finn oss */}
-    <div className="max-w-6xl mx-auto px-6 mt-16 mb-16">
+    <div className="max-w-6xl mx-auto px-6 mt-24 mb-24">
       <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Finn oss</h2>
       <div className="grid grid-cols-2 gap-6">
         <iframe

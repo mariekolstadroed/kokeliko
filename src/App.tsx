@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
@@ -13,32 +14,46 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 
+const PUBLIC_ROUTES = [
+  { path: '/', element: <Home /> },
+  { path: '/meny', element: <Menu /> },
+  { path: '/booking', element: <Booking /> },
+  { path: '/booking/bordreservasjon', element: <BordReservasjon /> },
+  { path: '/booking/catering', element: <BookingCatering /> },
+  { path: '/booking/lukket-selskap', element: <LukketSelskap /> },
+  { path: '/arrangementer', element: <Events /> },
+  { path: '/om-oss', element: <About /> },
+]
+
 function AppLayout() {
   const location = useLocation()
-  const isAdmin = location.pathname.startsWith('/admin')
+  const path = location.pathname
+  const isAdmin = path.startsWith('/admin')
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [path])
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      </Routes>
+    )
+  }
 
   return (
     <>
-      {!isAdmin && <Navbar />}
-      <main className={!isAdmin ? 'min-h-screen' : undefined}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/meny" element={<Menu />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/om-oss" element={<About />} />
-          <Route path="/arrangementer" element={<Events />} />
-          <Route path="/booking/bordreservasjon" element={<BordReservasjon />} />
-          <Route path="/booking/catering" element={<BookingCatering />} />
-          <Route path="/booking/lukket-selskap" element={<LukketSelskap />} />
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-        </Routes>
+      <Navbar />
+      <main className="min-h-screen">
+        {PUBLIC_ROUTES.map(({ path: routePath, element }) => (
+          <div key={routePath} className={path === routePath ? '' : 'hidden'}>
+            {element}
+          </div>
+        ))}
       </main>
-      {!isAdmin && <Footer />}
+      <Footer />
     </>
   )
 }
