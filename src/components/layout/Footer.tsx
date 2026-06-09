@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-end gap-3 text-[#c9a882]">
-          <p className="text-[11px] font-semibold uppercase tracking-widest mb-1">Kontakt</p>
+          <p className="font-special-elite text-xl tracking-wide mb-1">Kontakt</p>
           {contact.map(({ icon, text }) => (
             <div key={text} className="flex items-center gap-2 text-sm">
               {icon}
