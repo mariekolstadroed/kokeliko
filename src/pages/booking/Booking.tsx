@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import imgBord from '../../assets/booking/bord.png'
-import imgCatering from '../../assets/booking/catering.png'
-import imgSelskap from '../../assets/booking/selskap.png'
+import imgBord from '../../assets/booking/bord.jpg'
+import imgCatering from '../../assets/booking/catering.jpg'
+import imgSelskap from '../../assets/booking/selskap.jpg'
 
 const cards = [
   { to: '/booking/bordreservasjon', title: 'Bordreservasjon', sub: 'Bord holdt av til deg i to timer', img: imgBord },

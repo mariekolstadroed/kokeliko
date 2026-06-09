@@ -21,7 +21,7 @@ export default function Navbar() {
               key={label}
               to={to}
               className={({ isActive }) =>
-                `text-[#3d1f08] text-base transition-opacity ${isActive ? 'font-semibold' : 'font-medium hover:opacity-60'}`
+                `text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${isActive ? 'font-semibold' : 'font-medium hover:opacity-60'}`
               }
             >
               {label}
