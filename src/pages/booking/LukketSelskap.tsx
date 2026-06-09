@@ -1,5 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { IconArrowLeft } from '@tabler/icons-react'
 import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } from '../../lib/validation'
+import img1 from '../../assets/booking/lukket_selskap/lukket-selskap1.png'
+import img2 from '../../assets/booking/lukket_selskap/lukket-selskap2.png'
 
 const inputClass = 'w-full px-3 py-2.5 border border-stone-200 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-stone-400 transition-colors'
 const inputErrorClass = 'w-full px-3 py-2.5 border border-red-300 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-red-400 transition-colors'
@@ -52,9 +56,16 @@ export default function LukketSelskap() {
 
   if (status === 'ok') {
     return (
-      <div className="max-w-lg mx-auto px-6 py-20 text-center">
-        <p className="text-2xl font-bold text-stone-900 mb-3">Takk for din forespørsel!</p>
-        <p className="text-stone-500">Vi tar kontakt med deg så snart som mulig.</p>
+      <div className="relative min-h-screen flex items-center justify-center px-6 py-20">
+        <div className="absolute inset-0 flex">
+          <img src={img1} className="w-1/2 h-full object-cover" />
+          <img src={img2} className="w-1/2 h-full object-cover" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
+          <p className="text-2xl font-bold text-stone-900 mb-3">Takk for din forespørsel!</p>
+          <p className="text-stone-500">Vi tar kontakt med deg så snart som mulig.</p>
+        </div>
       </div>
     )
   }
@@ -68,13 +79,28 @@ export default function LukketSelskap() {
     : null
 
   return (
-    <div className="max-w-lg mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-2">Lukket selskap</h1>
-      <p className="text-stone-600 leading-relaxed mb-10">
-        Fyll ut skjemaet så hører du fra oss med mer informasjon.
-      </p>
+    <div className="relative min-h-screen flex items-center justify-center px-6 pb-16 -mt-24 pt-24">
+      {/* Bakgrunnsbilder */}
+      <div className="absolute inset-0 flex">
+        <img src={img2} alt="" className="w-1/2 h-full object-cover" />
+        <img src={img1} alt="" className="w-1/2 h-full object-cover" />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {/* Skjema-wrapper */}
+      <div className="relative flex items-start gap-4 w-full max-w-xl mt-16">
+        <Link to="/booking" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/80 hover:bg-white transition-colors shrink-0">
+          <IconArrowLeft size={18} className="text-stone-700" />
+        </Link>
+
+        {/* Skjema-container */}
+        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 w-full">
+        <h1 className="text-4xl font-bold font-special-elite text-stone-900 mb-2">Lukket selskap</h1>
+        <p className="text-stone-600 leading-relaxed mb-8">
+          Fyll ut skjemaet så hører du fra oss med mer informasjon.
+        </p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className={labelClass}>Navn *</label>
@@ -146,6 +172,8 @@ export default function LukketSelskap() {
           {status === 'sending' ? 'Sender…' : 'Send forespørsel'}
         </button>
       </form>
+        </div>{/* slutt skjema-container */}
+      </div>{/* slutt skjema-wrapper */}
     </div>
   )
 }

@@ -69,7 +69,7 @@ export default function Menu() {
                   )}
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h3 className="font-semibold font-special-elite text-lg text-stone-900">{item.name}</h3>
+                  <h3 className="font-semibold font-special-elite text-xl text-stone-900">{item.name}</h3>
                   {item.description && (
                     <p className="text-sm text-stone-600 mt-1">{item.description}</p>
                   )}

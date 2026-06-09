@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { GalleryItem, OpeningHour, SpecialHoursGroup, SpecialHour } from '../types'
 import logoHvit from '../assets/logo-hvit.png'
+import utendorsImg from '../assets/home/utendors.jpg'
 import kakaoImg from '../assets/home/kakao.jpg'
 import marsipanImg from '../assets/home/marsipanboller.png'
 import kveld1 from '../assets/kveld/kveld1.jpg'
@@ -271,6 +272,20 @@ export default function Home() {
         </div>
       )}
 
+    </div>
+
+    {/* Finn oss */}
+    <div className="max-w-6xl mx-auto px-6 mt-16 mb-16">
+      <h2 className="text-3xl font-bold font-special-elite text-stone-900 mb-8">Finn oss</h2>
+      <div className="grid grid-cols-2 gap-6">
+        <iframe
+          src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
+          className="w-full h-96 rounded-2xl border-0"
+          loading="lazy"
+          title="Kokeliko kart"
+        />
+        <img src={utendorsImg} alt="Utenfor Kokeliko" className="w-full h-96 rounded-2xl object-cover" />
+      </div>
     </div>
     </>
   )

@@ -4,8 +4,8 @@ import imgCatering from '../../assets/booking/catering.png'
 import imgSelskap from '../../assets/booking/selskap.png'
 
 const cards = [
-  { to: '/booking/bordreservasjon', title: 'Bordreservasjon', sub: 'Mandag – fredag', img: imgBord },
-  { to: '/booking/catering', title: 'Catering', sub: 'Sett sammen din egen tapas', img: imgCatering },
+  { to: '/booking/bordreservasjon', title: 'Bordreservasjon', sub: 'Bord holdt av til deg i to timer', img: imgBord },
+  { to: '/booking/catering', title: 'Catering', sub: 'Vi lager mat til ditt selsakp', img: imgCatering },
   { to: '/booking/lukket-selskap', title: 'Lukket selskap', sub: 'Hele lokalet for deg selv', img: imgSelskap },
 ]
 
