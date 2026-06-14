@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { supabase } from '@/lib/supabase'
+import { supabaseServer as supabase } from '@/lib/supabase-server'
 import type { Category, MenuItem } from '@/types/index'
 import MenuTabs from './MenuTabs'
 import menuImg1 from '@/assets/menu/menu1.jpg'

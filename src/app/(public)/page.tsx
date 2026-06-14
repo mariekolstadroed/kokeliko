@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { supabase } from '@/lib/supabase'
+import { supabaseServer as supabase } from '@/lib/supabase-server'
 import type { GalleryItem, OpeningHour, SpecialHour, SpecialHoursGroup } from '@/types/index'
 import StepCarousel from '@/components/home/StepCarousel'
 import KveldSection from '@/components/home/KveldSection'

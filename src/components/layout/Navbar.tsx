@@ -22,17 +22,18 @@ export default function Navbar() {
           <Image src={logo} alt="Kokeliko" style={{ height: '2.25rem', width: 'auto' }} priority />
         </Link>
         <div className="flex items-center gap-20">
-          {links.map(({ to, label }) => (
-            <Link
-              key={label}
-              href={to}
-              className={`text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${
-                pathname === to ? 'font-semibold' : 'font-medium hover:opacity-60'
-              }`}
-            >
-              {label}
-            </Link>
-          ))}
+          {links.map(({ to, label }) => {
+            const isActive = pathname === to || pathname.startsWith(to + '/')
+            return (
+              <Link
+                key={label}
+                href={to}
+                className={`text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${isActive ? 'border-b-2 border-[#3d1f08]' : 'hover:opacity-60'}`}
+              >
+                {label}
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </header>
