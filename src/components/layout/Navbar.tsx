@@ -19,7 +19,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 px-6 pt-5 pb-2">
       <nav className="flex items-center justify-between bg-[#faf7f2]/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-sm max-w-7xl mx-auto">
         <Link href="/">
-          <Image src={logo} alt="Kokeliko" height={36} priority />
+          <Image src={logo} alt="Kokeliko" className="h-9 w-auto" priority />
         </Link>
         <div className="flex items-center gap-20">
           {links.map(({ to, label }) => (

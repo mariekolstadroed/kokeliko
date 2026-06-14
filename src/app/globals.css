@@ -6,7 +6,7 @@
 
 body {
   background-color: #f0e8d8;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @keyframes gallery-scroll {

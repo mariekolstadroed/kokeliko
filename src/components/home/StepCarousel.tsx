@@ -48,7 +48,7 @@ export default function StepCarousel({ items }: { items: GalleryItem[] }) {
           <div key={i} className="shrink-0 w-64">
             <div className="relative w-64 h-64 rounded-2xl overflow-hidden bg-stone-100">
               {item.image_url && (
-                <Image src={item.image_url} alt={item.title ?? ''} fill className="object-cover" />
+                <Image src={item.image_url} alt={item.title ?? ''} fill sizes="256px" className="object-cover" />
               )}
             </div>
             {item.title && (
