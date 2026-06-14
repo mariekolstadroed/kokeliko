@@ -27,7 +27,7 @@ export default function MenuTabs({
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-5 py-2 text-xl whitespace-nowrap rounded-lg transition-colors font-special-elite ${
+            className={`px-5 py-2 text-xl whitespace-nowrap rounded-lg transition-colors font-special-elite cursor-pointer ${
               activeCategory === cat.id
                 ? 'bg-[#715055] font-semibold text-white'
                 : 'font-medium text-[#FAF7F2] hover:text-white'

@@ -33,7 +33,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-stone-50 pb-12">
       <header className="sticky top-0 z-10 flex items-center justify-between px-6 h-14 bg-white border-b border-stone-200">
         <div className="flex items-center gap-2">
-          <Image src={logo} alt="Kokeliko" height={32} width={110} style={{ height: '32px', width: 'auto' }} priority />
+          <Image src={logo} alt="Kokeliko" style={{ height: '32px', width: 'auto' }} priority />
           <span className="text-[25px] text-stone-400">admin</span>
         </div>
         <button
