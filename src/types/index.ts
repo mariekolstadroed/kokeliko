@@ -16,7 +16,7 @@ export type SpecialHoursGroup = {
 export type SpecialHour = {
   id: string
   group_id: string
-  date: string
+  date: string | null
   description: string | null
   open_time: string | null
   close_time: string | null

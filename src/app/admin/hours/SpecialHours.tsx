@@ -28,8 +28,15 @@ export default function SpecialHours() {
   }
 
   async function togglePublished(group: SpecialHoursGroup) {
-    setGroups(prev => prev.map(g => g.id === group.id ? { ...g, published: !g.published } : g))
-    await supabase.from('special_hours_groups').update({ published: !group.published }).eq('id', group.id)
+    const publishing = !group.published
+    if (publishing) {
+      setGroups(prev => prev.map(g => ({ ...g, published: g.id === group.id })))
+      await supabase.from('special_hours_groups').update({ published: false }).neq('id', group.id)
+      await supabase.from('special_hours_groups').update({ published: true }).eq('id', group.id)
+    } else {
+      setGroups(prev => prev.map(g => g.id === group.id ? { ...g, published: false } : g))
+      await supabase.from('special_hours_groups').update({ published: false }).eq('id', group.id)
+    }
   }
 
   async function deleteGroup(id: string) {

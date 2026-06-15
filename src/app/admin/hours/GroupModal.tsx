@@ -38,6 +38,7 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
   const [theme, setTheme] = useState(group?.theme ?? THEMES[0])
   const [dates, setDates] = useState<DateRow[]>([])
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!group) return
@@ -45,7 +46,7 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
       .then(({ data }) => {
         setDates((data ?? []).map(h => ({
           id: h.id,
-          date: h.date,
+          date: h.date ?? '',
           description: h.description ?? '',
           open_time: h.open_time?.slice(0, 5) ?? '08:00',
           close_time: h.close_time?.slice(0, 5) ?? '16:00',
@@ -60,6 +61,12 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
 
   async function handleSave() {
     if (!title.trim()) return
+    const invalid = dates.some(d => !d.date && !d.description.trim())
+    if (invalid) {
+      setError('Alle rader må ha enten en dato eller en beskrivelse.')
+      return
+    }
+    setError(null)
     setSaving(true)
 
     let groupId = group?.id
@@ -76,12 +83,12 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
       groupId = data?.id
     }
 
-    const validDates = dates.filter(d => d.date)
+    const validDates = dates.filter(d => d.date || d.description.trim())
     if (groupId && validDates.length > 0) {
       await supabase.from('special_hours').insert(
         validDates.map(d => ({
           group_id: groupId,
-          date: d.date,
+          date: d.date || null,
           description: d.description || null,
           open_time: d.closed ? null : d.open_time,
           close_time: d.closed ? null : d.close_time,
@@ -168,8 +175,8 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
                       <input
                         value={row.description}
                         onChange={e => updateRow(i, { description: e.target.value })}
-                        placeholder="Beskrivelse (valgfritt)"
-                        className={inputClass + ' flex-1'}
+                        placeholder="eks. skjærtorsdag, mandag - fredag"
+                        className={inputClass + ' flex-1' + (!row.date && !row.description.trim() ? ' border-red-300' : '')}
                       />
                       <button
                         onClick={() => setDates(prev => prev.filter((_, idx) => idx !== i))}
@@ -212,7 +219,8 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200 shrink-0">
+        <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200 shrink-0 flex-wrap">
+          {error && <p className="w-full text-xs text-red-500 mb-1">{error}</p>}
           <button
             onClick={onClose}
             className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"

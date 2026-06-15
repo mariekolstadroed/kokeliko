@@ -6,7 +6,11 @@ import KveldSection from '@/components/home/KveldSection'
 import logoHvit from '@/assets/logo-hvit.png'
 import kakaoImg from '@/assets/home/kakao.jpg'
 import marsipanImg from '@/assets/home/marsipanboller.jpg'
-import utendorsImg from '@/assets/home/utendors.jpg'
+import elvegangenImg from '@/assets/home/elvegangen.jpg'
+import kokelikoSirkel from '@/assets/home/kokeliko-sirkel.png'
+import elinPaKaffeImg from '@/assets/kaffen/elin-pa-kaffe.jpg'
+import barrieroImg from '@/assets/kaffen/barriero.png'
+import halfAndHalfImg from '@/assets/kaffen/half-and-half.png'
 
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
 
@@ -26,7 +30,7 @@ async function fetchHomeData() {
     await Promise.all([
       supabase.from('opening_hours').select('*').order('day'),
       supabase.from('special_hours_groups').select('*').eq('published', true),
-      supabase.from('special_hours').select('*').order('date'),
+      supabase.from('special_hours').select('*').order('date', { nullsFirst: false }),
       supabase
         .from('gallery_items')
         .select('*')
@@ -51,7 +55,7 @@ export default async function Home() {
       {/* Hero-bakgrunn */}
       <div className="bg-[#75482e] -mt-[120px] pt-[120px]">
         {/* Hero */}
-        <div className="relative mb-16" style={{ height: '50vw' }}>
+        <div className="relative" style={{ height: '50vw' }}>
           {/* Venstre blob — kakao */}
           <svg
             viewBox="0 60 1000 940"
@@ -93,18 +97,19 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="bg-[#f5ede3]">
+      <div className="max-w-6xl mx-auto px-6 py-16">
 
         {/* Opening hours */}
-        <div className="flex justify-center gap-80 mb-24">
+        <div className="grid items-center gap-16 px-20" style={{ gridTemplateColumns: '1fr auto' }}>
 
           {/* Regular hours */}
           <div>
-            <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-7">Åpningstider</h2>
-            <div className="flex flex-col gap-4">
+            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Åpningstider</h2>
+            <div className="flex flex-col gap-5">
               {regularHours.map(h => (
-                <div key={h.id} className="flex gap-10 text-lg">
-                  <span className="text-stone-700 font-medium w-28 shrink-0">{DAY_NAMES[h.day]}</span>
+                <div key={h.id} className="flex gap-10 text-xl">
+                  <span className="text-stone-700 font-medium w-32 shrink-0">{DAY_NAMES[h.day]}</span>
                   <span className="text-stone-500">
                     {h.closed ? 'Stengt' : `${formatTime(h.open_time)} – ${formatTime(h.close_time)}`}
                   </span>
@@ -114,20 +119,20 @@ export default async function Home() {
           </div>
 
           {/* Special hours */}
-          {specialGroups.length > 0 && (
-            <div className="flex flex-col gap-4">
+          {specialGroups.length > 0 ? (
+            <div className="flex flex-col gap-4 max-w-[460px]">
               {specialGroups.map(group => (
                 <div
                   key={group.id}
-                  className="border-4 rounded-2xl p-6 bg-white"
-                  style={{ borderColor: group.theme ?? '#e2d9cc' }}
+                  className="border-4 rounded-2xl p-6 backdrop-blur-sm shadow-lg"
+                  style={{ borderColor: group.theme ?? '#e2d9cc', backgroundColor: `${group.theme ?? '#e2d9cc'}33` }}
                 >
                   <h3 className="text-lg font-bold font-special-elite text-[#2E1608] mb-4">{group.title}</h3>
                   <div className="flex flex-col gap-3">
                     {group.hours.map(h => (
                       <div key={h.id} className="flex gap-8 text-base">
                         <span className="text-stone-700 font-medium w-36 shrink-0">
-                          {h.description ?? formatDate(h.date)}
+                          {h.description ?? (h.date ? formatDate(h.date) : '')}
                         </span>
                         <span className="text-stone-500">
                           {h.closed ? 'Stengt' : `${formatTime(h.open_time)} – ${formatTime(h.close_time)}`}
@@ -138,69 +143,100 @@ export default async function Home() {
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="w-[400px]">
+              <Image src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
+            </div>
           )}
 
         </div>
 
-        {/* Våre bestselgere */}
-        {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
-          <div className="mb-24">
+      </div>
+      </div>
+
+      {/* Våre bestselgere */}
+      {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
+        <div className="bg-stone-100">
+          <div className="max-w-6xl mx-auto px-6 py-24">
             <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
           </div>
-        )}
-
-      </div>
+        </div>
+      )}
 
       {/* Onsdag og torsdagkvelder — full bredde */}
       <KveldSection />
 
-      <div className="max-w-6xl mx-auto px-6">
-
-        {/* Nyheter i hyllene */}
-        {gallery.filter(i => i.section === 'nyheter').length > 0 && (
-          <div className="mt-24 mb-24">
+      {/* Nyheter i hyllene */}
+      {gallery.filter(i => i.section === 'nyheter').length > 0 && (
+        <div className="bg-amber-50">
+          <div className="max-w-6xl mx-auto px-6 py-24">
             <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
           </div>
-        )}
-
-      </div>
+        </div>
+      )}
 
       {/* Kaffen vår */}
-      <div className="max-w-6xl mx-auto px-6 mt-24 mb-24">
-        <div className="grid grid-cols-2 gap-12 items-start">
-          <div className="bg-stone-200 rounded-2xl aspect-[3/4] w-full" />
-          <div>
-            <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-6">Kaffen vår</h2>
-            <p className="text-stone-600 leading-relaxed text-lg mb-6">
-              Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
-              som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
-              både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
-              fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
-            </p>
-            <p className="text-stone-600 leading-relaxed text-lg">
-              Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
-              Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
-              og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
-              og det er takket være disse bønnene.
-            </p>
+      <div className="relative">
+        <Image src={elinPaKaffeImg} alt="" fill className="object-cover" />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
+          <div className="grid grid-cols-2 items-center gap-16">
+            {/* Overlapping circles */}
+            <div className="relative h-[480px] w-[480px] mx-auto shrink-0">
+              <div className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#f5ede3] shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image src={barrieroImg} alt="Barriero" fill sizes="300px" className="object-contain p-6" />
+              </div>
+              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#f5ede3] shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="300px" className="object-contain p-6" />
+              </div>
+            </div>
+            {/* Text */}
+            <div>
+              <h2 className="text-4xl font-bold font-special-elite text-white mb-6">Kaffen vår</h2>
+              <p className="text-white/80 leading-relaxed text-lg mb-6">
+                Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
+                som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
+                både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
+                fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
+              </p>
+              <p className="text-white/80 leading-relaxed text-lg">
+                Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
+                Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
+                og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
+                og det er takket være disse bønnene.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Finn oss */}
-      <div className="max-w-6xl mx-auto px-6 mt-24 mb-24">
-        <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Finn oss</h2>
-        <div className="grid grid-cols-2 gap-6">
-          <iframe
-            src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
-            className="w-full h-96 rounded-2xl border-0"
-            loading="lazy"
-            title="Kokeliko kart"
-          />
-          <div className="relative w-full h-96 rounded-2xl overflow-hidden">
-            <Image src={utendorsImg} alt="Utenfor Kokeliko" fill sizes="50vw" className="object-cover" loading="eager" />
+      <div className="relative">
+        <Image src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-25">
+          <div className="grid grid-cols-2 items-start gap-16">
+            <div>
+              <h2 className="text-5xl font-bold font-special-elite text-white mb-6">Finn oss</h2>
+              <p className="text-white/80 leading-relaxed text-lg mb-4">
+                Du finner oss i Elvegangen 9 på Bærums Verk — midt i det sjarmerende industriområdet med
+                butikker, gallerier og verksteder langs den lille elva.
+              </p>
+              <p className="text-white/80 leading-relaxed text-lg">
+                Vi holder til i et koselig lokale med plass til både en rask kopp kaffe og et lengre
+                opphold. Velkommen innom!
+              </p>
+            </div>
+            <div className="w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl mx-auto">
+              <iframe
+                src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
+                className="w-full h-full border-0"
+                loading="lazy"
+                title="Kokeliko kart"
+              />
+            </div>
           </div>
         </div>
       </div>
