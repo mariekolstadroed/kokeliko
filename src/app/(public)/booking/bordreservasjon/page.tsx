@@ -36,6 +36,10 @@ export default function BordReservasjon() {
     if (telefon) e.telefon = telefon
     const dato = validateFutureDate(form.dato, true)
     if (dato) e.dato = dato
+    if (!e.dato && form.dato) {
+      const day = new Date(form.dato).getUTCDay()
+      if (day === 0 || day === 6) e.dato = 'Det er dessverre ikke mulig å reservere bord i helger'
+    }
     if (!e.dato && dayHours?.closed) e.dato = 'Stengt denne dagen'
     if (!form.antall || Number(form.antall) < 1) e.antall = 'Antall må være større enn 0'
     if (Number(form.antall) >= 10 && !form.onsket_mat.trim()) e.onsket_mat = 'Ved bordbestilling for over 10 personer må mat forhåndsbestilles'

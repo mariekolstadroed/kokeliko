@@ -55,7 +55,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero-bakgrunn */}
-      <div className="bg-[#75482e] -mt-[120px] pt-[120px]">
+      <div className="bg-[#5E3926] -mt-[120px] pt-[120px]">
         {/* Hero */}
         <div className="relative" style={{ height: '50vw' }}>
           {/* Venstre blob — kakao */}
@@ -72,9 +72,8 @@ export default async function Home() {
               </clipPath>
             </defs>
             <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#leftBlobClip)" />
+            <rect x="0" y="0" width="1000" height="1000" clipPath="url(#leftBlobClip)" fill="rgba(0,0,0,0.2)" />
           </svg>
-          {/* Mørkt filter */}
-          <div className="absolute inset-0 -top-[120px] bg-black/20 z-[5]" />
           {/* Logo */}
           <div className="absolute inset-0 flex flex-col items-center justify-start pt-40 z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
             <Image src={logoHvit} alt="Kokeliko" style={{ width: '65vw', height: 'auto' }} priority />
@@ -95,6 +94,7 @@ export default async function Home() {
               </clipPath>
             </defs>
             <image href={marsipanImg.src} x="100" y="150" width="650" height="650" clipPath="url(#rightBlobClip)" />
+            <rect x="0" y="0" width="1000" height="1000" clipPath="url(#rightBlobClip)" fill="rgba(0,0,0,0.2)" />
           </svg>
         </div>
       </div>

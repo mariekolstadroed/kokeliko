@@ -16,9 +16,17 @@ export default function Booking() {
       <h1 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-4">Booking</h1>
       <p className="text-stone-600 leading-relaxed">
         Her kan du reservere bord hos oss. Vi har åpent for reservasjon alle dager utenom helger. Du kan booke
-        bord innenfor vanlig åpningstid, eller onsdag- og torsdagskveld. Vi tilbyr også catering med eller uten
-        levering til selskap, som er perfekt til konfirmasjon eller bursdag. Det er også mulig å ha lukket selskap
-        her i lokalet med mat fra oss.
+        bord innenfor vanlig åpningstid, eller onsdag- og torsdagskveld. Er dere over 10 stk så ønsker vi at dere
+        forhåndsbestiller mat i skjemaet, så blir det lettest mulig for både oss og dere!
+      </p>
+      <p className="text-stone-600 leading-relaxed">
+        Vi tilbyr også catering med eller uten levering til selskap, som er perfekt til konfirmasjon eller bursdag.
+        Her er vi fleksible og kan få til det meste både på og utenfor menyen, men vi anbefaler spesielt tapas.
+        Skriv inn i bookingen hvilke retter du ønsker, og eventuelle tilpasninger.
+      </p>
+      <p className="text-stone-600 leading-relaxed">
+        Det er også mulig å ha lukket selskap her i lokalet med mat fra oss. Da skriver du også hva slags mat du ønsker,
+        og så kommer vi sammen frem til hvordan vi arrangerer arrangementet på mail!
       </p>
 
       <div className="grid grid-cols-3 gap-6 mt-12">
