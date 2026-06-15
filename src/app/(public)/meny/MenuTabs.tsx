@@ -22,12 +22,12 @@ export default function MenuTabs({
   return (
     <>
       {/* Category tabs */}
-      <div className="inline-flex gap-1 mt-10 overflow-x-auto bg-[#FBAF75] rounded-xl px-1 py-1">
+      <div className="flex gap-1 mt-10 overflow-x-auto bg-[#FBAF75] rounded-xl px-1 py-1">
         {categories.map(cat => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-5 py-2 text-xl whitespace-nowrap rounded-lg transition-colors font-special-elite cursor-pointer ${
+            className={`px-5 pt-2 pb-1 text-xl whitespace-nowrap rounded-lg transition-colors font-special-elite cursor-pointer ${
               activeCategory === cat.id
                 ? 'bg-[#715055] font-semibold text-white'
                 : 'font-medium text-[#FAF7F2] hover:text-white'
