@@ -1,17 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import type { OpeningHour } from '../types'
 
-async function fetchOpeningHours(): Promise<OpeningHour[]> {
-  const { data } = await supabase.from('opening_hours').select('*').order('day')
-  return data ?? []
-}
-
 export function useOpeningHours() {
-  const { data: hours = [] } = useQuery({
-    queryKey: ['opening_hours'],
-    queryFn: fetchOpeningHours,
-  })
+  const [hours, setHours] = useState<OpeningHour[]>([])
+
+  useEffect(() => {
+    supabase.from('opening_hours').select('*').order('day').then(({ data }) => {
+      if (data) setHours(data)
+    })
+  }, [])
 
   function forDate(date: string): OpeningHour | null {
     if (!date || !hours.length) return null

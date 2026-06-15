@@ -1,4 +1,5 @@
-import logo from '../../assets/logo-hvit.png'
+import Image from 'next/image'
+import logo from '@/assets/logo-hvit.png'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconMapPin, IconPhone, IconMail } from '@tabler/icons-react'
 
 const socials = [
@@ -18,7 +19,7 @@ export default function Footer() {
     <footer className="bg-[#2e1608]">
       <div className="px-6 py-14 grid grid-cols-3 items-center gap-8 max-w-7xl mx-auto">
 
-        <img src={logo} alt="Kokeliko" className="h-14 brightness-90" />
+        <Image src={logo} alt="Kokeliko" height={56} style={{ width: 'auto' }} className="brightness-90" />
 
         <div className="flex items-center justify-center gap-4">
           {socials.map(({ icon, href, label }) => (

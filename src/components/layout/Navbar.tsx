@@ -1,5 +1,9 @@
-import { NavLink } from 'react-router-dom'
-import logo from '../../assets/logo-svart.png'
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import logo from '@/assets/logo-svart.png'
 
 const links = [
   { to: '/meny', label: 'Meny' },
@@ -9,24 +13,27 @@ const links = [
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
+
   return (
     <header className="sticky top-0 z-50 px-6 pt-5 pb-2">
       <nav className="flex items-center justify-between bg-[#faf7f2]/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-sm max-w-7xl mx-auto">
-        <NavLink to="/">
-          <img src={logo} alt="Kokeliko" className="h-9" />
-        </NavLink>
+        <Link href="/">
+          <Image src={logo} alt="Kokeliko" style={{ height: '2.25rem', width: 'auto' }} priority />
+        </Link>
         <div className="flex items-center gap-20">
-          {links.map(({ to, label }) => (
-            <NavLink
-              key={label}
-              to={to}
-              className={({ isActive }) =>
-                `text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${isActive ? 'font-semibold' : 'font-medium hover:opacity-60'}`
-              }
-            >
-              {label}
-            </NavLink>
-          ))}
+          {links.map(({ to, label }) => {
+            const isActive = pathname === to || pathname.startsWith(to + '/')
+            return (
+              <Link
+                key={label}
+                href={to}
+                className={`text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${isActive ? 'border-b-2 border-[#3d1f08]' : 'hover:opacity-60'}`}
+              >
+                {label}
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </header>
