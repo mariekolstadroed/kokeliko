@@ -21,7 +21,7 @@ export default function Navbar() {
         <Link href="/">
           <Image src={logo} alt="Kokeliko" style={{ height: '2.25rem', width: 'auto' }} priority />
         </Link>
-        <div className="flex items-center gap-20">
+        <div className="flex items-center gap-20 translate-y-[2px]">
           {links.map(({ to, label }) => {
             const isActive = pathname === to || pathname.startsWith(to + '/')
             return (

@@ -3,9 +3,9 @@ import logo from '@/assets/logo-hvit.png'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconMapPin, IconPhone, IconMail } from '@tabler/icons-react'
 
 const socials = [
-  { icon: <IconBrandInstagram size={18} />, href: 'https://www.instagram.com/kokelikokaffebar/', label: 'Instagram' },
-  { icon: <IconBrandFacebook size={18} />, href: 'https://www.facebook.com/kokeliko.no', label: 'Facebook' },
-  { icon: <IconBrandTiktok size={18} />, href: 'https://www.tiktok.com/@kokelikokaffebar', label: 'TikTok' },
+  { icon: <IconBrandInstagram size={26} />, href: 'https://www.instagram.com/kokelikokaffebar/', label: 'Instagram' },
+  { icon: <IconBrandFacebook size={26} />, href: 'https://www.facebook.com/kokeliko.no', label: 'Facebook' },
+  { icon: <IconBrandTiktok size={26} />, href: 'https://www.tiktok.com/@kokelikokaffebar', label: 'TikTok' },
 ]
 
 const contact = [
@@ -27,7 +27,7 @@ export default function Footer() {
               key={label}
               href={href}
               aria-label={label}
-              className="w-12 h-12 rounded-full border border-[#c9a882]/40 flex items-center justify-center text-[#c9a882] hover:border-[#c9a882] transition-colors"
+              className="w-14 h-14 rounded-full border border-[#c9a882]/40 flex items-center justify-center text-[#c9a882] hover:border-[#c9a882] transition-colors"
             >
               {icon}
             </a>

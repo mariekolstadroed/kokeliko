@@ -32,19 +32,19 @@ export default function KveldSection() {
           </p>
           <Link
             href="/booking/bordreservasjon"
-            className="inline-block px-8 py-4 bg-white text-[#3d1f08] text-sm font-semibold rounded-full hover:bg-[#f0e8d8] transition-colors"
+            className="inline-block px-8 pt-3 pb-2 bg-[#FAF7F2] text-[#3d1f08] text-lg font-special-elite rounded-full hover:bg-[#F0E8D8] transition-colors"
           >
             Reserver bord
           </Link>
         </div>
         <div className="relative px-16 py-20">
-          <div className="absolute -top-10 -right-10 w-56 h-56 rounded-full overflow-hidden z-20">
+          <div className="absolute -top-10 -right-10 w-56 h-56 rounded-full overflow-hidden z-20 opacity-80">
             <Image src={kunst2} alt="" fill sizes="224px" className="object-cover" />
           </div>
-          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full overflow-hidden z-0">
+          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full overflow-hidden z-0 opacity-80">
             <Image src={kunst1} alt="" fill sizes="224px" className="object-cover" />
           </div>
-          <div className="relative z-10 aspect-[3/4] overflow-hidden">
+          <div className="relative z-10 aspect-[3/4] overflow-hidden rounded-3xl">
             {kveldImages.map((src, i) => (
               <div
                 key={i}

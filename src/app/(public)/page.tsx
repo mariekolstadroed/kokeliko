@@ -11,6 +11,8 @@ import kokelikoSirkel from '@/assets/home/kokeliko-sirkel.png'
 import elinPaKaffeImg from '@/assets/kaffen/elin-pa-kaffe.jpg'
 import barrieroImg from '@/assets/kaffen/barriero.png'
 import halfAndHalfImg from '@/assets/kaffen/half-and-half.png'
+import gavekortImg from '@/assets/home/gavekort.jpg'
+import gaveposerImg from '@/assets/home/gaveposer.jpg'
 
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
 
@@ -156,9 +158,9 @@ export default async function Home() {
 
       {/* Våre bestselgere */}
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
-        <div className="bg-stone-100">
+        <div className="bg-[#dbd6ad]">
           <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
+            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
           </div>
         </div>
@@ -166,16 +168,6 @@ export default async function Home() {
 
       {/* Onsdag og torsdagkvelder — full bredde */}
       <KveldSection />
-
-      {/* Nyheter i hyllene */}
-      {gallery.filter(i => i.section === 'nyheter').length > 0 && (
-        <div className="bg-amber-50">
-          <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-3xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
-            <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
-          </div>
-        </div>
-      )}
 
       {/* Kaffen vår */}
       <div className="relative">
@@ -185,23 +177,23 @@ export default async function Home() {
           <div className="grid grid-cols-2 items-center gap-16">
             {/* Overlapping circles */}
             <div className="relative h-[480px] w-[480px] mx-auto shrink-0">
-              <div className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#f5ede3] shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+              <div className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
                 <Image src={barrieroImg} alt="Barriero" fill sizes="300px" className="object-contain p-6" />
               </div>
-              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#f5ede3] shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
                 <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="300px" className="object-contain p-6" />
               </div>
             </div>
             {/* Text */}
             <div>
-              <h2 className="text-4xl font-bold font-special-elite text-white mb-6">Kaffen vår</h2>
-              <p className="text-white/80 leading-relaxed text-lg mb-6">
+              <h2 className="text-5xl font-bold font-special-elite text-[#F0ECB4] mb-6">Kaffen vår</h2>
+              <p className="text-[#f5ede3]/90 leading-relaxed text-lg mb-6">
                 Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
                 som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
                 både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
                 fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
               </p>
-              <p className="text-white/80 leading-relaxed text-lg">
+              <p className="text-[#f5ede3]/90 leading-relaxed text-lg">
                 Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
                 Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
                 og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
@@ -212,21 +204,57 @@ export default async function Home() {
         </div>
       </div>
 
+      {/* Nyheter i hyllene */}
+      {gallery.filter(i => i.section === 'nyheter').length > 0 && (
+        <div className="bg-amber-50">
+          <div className="max-w-6xl mx-auto px-6 py-24">
+            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
+            <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
+          </div>
+        </div>
+      )}
+
+      {/* Gaver */}
+      <div className="bg-[#ebd7c0]">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-4">Gaver</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-6">
+            Vi kan lage personlige gaveposer med ting og tang fra hyllene, eller gavekort med ønsket beløp. Her er det bare å komme med ønsker.
+            Dette er veldig populært som sommergave/julegave til lærere eller ansatte i bedrift. Send oss en mail,
+            så fikser vi det du ønsker!
+          </p>
+          <a
+            href="mailto:elin@kokeliko.no"
+            className="inline-block mb-12 px-6 pt-3 pb-2 bg-[#75482e] text-white font-special-elite text-lg rounded-full hover:bg-[#5c3622] transition-colors"
+          >
+            Send oss dine ønsker
+          </a>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="relative rounded-2xl aspect-[4/3] w-full overflow-hidden">
+              <Image src={gavekortImg} alt="Gavekort" fill sizes="50vw" className="object-cover" />
+            </div>
+            <div className="relative rounded-2xl aspect-[4/3] w-full overflow-hidden">
+              <Image src={gaveposerImg} alt="Gaveposer" fill sizes="50vw" className="object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Finn oss */}
       <div className="relative">
         <Image src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-25">
-          <div className="grid grid-cols-2 items-start gap-16">
+          <div className="grid grid-cols-2 items-center gap-16">
             <div>
-              <h2 className="text-5xl font-bold font-special-elite text-white mb-6">Finn oss</h2>
-              <p className="text-white/80 leading-relaxed text-lg mb-4">
-                Du finner oss i Elvegangen 9 på Bærums Verk — midt i det sjarmerende industriområdet med
-                butikker, gallerier og verksteder langs den lille elva.
+              <h2 className="text-5xl font-bold font-special-elite text-[#f5ede3] mb-6">Finn oss</h2>
+              <p className="text-[#f5ede3]/90 leading-relaxed text-lg mb-4">
+                Du finner oss i Elvegangen 9 på Bærums Verk, rett ovenfor Baker Hansen og ved siden av våre gode naboer
+                i Verket Blomster.
               </p>
-              <p className="text-white/80 leading-relaxed text-lg">
-                Vi holder til i et koselig lokale med plass til både en rask kopp kaffe og et lengre
-                opphold. Velkommen innom!
+              <p className="text-[#f5ede3]/90 leading-relaxed text-lg">
+                Vi holder til i et koselig lokale med god plass både inne i varmen, og ute i solveggen,
+                med utsikt til elva!
               </p>
             </div>
             <div className="w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl mx-auto">
