@@ -71,9 +71,9 @@ export default async function Home() {
           <div className="absolute inset-0 -top-[120px] bg-black/20 z-[5]" />
           {/* Logo */}
           <div className="absolute inset-0 flex flex-col items-center justify-start pt-40 z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-            <Image src={logoHvit} alt="Kokeliko" style={{ width: '65vw', height: 'auto' }} />
+            <Image src={logoHvit} alt="Kokeliko" style={{ width: '65vw', height: 'auto' }} priority />
             <p className="font-special-elite text-white text-6xl tracking-[0.3em] mt-4">KAFFEBAR</p>
-            <p className="font-special-elite text-white text-2xl tracking-[0.2em] mt-2">På Bærums verk</p>
+            <p className="font-special-elite text-white text-2xl tracking-[0.2em] mt-2">På Bærums Verk</p>
           </div>
           {/* Høyre blob — marsipanboller */}
           <svg
@@ -200,7 +200,7 @@ export default async function Home() {
             title="Kokeliko kart"
           />
           <div className="relative w-full h-96 rounded-2xl overflow-hidden">
-            <Image src={utendorsImg} alt="Utenfor Kokeliko" fill sizes="50vw" className="object-cover" />
+            <Image src={utendorsImg} alt="Utenfor Kokeliko" fill sizes="50vw" className="object-cover" loading="eager" />
           </div>
         </div>
       </div>

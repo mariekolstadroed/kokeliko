@@ -19,7 +19,7 @@ export default function Footer() {
     <footer className="bg-[#2e1608]">
       <div className="px-6 py-14 grid grid-cols-3 items-center gap-8 max-w-7xl mx-auto">
 
-        <Image src={logo} alt="Kokeliko" height={56} style={{ width: 'auto' }} className="brightness-90" />
+        <Image src={logo} alt="Kokeliko" className="brightness-90 w-auto h-13" />
 
         <div className="flex items-center justify-center gap-4">
           {socials.map(({ icon, href, label }) => (

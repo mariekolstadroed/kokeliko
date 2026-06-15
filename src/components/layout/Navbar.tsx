@@ -28,7 +28,7 @@ export default function Navbar() {
               <Link
                 key={label}
                 href={to}
-                className={`text-[#3d1f08] text-[20px] font-special-elite transition-opacity ${isActive ? 'border-b-2 border-[#3d1f08]' : 'hover:opacity-60'}`}
+                className={`text-[#3d1f08] text-[20px] font-special-elite relative after:absolute after:bottom-1 after:left-0 after:h-[1.5px] after:w-full after:bg-[#3d1f08] after:origin-left ${isActive ? 'after:scale-x-100 after:transition-transform after:duration-500' : 'after:scale-x-0 hover:opacity-60'}`}
               >
                 {label}
               </Link>
