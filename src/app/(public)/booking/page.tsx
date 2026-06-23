@@ -44,7 +44,7 @@ export default function Booking() {
               placeholder="blur"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
+            <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/50" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <h3 className="text-white font-bold font-special-elite text-xl leading-snug">{title}</h3>
               <p className="text-white/75 text-sm mt-1">{sub}</p>

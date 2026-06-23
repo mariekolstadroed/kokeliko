@@ -44,7 +44,7 @@ export default function KveldSection() {
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full overflow-hidden z-0 opacity-80">
             <Image src={kunst1} alt="" fill sizes="224px" className="object-cover" />
           </div>
-          <div className="relative z-10 aspect-[3/4] overflow-hidden rounded-3xl">
+          <div className="relative z-10 aspect-3/4 overflow-hidden rounded-3xl">
             {kveldImages.map((src, i) => (
               <div
                 key={i}

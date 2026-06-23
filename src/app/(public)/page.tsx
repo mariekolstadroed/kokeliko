@@ -55,7 +55,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero-bakgrunn */}
-      <div className="bg-[#5E3926] -mt-[120px] pt-[120px]">
+      <div className="bg-[#5E3926] -mt-30 pt-30">
         {/* Hero */}
         <div className="relative" style={{ height: '50vw' }}>
           {/* Venstre blob — kakao */}
@@ -122,7 +122,7 @@ export default async function Home() {
 
           {/* Special hours */}
           {specialGroups.length > 0 ? (
-            <div className="flex flex-col gap-4 max-w-[460px]">
+            <div className="flex flex-col gap-4 max-w-115">
               {specialGroups.map(group => (
                 <div
                   key={group.id}
@@ -146,7 +146,7 @@ export default async function Home() {
               ))}
             </div>
           ) : (
-            <div className="w-[400px]">
+            <div className="w-100">
               <Image src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
             </div>
           )}
@@ -176,11 +176,11 @@ export default async function Home() {
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
           <div className="grid grid-cols-2 items-center gap-16">
             {/* Overlapping circles */}
-            <div className="relative h-[480px] w-[480px] mx-auto shrink-0">
-              <div className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+            <div className="relative h-120 w-120 mx-auto shrink-0">
+              <div className="absolute top-0 left-0 w-75 h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
                 <Image src={barrieroImg} alt="Barriero" fill sizes="300px" className="object-contain p-6" />
               </div>
-              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+              <div className="absolute bottom-0 right-0 w-75 h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
                 <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="300px" className="object-contain p-6" />
               </div>
             </div>
@@ -230,10 +230,10 @@ export default async function Home() {
             Send oss dine ønsker
           </a>
           <div className="grid grid-cols-2 gap-8">
-            <div className="relative rounded-2xl aspect-[4/3] w-full overflow-hidden">
+            <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
               <Image src={gavekortImg} alt="Gavekort" fill sizes="50vw" className="object-cover" />
             </div>
-            <div className="relative rounded-2xl aspect-[4/3] w-full overflow-hidden">
+            <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
               <Image src={gaveposerImg} alt="Gaveposer" fill sizes="50vw" className="object-cover" />
             </div>
           </div>
@@ -257,7 +257,7 @@ export default async function Home() {
                 med utsikt til elva!
               </p>
             </div>
-            <div className="w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl mx-auto">
+            <div className="w-100 h-100 rounded-full overflow-hidden shadow-2xl mx-auto">
               <iframe
                 src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
                 className="w-full h-full border-0"

@@ -162,14 +162,14 @@ export default function BordReservasjon() {
             {Number(form.antall) >= 10 && (
               <div>
                 <label className={labelClass}>Ønsket mat *</label>
-                <textarea className={f('onsket_mat') + ' block resize-y min-h-[80px]'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+                <textarea className={f('onsket_mat') + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
                 {err('onsket_mat')}
               </div>
             )}
 
             <div>
               <label className={labelClass}>Melding</label>
-              <textarea className={inputClass + ' block resize-none min-h-[80px]'} value={form.melding} onChange={e => set('melding', e.target.value)} />
+              <textarea className={inputClass + ' block resize-none min-h-20'} value={form.melding} onChange={e => set('melding', e.target.value)} />
             </div>
 
             {status === 'error' && (
