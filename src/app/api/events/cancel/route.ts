@@ -15,13 +15,20 @@ export async function DELETE(request: Request) {
 
   const { data: reg } = await supabaseAdmin
     .from('event_registration')
-    .select('name, email, event_id, events(title, event_date, event_start_time, event_end_time)')
+    .select('name, email, event_id')
     .eq('cancellation_token', token)
     .single()
 
-  if (!reg) return Response.json({ ok: false, reason: 'not_found' }, { status: 404 })
+  if (!reg) return Response.json({ ok: false }, { status: 404 })
 
-  const ev = reg.events as { title: string; event_date: string; event_start_time: string; event_end_time: string | null }
+  const { data: ev } = await supabaseAdmin
+    .from('events')
+    .select('title, event_date, event_start_time, event_end_time')
+    .eq('id', reg.event_id)
+    .single()
+
+  if (!ev) return Response.json({ ok: false }, { status: 500 })
+
   const eventStart = new Date(`${ev.event_date}T${ev.event_start_time}`)
   if (new Date() >= eventStart) {
     return Response.json({ ok: false, reason: 'started' }, { status: 409 })
