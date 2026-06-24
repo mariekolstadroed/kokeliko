@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import logo from '@/assets/logo-svart.png'
@@ -19,7 +20,7 @@ const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'gallery', label: 'Galleri', icon: <IconPhoto size={15} /> },
 ]
 
-export default function Dashboard() {
+function Dashboard() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const tab = (searchParams.get('tab') as Tab) ?? 'menu'
@@ -69,5 +70,13 @@ export default function Dashboard() {
       {tab === 'events' && <EventsSection />}
       {tab === 'gallery' && <GallerySection />}
     </div>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense>
+      <Dashboard />
+    </Suspense>
   )
 }
