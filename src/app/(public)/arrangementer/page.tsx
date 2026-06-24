@@ -1,3 +1,13 @@
+import EventsGrid from './EventsGrid'
+
 export default function Arrangementer() {
-  return <div>Arrangementer</div>
+  return (
+    <div className="max-w-5xl mx-auto px-6 py-16">
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-3">Arrangementer</h1>
+        <p className="text-stone-500 text-lg">Kommende arrangementer hos Kokeliko</p>
+      </div>
+      <EventsGrid />
+    </div>
+  )
 }

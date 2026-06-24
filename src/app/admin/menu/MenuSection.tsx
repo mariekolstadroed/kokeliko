@@ -13,6 +13,8 @@ export default function MenuSection() {
   const [loading, setLoading] = useState(true)
   const [itemModal, setItemModal] = useState<{ open: boolean; item?: MenuItem; categoryId?: string }>({ open: false })
   const [categoryModal, setCategoryModal] = useState<{ open: boolean; category?: Category }>({ open: false })
+  const [confirmItemId, setConfirmItemId] = useState<string | null>(null)
+  const [confirmCatId, setConfirmCatId] = useState<string | null>(null)
   const initialLoad = useRef(true)
 
   useEffect(() => { fetchAll() }, [])
@@ -101,13 +103,11 @@ export default function MenuSection() {
   }
 
   async function deleteItem(id: string) {
-    if (!confirm('Slette dette elementet?')) return
     setItems(prev => prev.filter(i => i.id !== id))
     await supabase.from('menu_items').delete().eq('id', id)
   }
 
   async function deleteCategory(id: string) {
-    if (!confirm('Slette denne kategorien? Alle menyelementer i kategorien slettes også.')) return
     setCategories(prev => prev.filter(c => c.id !== id))
     setItems(prev => prev.filter(i => i.category_id !== id))
     await supabase.from('categories').delete().eq('id', id)
@@ -143,8 +143,30 @@ export default function MenuSection() {
         const catItems = sortedCatItems(cat.id)
         const totalCats = categories.length
         return (
-          <div key={cat.id} className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
-            <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-stone-200">
+          <div key={cat.id} className={`border rounded-xl overflow-hidden shadow-sm ${confirmCatId === cat.id ? 'bg-red-50 border-red-200' : 'bg-white border-stone-200'}`}>
+            {confirmCatId === cat.id ? (
+              <div className="flex flex-col items-center justify-center gap-4 py-10">
+                <p className="text-[13px] text-stone-700 text-center">
+                  Slette <span className="font-bold">{cat.name}</span>?<br />
+                  <span className="text-stone-400 text-[12px]">Alle menyelementer i kategorien slettes også.</span>
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setConfirmCatId(null)}
+                    className="px-2.5 py-1 text-[12px] font-medium rounded-md border border-red-200 bg-white text-stone-600 hover:bg-red-100 transition-colors"
+                  >
+                    Avbryt
+                  </button>
+                  <button
+                    onClick={() => { deleteCategory(cat.id); setConfirmCatId(null) }}
+                    className="px-2.5 py-1 text-[12px] font-medium rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+                  >
+                    Slett
+                  </button>
+                </div>
+              </div>
+            ) : <>
+            <div className="flex items-center justify-between px-4.5 py-3.5 border-b border-stone-200">
               <div className="flex items-center gap-1">
                 <div className="flex flex-col mr-1">
                   <button
@@ -178,7 +200,7 @@ export default function MenuSection() {
                   <IconPlus size={12} aria-hidden /> Legg til
                 </button>
                 <button
-                  onClick={() => deleteCategory(cat.id)}
+                  onClick={() => setConfirmCatId(cat.id)}
                   className="inline-flex items-center p-1 text-xs rounded-md text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <IconTrash size={13} aria-hidden />
@@ -195,7 +217,7 @@ export default function MenuSection() {
               <thead>
                 <tr>
                   {['Navn', 'Pris', 'Synlig', ''].map(h => (
-                    <th key={h} className="text-left px-[18px] py-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400 bg-stone-50 border-b border-stone-200">
+                    <th key={h} className="text-left px-4.5 py-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400 bg-stone-50 border-b border-stone-200">
                       {h}
                     </th>
                   ))}
@@ -204,59 +226,84 @@ export default function MenuSection() {
               <tbody>
                 {catItems.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-[18px] py-6 text-sm text-stone-400 italic">
+                    <td colSpan={4} className="px-4.5 py-6 text-sm text-stone-400 italic">
                       Ingen elementer ennå
                     </td>
                   </tr>
                 ) : catItems.map((item, idx) => (
-                  <tr key={item.id} className="border-b border-stone-200 last:border-b-0">
-                    <td className="px-[18px] py-2.5 text-stone-800">{item.name}</td>
-                    <td className="px-[18px] py-2.5 text-stone-800">{item.price != null ? `${item.price} kr` : '—'}</td>
-                    <td className="px-[18px] py-2.5">
-                      <button
-                        onClick={() => toggleAvailable(item)}
-                        aria-label={item.available ? 'Skjul fra meny' : 'Vis på meny'}
-                        className={`relative w-9 h-5 rounded-full transition-colors ${item.available ? 'bg-green-500' : 'bg-stone-300'}`}
-                      >
-                        <span className={`absolute top-[3px] w-3.5 h-3.5 bg-white rounded-full transition-all ${item.available ? 'right-[3px]' : 'left-[3px]'}`} />
-                      </button>
-                    </td>
-                    <td className="px-[18px] py-2.5">
-                      <div className="flex items-center gap-1 justify-end">
-                        <div className="flex flex-col">
-                          <button
-                            onClick={() => moveItem(item, 'up')}
-                            disabled={idx === 0}
-                            className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
-                          >
-                            <IconChevronUp size={13} aria-hidden />
-                          </button>
-                          <button
-                            onClick={() => moveItem(item, 'down')}
-                            disabled={idx === catItems.length - 1}
-                            className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
-                          >
-                            <IconChevronDown size={13} aria-hidden />
-                          </button>
+                  <tr key={item.id} className={`border-b border-stone-200 last:border-b-0 ${confirmItemId === item.id ? 'bg-red-50' : ''}`}>
+                    {confirmItemId === item.id ? (
+                      <td colSpan={4} className="px-4.5 py-3.5">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-[13px] text-stone-700">Slette <span className="font-bold">{item.name}</span>?</span>
+                          <div className="flex items-center gap-2 shrink-0">
+                            <button
+                              onClick={() => setConfirmItemId(null)}
+                              className="px-2.5 py-1 text-[12px] font-medium rounded-md border border-stone-200 text-stone-600 hover:bg-stone-50 transition-colors"
+                            >
+                              Avbryt
+                            </button>
+                            <button
+                              onClick={() => { deleteItem(item.id); setConfirmItemId(null) }}
+                              className="px-2.5 py-1 text-[12px] font-medium rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+                            >
+                              Slett
+                            </button>
+                          </div>
                         </div>
-                        <button
-                          onClick={() => setItemModal({ open: true, item })}
-                          className="inline-flex items-center p-1.5 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
-                        >
-                          <IconEdit size={13} aria-hidden />
-                        </button>
-                        <button
-                          onClick={() => deleteItem(item.id)}
-                          className="inline-flex items-center p-1.5 rounded-md text-red-500 hover:bg-red-50 transition-colors"
-                        >
-                          <IconTrash size={13} aria-hidden />
-                        </button>
-                      </div>
-                    </td>
+                      </td>
+                    ) : (
+                      <>
+                        <td className="px-4.5 py-2.5 text-stone-800">{item.name}</td>
+                        <td className="px-4.5 py-2.5 text-stone-800">{item.price != null ? `${item.price} kr` : '—'}</td>
+                        <td className="px-4.5 py-2.5">
+                          <button
+                            onClick={() => toggleAvailable(item)}
+                            aria-label={item.available ? 'Skjul fra meny' : 'Vis på meny'}
+                            className={`relative w-9 h-5 rounded-full transition-colors ${item.available ? 'bg-green-500' : 'bg-stone-300'}`}
+                          >
+                            <span className={`absolute top-0.75 w-3.5 h-3.5 bg-white rounded-full transition-all ${item.available ? 'right-0.75' : 'left-0.75'}`} />
+                          </button>
+                        </td>
+                        <td className="px-4.5 py-2.5">
+                          <div className="flex items-center gap-1 justify-end">
+                            <div className="flex flex-col">
+                              <button
+                                onClick={() => moveItem(item, 'up')}
+                                disabled={idx === 0}
+                                className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                              >
+                                <IconChevronUp size={13} aria-hidden />
+                              </button>
+                              <button
+                                onClick={() => moveItem(item, 'down')}
+                                disabled={idx === catItems.length - 1}
+                                className="inline-flex items-center p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                              >
+                                <IconChevronDown size={13} aria-hidden />
+                              </button>
+                            </div>
+                            <button
+                              onClick={() => setItemModal({ open: true, item })}
+                              className="inline-flex items-center p-1.5 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+                            >
+                              <IconEdit size={13} aria-hidden />
+                            </button>
+                            <button
+                              onClick={() => setConfirmItemId(item.id)}
+                              className="inline-flex items-center p-1.5 rounded-md text-red-500 hover:bg-red-50 transition-colors"
+                            >
+                              <IconTrash size={13} aria-hidden />
+                            </button>
+                          </div>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
             </table>
+            </>}
           </div>
         )
       })}

@@ -24,13 +24,13 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
   const [published, setPublished] = useState(event?.published ?? false)
   const [saving, setSaving] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
-  const [errors, setErrors] = useState<{ date?: string; endTime?: string }>({})
+  const [errors, setErrors] = useState<{ date?: string; maxCapacity?: string }>({})
 
   function validate() {
-    const e: { date?: string; endTime?: string } = {}
+    const e: { date?: string; maxCapacity?: string } = {}
     const today = new Date().toISOString().slice(0, 10)
     if (eventDate && eventDate < today) e.date = 'Datoen har allerede vært'
-    if (endTime && startTime && endTime <= startTime) e.endTime = 'Sluttid må være etter starttid'
+    if (maxCapacity && Number(maxCapacity) <= 0) e.maxCapacity = 'Må være minst 1'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -124,7 +124,7 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
           <div>
             <label className={labelClass}>Beskrivelse</label>
             <textarea
-              className={inputClass + ' resize-y min-h-[72px]'}
+              className={inputClass + ' resize-y min-h-18'}
               value={description ?? ''}
               onChange={e => setDescription(e.target.value)}
             />
@@ -143,7 +143,15 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
             </div>
             <div className="flex-1">
               <label className={labelClass}>Maks antall</label>
-              <input type="number" min="1" className={inputClass} value={maxCapacity} onChange={e => setMaxCapacity(e.target.value)} placeholder="Ubegrenset" />
+              <input
+                type="number"
+                min="1"
+                className={inputClass + (errors.maxCapacity ? ' border-red-400' : '')}
+                value={maxCapacity}
+                onChange={e => { setMaxCapacity(e.target.value); setErrors(prev => ({ ...prev, maxCapacity: undefined })) }}
+                placeholder="Ubegrenset"
+              />
+              {errors.maxCapacity && <p className="text-[11.5px] text-red-500 mt-1">{errors.maxCapacity}</p>}
             </div>
           </div>
 
@@ -156,11 +164,10 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
               <label className={labelClass}>Sluttid</label>
               <input
                 type="time"
-                className={inputClass + (errors.endTime ? ' border-red-400' : '')}
+                className={inputClass}
                 value={endTime}
-                onChange={e => { setEndTime(e.target.value); setErrors(prev => ({ ...prev, endTime: undefined })) }}
+                onChange={e => setEndTime(e.target.value)}
               />
-              {errors.endTime && <p className="text-[11.5px] text-red-500 mt-1">{errors.endTime}</p>}
             </div>
           </div>
 

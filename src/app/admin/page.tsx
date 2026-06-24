@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import logo from '@/assets/logo-svart.png'
 import { supabase } from '@/lib/supabase'
@@ -21,8 +20,13 @@ const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
 ]
 
 export default function Dashboard() {
-  const [tab, setTab] = useState<Tab>('menu')
+  const searchParams = useSearchParams()
   const router = useRouter()
+  const tab = (searchParams.get('tab') as Tab) ?? 'menu'
+
+  function setTab(t: Tab) {
+    router.replace(`/admin?tab=${t}`)
+  }
 
   async function handleLogout() {
     await supabase.auth.signOut()

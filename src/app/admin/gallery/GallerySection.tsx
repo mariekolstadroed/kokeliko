@@ -15,6 +15,7 @@ export default function GallerySection() {
   const [items, setItems] = useState<GalleryItem[]>([])
   const [loading, setLoading] = useState(true)
   const [modal, setModal] = useState<{ open: boolean; item?: GalleryItem; section?: 'bestselgere' | 'nyheter' }>({ open: false })
+  const [confirmId, setConfirmId] = useState<string | null>(null)
   const initialLoad = useRef(true)
 
   useEffect(() => { fetchAll() }, [])
@@ -63,7 +64,6 @@ export default function GallerySection() {
   }
 
   async function deleteItem(id: string) {
-    if (!confirm('Slette dette bildet?')) return
     setItems(prev => prev.filter(i => i.id !== id))
     await supabase.from('gallery_items').delete().eq('id', id)
   }
@@ -98,55 +98,79 @@ export default function GallerySection() {
                   Ingen bilder ennå
                 </div>
               ) : sectionItems.map((item, idx) => (
-                <div key={item.id} className="flex items-center gap-4 px-4 py-4 border-b border-stone-100 last:border-b-0">
-                  <div className="flex flex-col shrink-0">
-                    <button
-                      onClick={() => moveItem(item, 'up')}
-                      disabled={idx === 0}
-                      className="p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
-                    >
-                      <IconChevronUp size={13} />
-                    </button>
-                    <button
-                      onClick={() => moveItem(item, 'down')}
-                      disabled={idx === sectionItems.length - 1}
-                      className="p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
-                    >
-                      <IconChevronDown size={13} />
-                    </button>
-                  </div>
+                <div key={item.id} className={`flex items-center gap-4 px-4 py-4 border-b border-stone-100 last:border-b-0 ${confirmId === item.id ? 'bg-red-50' : ''}`}>
+                  {confirmId === item.id ? (
+                    <div className="flex flex-col items-center justify-center gap-3 w-full min-h-20">
+                      <p className="text-[13px] text-stone-700 text-center">Slette <span className="font-bold">{item.title ?? 'dette bildet'}</span>?</p>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setConfirmId(null)}
+                          className="px-2.5 py-1 text-[12px] font-medium rounded-md border border-red-200 bg-white text-stone-600 hover:bg-red-100 transition-colors"
+                        >
+                          Avbryt
+                        </button>
+                        <button
+                          onClick={() => { deleteItem(item.id); setConfirmId(null) }}
+                          className="px-2.5 py-1 text-[12px] font-medium rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+                        >
+                          Slett
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-col shrink-0">
+                        <button
+                          onClick={() => moveItem(item, 'up')}
+                          disabled={idx === 0}
+                          className="p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                        >
+                          <IconChevronUp size={13} />
+                        </button>
+                        <button
+                          onClick={() => moveItem(item, 'down')}
+                          disabled={idx === sectionItems.length - 1}
+                          className="p-0.5 rounded text-stone-400 hover:text-stone-700 disabled:opacity-20 transition-colors"
+                        >
+                          <IconChevronDown size={13} />
+                        </button>
+                      </div>
 
-                  <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-stone-100">
-                    {item.image_url && (
-                      <img src={item.image_url} alt="" className="w-full h-full object-cover" />
-                    )}
-                  </div>
+                      <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-stone-100">
+                        {item.image_url && (
+                          <img src={item.image_url} alt="" className="w-full h-full object-cover" />
+                        )}
+                      </div>
 
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13.5px] text-stone-800 truncate">{item.title ?? <span className="text-stone-400 italic">Ingen tekst</span>}</p>
-                  </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13.5px] text-stone-800 truncate">{item.title ?? <span className="text-stone-400 italic">Ingen tekst</span>}</p>
+                        <span className={`inline-block mt-1 px-1.5 py-0.5 rounded-full text-[11px] font-semibold ${item.published ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'}`}>
+                          {item.published ? 'Publisert' : 'Skjult'}
+                        </span>
+                      </div>
 
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button
-                      onClick={() => togglePublished(item)}
-                      className={`p-1.5 rounded-md transition-colors ${item.published ? 'text-stone-500 hover:bg-stone-100' : 'text-stone-300 hover:bg-stone-100'}`}
-                      aria-label={item.published ? 'Skjul' : 'Vis'}
-                    >
-                      {item.published ? <IconEye size={14} /> : <IconEyeOff size={14} />}
-                    </button>
-                    <button
-                      onClick={() => setModal({ open: true, item, section: item.section })}
-                      className="p-1.5 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
-                    >
-                      <IconEdit size={13} />
-                    </button>
-                    <button
-                      onClick={() => deleteItem(item.id)}
-                      className="p-1.5 rounded-md text-red-500 hover:bg-red-50 transition-colors"
-                    >
-                      <IconTrash size={13} />
-                    </button>
-                  </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => togglePublished(item)}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors text-[12px] font-medium"
+                        >
+                          {item.published ? <><IconEyeOff size={13} /> Skjul</> : <><IconEye size={13} /> Publiser</>}
+                        </button>
+                        <button
+                          onClick={() => setModal({ open: true, item, section: item.section })}
+                          className="p-1.5 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+                        >
+                          <IconEdit size={13} />
+                        </button>
+                        <button
+                          onClick={() => setConfirmId(item.id)}
+                          className="p-1.5 rounded-md text-red-500 hover:bg-red-50 transition-colors"
+                        >
+                          <IconTrash size={13} />
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>

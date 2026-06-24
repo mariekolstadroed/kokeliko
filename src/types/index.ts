@@ -41,6 +41,7 @@ export type EventRegistration = {
   name: string
   email: string
   phone: string | null
+  cancellation_token: string
 }
 
 export type Category = {
