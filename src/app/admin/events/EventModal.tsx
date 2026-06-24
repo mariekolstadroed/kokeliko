@@ -174,25 +174,27 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
           <div>
             <label className={labelClass}>Bilde</label>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-            {previewSrc ? (
-              <div className="relative rounded-lg overflow-hidden border border-stone-200 aspect-video">
-                <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+            <div className="w-88 max-w-full">
+              {previewSrc ? (
+                <div className="relative rounded-lg overflow-hidden border border-stone-200 aspect-video">
+                  <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+                  <button
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"
+                  >
+                    <IconX size={13} />
+                  </button>
+                </div>
+              ) : (
                 <button
-                  onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full aspect-video flex flex-col items-center justify-center gap-2 border border-dashed border-stone-300 rounded-lg text-[13px] text-stone-400 hover:bg-stone-50 hover:border-stone-400 transition-colors"
                 >
-                  <IconX size={13} />
+                  <IconUpload size={15} /> Last opp bilde
                 </button>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 px-3 py-3 border border-dashed border-stone-300 rounded-lg text-[13px] text-stone-400 hover:bg-stone-50 hover:border-stone-400 transition-colors"
-              >
-                <IconUpload size={15} /> Last opp bilde
-              </button>
-            )}
+              )}
+            </div>
           </div>
 
           <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">

@@ -18,7 +18,7 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
   const isPast = event.event_date < new Date().toISOString().slice(0, 10)
 
   return (
-    <div className={`bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm flex flex-col ${isPast ? 'opacity-70' : ''}`}>
+    <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
       <div className="relative aspect-video bg-stone-100 overflow-hidden">
         {event.image_url ? (
           <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
@@ -27,14 +27,15 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
             Ingen bilde
           </div>
         )}
+        {isPast && <div className="absolute inset-0 bg-white/50" />}
         {isPast && (
-          <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-stone-800/70 text-white">
+          <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-stone-600/70 text-white">
             Arrangementet har vært
           </span>
         )}
       </div>
 
-      <div className="p-6 flex flex-col gap-3 flex-1">
+      <div className={`p-6 flex flex-col gap-3 flex-1${isPast ? ' opacity-70' : ''}`}>
         <h2 className="text-2xl font-bold font-special-elite text-[#2E1608] leading-snug">
           {event.title}
         </h2>

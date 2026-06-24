@@ -19,7 +19,14 @@ export default function EventsGrid() {
       supabase.from('events').select('*').eq('published', true).order('event_date'),
       supabase.from('event_registration').select('event_id'),
     ])
-    setEvents(evts ?? [])
+    const today = new Date().toISOString().slice(0, 10)
+    const sorted = (evts ?? []).sort((a, b) => {
+      const aPast = a.event_date < today
+      const bPast = b.event_date < today
+      if (aPast !== bPast) return aPast ? 1 : -1
+      return a.event_date.localeCompare(b.event_date)
+    })
+    setEvents(sorted)
     const c: Record<string, number> = {}
     ;(regs ?? []).forEach(r => { c[r.event_id] = (c[r.event_id] ?? 0) + 1 })
     setCounts(c)

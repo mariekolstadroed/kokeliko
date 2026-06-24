@@ -18,6 +18,8 @@ function formatTime(t: string) {
   return t.slice(0, 5)
 }
 
+const today = new Date().toISOString().slice(0, 10)
+
 export default function EventsSection() {
   const [events, setEvents] = useState<Event[]>([])
   const [counts, setCounts] = useState<Record<string, number>>({})
@@ -77,7 +79,9 @@ export default function EventsSection() {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4">
-          {events.map(event => (
+          {events.map(event => {
+            const isPast = event.event_date < today
+            return (
             <div key={event.id} className={`border rounded-xl overflow-hidden shadow-sm flex flex-col ${confirmEventId === event.id ? 'bg-red-50 border-red-200' : 'bg-white border-stone-200'}`}>
 
               {confirmEventId === event.id ? (
@@ -108,13 +112,19 @@ export default function EventsSection() {
                         <IconPhoto size={28} />
                       </div>
                     )}
+                    {isPast && <div className="absolute inset-0 bg-white/50" />}
                     <span className={`absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[11px] font-semibold ${event.published ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'}`}>
                       {event.published ? 'Publisert' : 'Utkast'}
                     </span>
+                    {isPast && (
+                      <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-600/70 text-white">
+                        Arrangementet har vært
+                      </span>
+                    )}
                   </div>
 
                   <div className="p-3.5 flex flex-col gap-2 flex-1">
-                    <div className="flex items-start justify-between gap-2">
+                    <div className={`flex items-start justify-between gap-2${isPast ? ' opacity-60' : ''}`}>
                       <div>
                         <div className="text-[14px] font-semibold text-stone-800 leading-snug">{event.title}</div>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-stone-500 mt-1">
@@ -144,7 +154,7 @@ export default function EventsSection() {
                       <div className="flex items-center gap-1 shrink-0">
                         <button
                           onClick={() => togglePublished(event)}
-                          className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+                          className={`inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium rounded-md border transition-colors ${isPast && event.published ? 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'}`}
                         >
                           {event.published ? <><IconEyeOff size={13} /> Skjul</> : <><IconEye size={13} /> Publiser</>}
                         </button>
@@ -167,7 +177,7 @@ export default function EventsSection() {
               )}
 
             </div>
-          ))}
+          )})}
         </div>
       )}
 
