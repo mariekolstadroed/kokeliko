@@ -112,7 +112,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           <div>
             <label className={labelClass}>Innhold</label>
             <textarea
-              className={inputClass + ' block resize-y min-h-[68px]'}
+              className={inputClass + ' block resize-y min-h-17'}
               value={description ?? ''}
               onChange={e => setDescription(e.target.value)}
             />

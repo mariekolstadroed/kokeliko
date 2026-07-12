@@ -64,7 +64,7 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
           <div>
             <label className={labelClass}>Beskrivelse</label>
             <textarea
-              className={inputClass + ' block resize-y min-h-[68px]'}
+              className={inputClass + ' block resize-y min-h-17'}
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Vises på menysiden under kategorinavnet"

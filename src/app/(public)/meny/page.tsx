@@ -49,7 +49,7 @@ export default async function MenuPage() {
         <div className="absolute inset-0 bg-[#faf7f2]/30" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12 relative">
+      <div className="max-w-6xl mx-auto px-6 pt-14 pb-12 relative">
         {/* Høyre sirkler */}
         <div className="absolute -right-24 top-56 w-120 h-120 rounded-full overflow-hidden z-0 pointer-events-none">
           <Image src={menuImg1} alt="" fill sizes="480px" priority placeholder="blur" className="object-cover scale-[1.2]" />
@@ -61,7 +61,7 @@ export default async function MenuPage() {
         </div>
 
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-1">Meny</h1>
+          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-3 text-center">Meny</h1>
           <MenuTabs categories={categories} items={items} />
         </div>
       </div>

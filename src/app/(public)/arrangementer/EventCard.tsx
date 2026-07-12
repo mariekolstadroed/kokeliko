@@ -19,7 +19,7 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
 
   return (
     <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
-      <div className="relative aspect-video bg-stone-100 overflow-hidden">
+      <div className="relative h-56 bg-stone-100 overflow-hidden">
         {event.image_url ? (
           <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
         ) : (

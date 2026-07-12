@@ -45,7 +45,7 @@ export default function MenuTabs({
         return (
           <div key={cat.id} className={isActive ? '' : 'hidden'}>
             {cat.description && (
-              <p className="text-stone-600 leading-relaxed mt-4 whitespace-pre-line pr-[24rem]">
+              <p className="text-stone-500 text-base mt-4 whitespace-pre-line pr-96">
                 {cat.description}
               </p>
             )}
