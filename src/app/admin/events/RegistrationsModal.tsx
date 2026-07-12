@@ -55,7 +55,6 @@ export default function RegistrationsModal({ event, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-6"
-      onClick={e => e.target === e.currentTarget && onClose()}
     >
       <div className="bg-white rounded-xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[85vh]">
 

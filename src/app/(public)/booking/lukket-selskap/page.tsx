@@ -99,8 +99,8 @@ export default function LukketSelskap() {
         </Link>
 
         <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 w-full">
-          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-2">Lukket selskap</h1>
-          <p className="text-stone-600 leading-relaxed mb-8">
+          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-2 text-center">Lukket selskap</h1>
+          <p className="text-stone-600 leading-relaxed mb-8 text-center">
             Fyll ut skjemaet så hører du fra oss med mer informasjon.
           </p>
 
@@ -156,12 +156,12 @@ export default function LukketSelskap() {
 
             <div>
               <label className={labelClass}>Ønsket mat</label>
-              <textarea className={inputClass + ' block resize-y min-h-[80px]'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+              <textarea className={inputClass + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
             </div>
 
             <div>
               <label className={labelClass}>Annen informasjon</label>
-              <textarea className={inputClass + ' block resize-y min-h-[80px]'} value={form.annen_info} onChange={e => set('annen_info', e.target.value)} />
+              <textarea className={inputClass + ' block resize-y min-h-20'} value={form.annen_info} onChange={e => set('annen_info', e.target.value)} />
             </div>
 
             {status === 'error' && (

@@ -22,12 +22,12 @@ export default function MenuTabs({
   return (
     <>
       {/* Category tabs */}
-      <div className="flex gap-1 mt-10 overflow-x-auto bg-[#FBAF75] rounded-xl px-1 py-1">
+      <div className="flex w-fit mx-auto gap-1 mt-10 overflow-x-auto bg-[#FBAF75] rounded-xl px-1 py-1">
         {categories.map(cat => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-5 pt-2 pb-1 text-xl whitespace-nowrap rounded-lg transition-colors font-special-elite cursor-pointer ${
+            className={`px-5 pt-2 pb-1 text-[1.325rem] whitespace-nowrap rounded-lg transition-colors font-special-elite cursor-pointer ${
               activeCategory === cat.id
                 ? 'bg-[#715055] font-semibold text-white'
                 : 'font-medium text-[#FAF7F2] hover:text-white'
@@ -45,7 +45,7 @@ export default function MenuTabs({
         return (
           <div key={cat.id} className={isActive ? '' : 'hidden'}>
             {cat.description && (
-              <p className="text-stone-500 text-base mt-4 whitespace-pre-line pr-96">
+              <p className="text-stone-500 text-lg mt-4 whitespace-pre-line text-center">
                 {cat.description}
               </p>
             )}
@@ -64,9 +64,9 @@ export default function MenuTabs({
                         )}
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="font-semibold font-special-elite text-xl text-[#2E1608]">{item.name}</h3>
+                        <h3 className="font-semibold font-special-elite text-2xl text-[#2E1608]">{item.name}</h3>
                         {item.description && (
-                          <p className="text-sm text-stone-600 mt-1">{item.description}</p>
+                          <p className="text-base text-stone-600 mt-1">{item.description}</p>
                         )}
                         {item.allergens && (
                           <p className="text-sm text-stone-400 mt-1">Allergener: {item.allergens}</p>

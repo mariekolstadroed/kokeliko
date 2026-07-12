@@ -107,7 +107,7 @@ export default async function Home() {
 
           {/* Regular hours */}
           <div>
-            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Åpningstider</h2>
+            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8">Åpningstider</h2>
             <div className="flex flex-col gap-5">
               {regularHours.map(h => (
                 <div key={h.id} className="flex gap-10 text-xl">
@@ -160,7 +160,7 @@ export default async function Home() {
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
         <div className="bg-[#dbd6ad]">
           <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Våre bestselgere</h2>
+            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8 text-center">Våre bestselgere</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
           </div>
         </div>
@@ -208,7 +208,7 @@ export default async function Home() {
       {gallery.filter(i => i.section === 'nyheter').length > 0 && (
         <div className="bg-amber-50">
           <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-8">Nyheter i hyllene</h2>
+            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8 text-center">Nyheter i hyllene</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
           </div>
         </div>
@@ -217,18 +217,20 @@ export default async function Home() {
       {/* Gaver */}
       <div className="bg-[#ebd7c0]">
         <div className="max-w-6xl mx-auto px-6 py-24">
-          <h2 className="text-4xl font-bold font-special-elite text-[#2E1608] mb-4">Gaver</h2>
-          <p className="text-stone-600 text-lg leading-relaxed mb-6">
+          <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-4 text-center">Gaver</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-6 text-center">
             Vi kan lage personlige gaveposer med ting og tang fra hyllene, eller gavekort med ønsket beløp. Her er det bare å komme med ønsker.
             Dette er veldig populært som sommergave/julegave til lærere eller ansatte i bedrift. Send oss en mail,
             så fikser vi det du ønsker!
           </p>
+          <div className="flex justify-center">
           <a
             href="mailto:elin@kokeliko.no"
             className="inline-block mb-12 px-6 pt-3 pb-2 bg-[#75482e] text-white font-special-elite text-lg rounded-full hover:bg-[#5c3622] transition-colors"
           >
             Send oss dine ønsker
           </a>
+          </div>
           <div className="grid grid-cols-2 gap-8">
             <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
               <Image src={gavekortImg} alt="Gavekort" fill sizes="50vw" className="object-cover" />

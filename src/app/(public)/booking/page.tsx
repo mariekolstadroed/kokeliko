@@ -14,17 +14,13 @@ export default function Booking() {
   return (
     <div className="max-w-6xl mx-auto px-6 pt-14 pb-12">
       <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-3 text-center">Booking</h1>
-      <div className="text-center flex flex-col gap-3">
-        <p className="text-stone-500 text-base">
-          Reserver bord hos oss! Vi tar imot reservasjoner alle dager unntatt helg, så du kan reservere innenfor vanlig 
-          åpningstid eller onsdag/torsdag kveld. Grupper over 10 bes forhåndsbestille mat i skjemaet.
-        </p>
-        <p className="text-stone-500 text-base">
-          Vi tilbyr også catering (med eller uten levering) til konfirmasjon, bursdag og andre selskap. Vi er fleksible 
-          og kan tilpasse det meste, men anbefaler spesielt tapas. Skriv ønskede retter og eventuelle tilpasninger i bookingen.
-        </p>
-        <p className="text-stone-500 text-base">
-          I tillegg kan du leie lokalet til lukket selskap med mat fra oss. Skriv ønsket mat i bookingen, så avtaler vi 
+      <div className="text-center flex flex-col gap-3 mt-6">
+        <p className="text-stone-500 text-lg">
+          Reserver bord hos oss! Vi tar imot bordreservasjoner i vanlig åpningstid på hverdager, samt onsdag og torsdag kveld.
+          Grupper over 10 bes forhåndsbestille mat i skjemaet.<br />
+          Vi tilbyr catering til konfirmasjon med f.eks. tapas, bursdag og andre selskap. Skriv ønskede retter og eventuelle
+          tilpasninger i bookingen.<br />
+          I tillegg kan du leie lokalet til lukket selskap med mat fra oss. Skriv ønsket mat i bookingen, så avtaler vi
           resten av arrangementet på mail.
         </p>
       </div>
@@ -44,10 +40,10 @@ export default function Booking() {
               placeholder="blur"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/50" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-white font-bold font-special-elite text-xl leading-snug">{title}</h3>
-              <p className="text-white/75 text-sm mt-1">{sub}</p>
+            <div className="absolute inset-0 bg-black/35" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+              <h3 className="text-white font-bold font-special-elite text-3xl leading-snug">{title}</h3>
+              <p className="text-white/75 text-base mt-1">{sub}</p>
             </div>
           </Link>
         ))}

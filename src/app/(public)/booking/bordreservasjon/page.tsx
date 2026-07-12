@@ -107,8 +107,8 @@ export default function BordReservasjon() {
         </Link>
 
         <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 w-full">
-          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-2">Bordreservasjon</h1>
-          <p className="text-stone-600 leading-relaxed mb-8">
+          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-2 text-center">Bordreservasjon</h1>
+          <p className="text-stone-600 leading-relaxed mb-8 text-center">
             Fyll ut skjemaet så bekrefter vi reservasjonen din på e-post.
           </p>
 

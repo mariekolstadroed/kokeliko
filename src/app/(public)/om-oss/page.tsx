@@ -10,7 +10,7 @@ export default function OmOss() {
 
         <div className="text-center mb-14">
           <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-3">Om oss</h1>
-          <p className="text-stone-500 text-base">Historien om Kokeliko</p>
+          <p className="text-stone-500 text-lg mt-6">Historien om Kokeliko</p>
         </div>
 
         <div className="flex flex-col gap-24">

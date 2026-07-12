@@ -45,14 +45,14 @@ export default function StepCarousel({ items }: { items: GalleryItem[] }) {
         }}
       >
         {(shouldLoop ? [...items, ...items] : items).map((item, i) => (
-          <div key={i} className="shrink-0 w-[348px]">
-            <div className="relative w-[348px] h-[348px] rounded-2xl overflow-hidden bg-stone-100">
+          <div key={i} className="shrink-0 w-87">
+            <div className="relative w-87 h-87 rounded-2xl overflow-hidden bg-stone-100">
               {item.image_url && (
                 <Image src={item.image_url} alt={item.title ?? ''} fill sizes="348px" className="object-cover" priority={i === 0} />
               )}
             </div>
             {item.title && (
-              <p className="mt-3 text-stone-700 text-base font-medium">{item.title}</p>
+              <p className="mt-3 text-stone-700 text-lg font-medium text-center">{item.title}</p>
             )}
           </div>
         ))}

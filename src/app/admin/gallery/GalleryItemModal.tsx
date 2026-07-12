@@ -74,7 +74,6 @@ export default function GalleryItemModal({ item, section, onClose, onSaved }: Pr
   return (
     <div
       className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-6"
-      onClick={e => e.target === e.currentTarget && onClose()}
     >
       <div className="bg-white rounded-xl w-full max-w-sm shadow-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-stone-200">
