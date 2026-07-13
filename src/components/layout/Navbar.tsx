@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { IconMenu2, IconX } from '@tabler/icons-react'
 import logo from '@/assets/logo-svart.png'
 
 const links = [
@@ -14,14 +16,18 @@ const links = [
 
 export default function Navbar() {
   const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 px-6 pt-5 pb-2">
+    <header className="sticky top-0 z-50 px-6 md:px-10 lg:px-6 pt-5 pb-2">
+      {/* Navbar-pille — endrer seg aldri */}
       <nav className="flex items-center justify-between bg-[#faf7f2]/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-sm max-w-7xl mx-auto">
-        <Link href="/">
+        <Link href="/" onClick={() => setIsOpen(false)}>
           <Image src={logo} alt="Kokeliko" style={{ height: '2.25rem', width: 'auto' }} priority />
         </Link>
-        <div className="flex items-center gap-20 translate-y-0.5">
+
+        {/* Desktop-lenker */}
+        <div className="hidden lg:flex items-center gap-20 translate-y-0.5">
           {links.map(({ to, label }) => {
             const isActive = pathname === to || pathname.startsWith(to + '/')
             return (
@@ -35,7 +41,37 @@ export default function Navbar() {
             )
           })}
         </div>
+
+        {/* Hamburgerknapp */}
+        <button
+          className="lg:hidden text-[#3d1f08] p-1"
+          onClick={() => setIsOpen(o => !o)}
+          aria-label={isOpen ? 'Lukk meny' : 'Åpne meny'}
+        >
+          {isOpen ? <IconX size={28} /> : <IconMenu2 size={28} />}
+        </button>
       </nav>
+
+      {/* Mobilmeny — eget panel under pilla, høyrejustert, over innholdet */}
+      {isOpen && (
+        <div className="lg:hidden absolute top-full left-6 right-6 md:left-10 md:right-10 mt-0 flex justify-end max-w-7xl mx-auto">
+          <div className="bg-[#faf7f2]/80 backdrop-blur-sm rounded-2xl shadow-sm px-10 py-6 flex flex-col items-center gap-6">
+            {links.map(({ to, label }) => {
+              const isActive = pathname === to || pathname.startsWith(to + '/')
+              return (
+                <Link
+                  key={label}
+                  href={to}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-[#3d1f08] text-2xl font-special-elite relative after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:bg-[#3d1f08] after:origin-left ${isActive ? 'after:scale-x-100' : 'after:scale-x-0'}`}
+                >
+                  {label}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </header>
   )
 }
