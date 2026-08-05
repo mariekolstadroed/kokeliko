@@ -8,6 +8,15 @@ const supabaseAdmin = createClient(
 const resend = new Resend(process.env.RESEND_API_KEY)
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url)
   const token = searchParams.get('token')
@@ -46,6 +55,9 @@ export async function DELETE(request: Request) {
   const dateStr = `${d}. ${months[m - 1]} ${y}`
   const timeStr = ev.event_start_time.slice(0, 5) + (ev.event_end_time ? ` – ${ev.event_end_time.slice(0, 5)}` : '')
 
+  const safeTitle = escapeHtml(ev.title)
+  const safeName = escapeHtml(reg.name)
+
   await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: process.env.CONTACT_EMAIL!,
@@ -53,15 +65,15 @@ export async function DELETE(request: Request) {
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:480px;">
         <img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;margin-bottom:20px;display:block;">
-        <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Du er avmeldt – ${ev.title}</h2>
+        <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Du er avmeldt – ${safeTitle}</h2>
         <table role="presentation" style="width:100%;border-collapse:collapse;">
           <tr>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;width:180px;font-size:14px;">Navn</td>
-            <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${reg.name}</td>
+            <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeName}</td>
           </tr>
           <tr>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
-            <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${ev.title}</td>
+            <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeTitle}</td>
           </tr>
           <tr>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Dato</td>

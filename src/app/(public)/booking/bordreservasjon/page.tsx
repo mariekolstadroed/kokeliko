@@ -14,9 +14,9 @@ const inputErrorClass = 'w-full px-3 py-2.5 border border-red-300 rounded-lg tex
 const labelClass = 'block text-sm font-medium text-stone-700 mb-1.5'
 
 export default function BordReservasjon() {
-  const [form, setForm] = useState({ navn: '', epost: '', telefon: '', dato: '', klokkeslett: '', antall: '', onsket_mat: '', melding: '' })
+  const [form, setForm] = useState({ navn: '', epost: '', telefon: '', dato: '', klokkeslett: '', antall: '', onsket_mat: '', melding: '', _hp: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'rate_limited'>('idle')
   const { forDate } = useOpeningHours()
 
   function set(field: string, value: string) {
@@ -61,6 +61,7 @@ export default function BordReservasjon() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'bordreservasjon', ...form }),
       })
+      if (res.status === 429) { setStatus('rate_limited'); return }
       setStatus(res.ok ? 'ok' : 'error')
     } catch {
       setStatus('error')
@@ -81,7 +82,7 @@ export default function BordReservasjon() {
 
   if (status === 'ok') {
     return (
-      <div className="relative min-h-screen flex items-center justify-center px-6 py-20">
+      <div className="relative min-h-screen flex items-center justify-center px-6 -mt-24 pt-24">
         {bgImages}
         <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
           <p className="text-2xl font-bold text-stone-900 mb-3">Takk for din forespørsel!</p>
@@ -113,6 +114,9 @@ export default function BordReservasjon() {
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }} aria-hidden="true">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form._hp} onChange={e => set('_hp', e.target.value)} />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Navn *</label>
@@ -174,6 +178,9 @@ export default function BordReservasjon() {
 
             {status === 'error' && (
               <p className="text-sm text-red-500">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+            )}
+            {status === 'rate_limited' && (
+              <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
             )}
 
             <button

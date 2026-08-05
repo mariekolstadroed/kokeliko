@@ -70,7 +70,7 @@ export default function StepCarousel({ items }: { items: GalleryItem[] }) {
               style={{ opacity: i === fadeIdx ? 1 : 0 }}
             >
               {item.image_url && (
-                <Image src={item.image_url} alt={item.title ?? ''} fill sizes="100vw" className="object-cover" priority={i === 0} />
+                <Image src={item.image_url} alt={item.title ?? ''} fill sizes="calc(100vw - 48px)" className="object-cover" priority={i === 0} />
               )}
             </div>
           ))}

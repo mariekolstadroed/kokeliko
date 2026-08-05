@@ -4,8 +4,47 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
 const LOGO_HTML = `<img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;margin-bottom:20px;display:block;">`
 
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const entry = rateLimitMap.get(ip)
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 15 * 60 * 1000 })
+    return true
+  }
+  if (entry.count >= 5) return false
+  entry.count++
+  return true
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+const ALLOWED_TYPES = new Set(['bordreservasjon', 'catering', 'lukket_selskap', 'event_registration', 'event_cancellation'])
+
 export async function POST(req: Request) {
-  const { type, ...fields } = await req.json() as Record<string, string>
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? req.headers.get('x-real-ip') ?? 'unknown'
+  if (!checkRateLimit(ip)) return Response.json({ ok: false }, { status: 429 })
+
+  const body = await req.json() as Record<string, string>
+  const { type, _hp, ...rawFields } = body
+
+  if (_hp) return Response.json({ ok: false }, { status: 400 })
+  if (!ALLOWED_TYPES.has(type)) return Response.json({ ok: false }, { status: 400 })
+  if (Object.values(rawFields).some(v => typeof v === 'string' && v.length > 2000)) {
+    return Response.json({ ok: false }, { status: 400 })
+  }
+
+  const fields = Object.fromEntries(
+    Object.entries(rawFields).map(([k, v]) => [k, typeof v === 'string' ? escapeHtml(v) : v])
+  )
 
   if (type === 'event_registration') return handleEventRegistration(fields)
   if (type === 'event_cancellation') return handleEventCancellation(fields)

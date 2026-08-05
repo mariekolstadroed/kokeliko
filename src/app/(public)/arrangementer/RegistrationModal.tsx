@@ -23,7 +23,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function RegistrationModal({ event, onClose, onRegistered }: Props) {
-  const [form, setForm] = useState({ navn: '', epost: '', telefon: '' })
+  const [form, setForm] = useState({ navn: '', epost: '', telefon: '', _hp: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'duplicate' | 'error'>('idle')
 
@@ -72,6 +72,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         type: 'event_registration',
+        _hp: form._hp,
         navn: form.navn.trim(),
         epost: form.epost.trim().toLowerCase(),
         event_title: event.title,
@@ -133,6 +134,9 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4 overflow-y-auto">
+            <div style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }} aria-hidden="true">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form._hp} onChange={e => set('_hp', e.target.value)} />
+            </div>
             <div>
               <label className={labelClass}>Navn *</label>
               <input className={f('navn')} value={form.navn} onChange={e => set('navn', e.target.value)} />
