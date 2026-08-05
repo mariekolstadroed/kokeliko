@@ -78,7 +78,7 @@ export default function EventsSection() {
           Ingen arrangementer ennå
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {events.map(event => {
             const isPast = event.event_date < today
             return (

@@ -74,7 +74,7 @@ export default function RegularHours() {
 
   return (
     <div className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-stone-200">
+      <div className="flex items-center justify-between px-4.5 py-3.5 border-b border-stone-200">
         <div className="text-[15px] font-semibold text-stone-800">Faste åpningstider</div>
         {editing ? (
           <div className="flex items-center gap-1.5">
@@ -104,7 +104,7 @@ export default function RegularHours() {
 
       {editing ? (
         draft.map(row => (
-          <div key={row.day} className="flex items-center gap-3 px-[18px] py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
+          <div key={row.day} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4.5 py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
             <div className="w-24 font-medium text-stone-800">{DAY_NAMES[row.day]}</div>
             <label className="flex items-center gap-1.5 text-stone-600 cursor-pointer">
               <input
@@ -138,7 +138,7 @@ export default function RegularHours() {
           const day = i + 1
           const h = hours.find(h => h.day === day)
           return (
-            <div key={day} className="flex items-center px-[18px] py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
+            <div key={day} className="flex items-center px-4.5 py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
               <div className="w-28 shrink-0 font-medium text-stone-800">{DAY_NAMES[day]}</div>
               {!h || h.closed ? (
                 <span className="text-stone-400">Stengt</span>

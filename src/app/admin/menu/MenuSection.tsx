@@ -191,13 +191,13 @@ export default function MenuSection() {
                   onClick={() => setCategoryModal({ open: true, category: cat })}
                   className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
                 >
-                  <IconEdit size={12} aria-hidden /> Rediger kategori
+                  <IconEdit size={12} aria-hidden /> <span className="hidden md:inline">Rediger kategori</span>
                 </button>
                 <button
                   onClick={() => setItemModal({ open: true, categoryId: cat.id })}
                   className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
                 >
-                  <IconPlus size={12} aria-hidden /> Legg til
+                  <IconPlus size={12} aria-hidden /> <span className="hidden md:inline">Legg til</span>
                 </button>
                 <button
                   onClick={() => setConfirmCatId(cat.id)}
@@ -207,11 +207,12 @@ export default function MenuSection() {
                 </button>
               </div>
             </div>
+            <div className="overflow-x-auto">
             <table className="w-full table-fixed border-collapse text-[13.5px]">
               <colgroup>
                 <col />
-                <col className="w-28" />
-                <col className="w-24" />
+                <col className="w-16 md:w-28" />
+                <col className="w-10 md:w-24" />
                 <col className="w-24" />
               </colgroup>
               <thead>
@@ -254,18 +255,18 @@ export default function MenuSection() {
                       </td>
                     ) : (
                       <>
-                        <td className="px-4.5 py-2.5 text-stone-800">{item.name}</td>
-                        <td className="px-4.5 py-2.5 text-stone-800">{item.price != null ? `${item.price} kr` : '—'}</td>
-                        <td className="px-4.5 py-2.5">
+                        <td className="px-4.5 py-2.5 text-stone-800 max-md:break-all">{item.name}</td>
+                        <td className="max-md:pl-0 max-md:pr-1 px-4.5 py-2.5 text-stone-800">{item.price != null ? `${item.price} kr` : '—'}</td>
+                        <td className="max-md:pl-0 max-md:pr-1 px-4.5 py-2.5">
                           <button
                             onClick={() => toggleAvailable(item)}
                             aria-label={item.available ? 'Skjul fra meny' : 'Vis på meny'}
-                            className={`relative w-9 h-5 rounded-full transition-colors ${item.available ? 'bg-green-500' : 'bg-stone-300'}`}
+                            className={`relative w-7 h-4 md:w-9 md:h-5 rounded-full transition-colors ${item.available ? 'bg-green-500' : 'bg-stone-300'}`}
                           >
-                            <span className={`absolute top-0.75 w-3.5 h-3.5 bg-white rounded-full transition-all ${item.available ? 'right-0.75' : 'left-0.75'}`} />
+                            <span className={`absolute w-3 h-3 md:w-3.5 md:h-3.5 bg-white rounded-full transition-all top-0.5 md:top-0.75 ${item.available ? 'right-0.5 md:right-0.75' : 'left-0.5 md:left-0.75'}`} />
                           </button>
                         </td>
-                        <td className="px-4.5 py-2.5">
+                        <td className="max-md:px-1.5 px-4.5 py-2.5">
                           <div className="flex items-center gap-1 justify-end">
                             <div className="flex flex-col">
                               <button
@@ -303,6 +304,7 @@ export default function MenuSection() {
                 ))}
               </tbody>
             </table>
+            </div>
             </>}
           </div>
         )

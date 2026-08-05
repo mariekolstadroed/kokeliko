@@ -49,12 +49,12 @@ function Dashboard() {
         </button>
       </header>
 
-      <div className="flex px-6 bg-white border-b border-stone-200">
+      <div className="flex px-6 bg-white border-b border-stone-200 overflow-x-auto scrollbar-none">
         {tabs.map(t => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            className={`flex items-center gap-1.5 px-3 md:px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors whitespace-nowrap ${
               tab === t.id
                 ? 'text-stone-800 border-pink-500'
                 : 'text-stone-400 border-transparent hover:text-stone-600'

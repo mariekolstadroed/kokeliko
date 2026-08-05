@@ -91,7 +91,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
     <div
       className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-6"
     >
-      <div className="bg-white rounded-xl w-full max-w-md shadow-2xl">
+      <div className="bg-white rounded-xl w-full max-w-md shadow-2xl flex flex-col max-h-[90vh]">
 
         <div className="flex items-center justify-between px-5 py-4 border-b border-stone-200">
           <div className="text-[15px] font-semibold text-stone-800">
@@ -102,7 +102,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           </button>
         </div>
 
-        <div className="p-5 flex flex-col gap-4">
+        <div className="p-5 flex flex-col gap-4 overflow-y-auto flex-1">
           <div>
             <label className={labelClass}>Navn *</label>
             <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
@@ -181,7 +181,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
             {uploadError}
           </div>
         )}
-        <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200">
+        <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200 shrink-0">
           <button
             onClick={onClose}
             className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"

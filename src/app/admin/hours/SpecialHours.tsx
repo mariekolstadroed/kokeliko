@@ -106,7 +106,7 @@ export default function SpecialHours() {
                   onClick={() => togglePublished(group)}
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors text-[12px] font-medium"
                 >
-                  {group.published ? <><IconEyeOff size={13} /> Skjul</> : <><IconEye size={13} /> Publiser</>}
+                  {group.published ? <><IconEyeOff size={13} /><span className="hidden md:inline"> Skjul</span></> : <><IconEye size={13} /><span className="hidden md:inline"> Publiser</span></>}
                 </button>
                 <button
                   onClick={() => setModal({ open: true, group })}
