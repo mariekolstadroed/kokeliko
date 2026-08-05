@@ -64,11 +64,11 @@ export default function Catering() {
   }
 
   const bgImages = (
-    <div className="absolute inset-0 flex">
-      <div className="relative w-1/2 h-full">
-        <Image src={cateringImg1} alt="" fill sizes="50vw" placeholder="blur" className="object-cover" />
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 md:right-1/2">
+        <Image src={cateringImg1} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" placeholder="blur" className="object-cover" />
       </div>
-      <div className="relative w-1/2 h-full">
+      <div className="absolute inset-y-0 left-1/2 right-0 max-md:hidden">
         <Image src={cateringImg2} alt="" fill sizes="50vw" placeholder="blur" className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-black/40" />
@@ -95,22 +95,22 @@ export default function Catering() {
     : null
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-6 pb-16 -mt-24 pt-24">
+    <div className="relative min-h-screen flex max-md:items-start items-center justify-center px-6 pb-16 -mt-24 pt-24">
       {bgImages}
 
-      <div className="relative flex items-start gap-4 w-full max-w-xl mt-16">
-        <Link href="/booking" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/80 hover:bg-white transition-colors shrink-0">
+      <div className="relative w-full md:max-w-md lg:max-w-xl mt-10 md:mt-16">
+        <Link href="/booking" className="mb-3 md:mb-0 md:absolute md:-left-12 md:top-2 inline-flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-white transition-colors">
           <IconArrowLeft size={18} className="text-stone-700" />
         </Link>
 
-        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 w-full">
-          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-2 text-center">Catering</h1>
+        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 lg:p-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-2 text-center">Catering</h1>
           <p className="text-stone-600 leading-relaxed mb-8 text-center">
             Fyll ut skjemaet så setter vi sammen et tilbud til deg.
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Navn *</label>
                 <input className={f('navn')} required value={form.navn} onChange={e => set('navn', e.target.value)} />
@@ -134,7 +134,7 @@ export default function Catering() {
               <input className={inputClass} value={form.type_arrangement} onChange={e => set('type_arrangement', e.target.value)} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Dato *</label>
                 <input className={f('dato')} type="date" required min={minDate} value={form.dato} onChange={e => set('dato', e.target.value)} />

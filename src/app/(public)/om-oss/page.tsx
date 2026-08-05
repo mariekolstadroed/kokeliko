@@ -6,20 +6,20 @@ import uteImg from '@/assets/omoss/ute.jpg'
 export default function OmOss() {
   return (
     <div>
-      <div className="max-w-6xl mx-auto px-6 pt-14 pb-24">
+      <div className="max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-24">
 
-        <div className="text-center mb-14">
-          <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-3">Om oss</h1>
-          <p className="text-stone-500 text-lg mt-6">Historien om Kokeliko</p>
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-3">Om oss</h1>
+          <p className="text-stone-500 text-base md:text-[17px] lg:text-lg mt-4 md:mt-6 lg:mt-8">Historien om Kokeliko</p>
         </div>
 
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-16 md:gap-24">
 
           {/* Seksjon 1 — tekst venstre, bilde høyre */}
-          <div className="grid grid-cols-2 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
-              <h2 className="font-special-elite text-[#2E1608] text-4xl mb-6">Tiden flyr…</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-lg leading-relaxed">
+              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">Tiden flyr…</h2>
+              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   For 13 (!!!) år siden begynte dette KokelikoProsjektet som skulle bli en riktig så spennende og
                   innholdsrik reise!
@@ -39,19 +39,19 @@ export default function OmOss() {
                 </p>
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square w-4/5 ml-auto relative">
-              <Image src={voyenengaImg} alt="Vøyenenga" fill sizes="50vw" className="object-cover" loading="eager" />
+            <div className="rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:ml-auto relative">
+              <Image src={voyenengaImg} alt="Vøyenenga" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" loading="eager" />
             </div>
           </div>
 
           {/* Seksjon 2 — bilde venstre, tekst høyre */}
-          <div className="grid grid-cols-2 items-center">
-            <div className="rounded-2xl overflow-hidden aspect-square w-4/5 mr-auto relative">
-              <Image src={marsipanbollerImg} alt="Marsipanboller" fill sizes="50vw" className="object-cover" />
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
+            <div className="order-2 md:order-1 rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:mr-auto relative">
+              <Image src={marsipanbollerImg} alt="Marsipanboller" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
-            <div>
-              <h2 className="font-special-elite text-[#2E1608] text-4xl mb-6">Mr. Simonelli gjør sitt inntog</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-lg leading-relaxed">
+            <div className="order-1 md:order-2">
+              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">Mr. Simonelli gjør sitt inntog</h2>
+              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   Et googlesøk: «Hvordan starte kafe» og det kom opp flere leverandører av storkjøkkenutstyr.
                   Jeg ringte en av dem, og der skulle jeg være så heldig å finne Christian! Han hadde masse
@@ -74,10 +74,10 @@ export default function OmOss() {
           </div>
 
           {/* Seksjon 3 — tekst venstre, bilde høyre */}
-          <div className="grid grid-cols-2 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
-              <h2 className="font-special-elite text-[#2E1608] text-4xl mb-6">13 år og mye klokere</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-lg leading-relaxed">
+              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">13 år og mye klokere</h2>
+              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   Mange fangede baller, 13 år senere og ganske så mye klokere bor Kokeliko nå i Elvegangen 9
                   på Bærums Verk. Vi er i gang med vårt 7.de år på Lykkeverket og stortrives!
@@ -99,8 +99,8 @@ export default function OmOss() {
                 </p>
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square w-4/5 ml-auto relative">
-              <Image src={uteImg} alt="Ute" fill sizes="50vw" className="object-cover" />
+            <div className="rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:ml-auto relative">
+              <Image src={uteImg} alt="Ute" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
           </div>
 

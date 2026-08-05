@@ -26,8 +26,8 @@ export default async function MenuPage() {
   const { categories, items } = await fetchMenuData()
 
   return (
-    <div className="max-w-6xl mx-auto px-6 pt-14 pb-12">
-      <h1 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-3 text-center">Meny</h1>
+    <div className="max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-3 text-center">Meny</h1>
       <MenuTabs categories={categories} items={items} />
     </div>
   )

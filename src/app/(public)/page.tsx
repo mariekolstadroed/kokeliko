@@ -100,18 +100,18 @@ export default async function Home() {
       </div>
 
       <div className="bg-[#f5ede3]">
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16">
 
         {/* Opening hours */}
-        <div className="grid items-center gap-16 px-20" style={{ gridTemplateColumns: '1fr auto' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[auto_auto] md:justify-center lg:grid-cols-[1fr_auto] items-center gap-10 md:gap-16 lg:gap-16">
 
           {/* Regular hours */}
-          <div>
-            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8">Åpningstider</h2>
-            <div className="flex flex-col gap-5">
+          <div className="lg:pl-20">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-6 lg:mb-8 max-lg:text-center">Åpningstider</h2>
+            <div className="max-lg:w-fit max-lg:mx-auto flex flex-col gap-4 lg:gap-5">
               {regularHours.map(h => (
-                <div key={h.id} className="flex gap-10 text-xl">
-                  <span className="text-stone-700 font-medium w-32 shrink-0">{DAY_NAMES[h.day]}</span>
+                <div key={h.id} className="flex gap-8 lg:gap-10 text-base lg:text-xl">
+                  <span className="text-stone-700 font-medium w-28 lg:w-32 shrink-0">{DAY_NAMES[h.day]}</span>
                   <span className="text-stone-500">
                     {h.closed ? 'Stengt' : `${formatTime(h.open_time)} – ${formatTime(h.close_time)}`}
                   </span>
@@ -122,18 +122,18 @@ export default async function Home() {
 
           {/* Special hours */}
           {specialGroups.length > 0 ? (
-            <div className="flex flex-col gap-4 max-w-115">
+            <div className="flex flex-col gap-3 lg:gap-4 max-lg:w-fit max-lg:mx-auto lg:max-w-115 lg:pr-20">
               {specialGroups.map(group => (
                 <div
                   key={group.id}
-                  className="border-4 rounded-2xl p-6 backdrop-blur-sm shadow-lg"
+                  className="border-2 lg:border-4 rounded-2xl p-4 lg:p-6 backdrop-blur-sm shadow-lg"
                   style={{ borderColor: group.theme ?? '#e2d9cc', backgroundColor: `${group.theme ?? '#e2d9cc'}33` }}
                 >
-                  <h3 className="text-lg font-bold font-special-elite text-[#2E1608] mb-4">{group.title}</h3>
-                  <div className="flex flex-col gap-3">
+                  <h3 className="text-base lg:text-lg font-bold font-special-elite text-[#2E1608] mb-2 lg:mb-4">{group.title}</h3>
+                  <div className="flex flex-col gap-2 lg:gap-3">
                     {group.hours.map(h => (
-                      <div key={h.id} className="flex gap-8 text-base">
-                        <span className="text-stone-700 font-medium w-36 shrink-0">
+                      <div key={h.id} className="flex gap-4 lg:gap-8 text-sm lg:text-base">
+                        <span className="text-stone-700 font-medium w-28 lg:w-36 shrink-0">
                           {h.description ?? (h.date ? formatDate(h.date) : '')}
                         </span>
                         <span className="text-stone-500">
@@ -146,8 +146,10 @@ export default async function Home() {
               ))}
             </div>
           ) : (
-            <div className="w-100">
-              <Image src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
+            <div className="hidden md:block lg:pr-20">
+              <div className="w-60 lg:w-100">
+                <Image src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
+              </div>
             </div>
           )}
 
@@ -159,8 +161,8 @@ export default async function Home() {
       {/* Våre bestselgere */}
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
         <div className="bg-[#dbd6ad]">
-          <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8 text-center">Våre bestselgere</h2>
+          <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-6 md:mb-8 text-center">Våre bestselgere</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'bestselgere')} />
           </div>
         </div>
@@ -173,27 +175,27 @@ export default async function Home() {
       <div className="relative">
         <Image src={elinPaKaffeImg} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-black/55" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-          <div className="grid grid-cols-2 items-center gap-16">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
             {/* Overlapping circles */}
-            <div className="relative h-120 w-120 mx-auto shrink-0">
-              <div className="absolute top-0 left-0 w-75 h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image src={barrieroImg} alt="Barriero" fill sizes="300px" className="object-contain p-6" />
+            <div className="order-2 lg:order-1 relative h-72 w-72 lg:h-120 lg:w-120 mx-auto shrink-0">
+              <div className="absolute top-0 left-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
               </div>
-              <div className="absolute bottom-0 right-0 w-75 h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="300px" className="object-contain p-6" />
+              <div className="absolute bottom-0 right-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-[#ebd7c0]/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
               </div>
             </div>
             {/* Text */}
-            <div>
-              <h2 className="text-5xl font-bold font-special-elite text-[#F0ECB4] mb-6">Kaffen vår</h2>
-              <p className="text-[#f5ede3]/90 leading-relaxed text-lg mb-6">
+            <div className="order-1 lg:order-2 max-lg:text-center">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#F0ECB4] mb-6">Kaffen vår</h2>
+              <p className="text-[#f5ede3]/90 leading-relaxed text-base lg:text-lg mb-6">
                 Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
                 som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
                 både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
                 fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
               </p>
-              <p className="text-[#f5ede3]/90 leading-relaxed text-lg">
+              <p className="text-[#f5ede3]/90 leading-relaxed text-base lg:text-lg">
                 Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
                 Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
                 og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
@@ -207,8 +209,8 @@ export default async function Home() {
       {/* Nyheter i hyllene */}
       {gallery.filter(i => i.section === 'nyheter').length > 0 && (
         <div className="bg-amber-50">
-          <div className="max-w-6xl mx-auto px-6 py-24">
-            <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-8 text-center">Nyheter i hyllene</h2>
+          <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-6 md:mb-8 text-center">Nyheter i hyllene</h2>
             <StepCarousel items={gallery.filter(i => i.section === 'nyheter')} />
           </div>
         </div>
@@ -216,9 +218,9 @@ export default async function Home() {
 
       {/* Gaver */}
       <div className="bg-[#ebd7c0]">
-        <div className="max-w-6xl mx-auto px-6 py-24">
-          <h2 className="text-5xl font-bold font-special-elite text-[#2E1608] mb-4 text-center">Gaver</h2>
-          <p className="text-stone-600 text-lg leading-relaxed mb-6 text-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-4 text-center">Gaver</h2>
+          <p className="text-stone-600 text-base lg:text-lg leading-relaxed mb-6 text-center">
             Vi kan lage personlige gaveposer med ting og tang fra hyllene, eller gavekort med ønsket beløp. Her er det bare å komme med ønsker.
             Dette er veldig populært som sommergave/julegave til lærere eller ansatte i bedrift. Send oss en mail,
             så fikser vi det du ønsker!
@@ -226,17 +228,17 @@ export default async function Home() {
           <div className="flex justify-center">
           <a
             href="mailto:elin@kokeliko.no"
-            className="inline-block mb-12 px-6 pt-3 pb-2 bg-[#75482e] text-white font-special-elite text-lg rounded-full hover:bg-[#5c3622] transition-colors"
+            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-[#75482e] text-white font-special-elite text-base lg:text-lg rounded-full hover:bg-[#5c3622] transition-colors"
           >
             Send oss dine ønsker
           </a>
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
-              <Image src={gavekortImg} alt="Gavekort" fill sizes="50vw" className="object-cover" />
+              <Image src={gavekortImg} alt="Gavekort" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
-              <Image src={gaveposerImg} alt="Gaveposer" fill sizes="50vw" className="object-cover" />
+              <Image src={gaveposerImg} alt="Gaveposer" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
           </div>
         </div>
@@ -246,20 +248,20 @@ export default async function Home() {
       <div className="relative">
         <Image src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
         <div className="absolute inset-0 bg-black/60" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-25">
-          <div className="grid grid-cols-2 items-center gap-16">
-            <div>
-              <h2 className="text-5xl font-bold font-special-elite text-[#f5ede3] mb-6">Finn oss</h2>
-              <p className="text-[#f5ede3]/90 leading-relaxed text-lg mb-4">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-25">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-16">
+            <div className="max-md:text-center">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#f5ede3] mb-6">Finn oss</h2>
+              <p className="text-[#f5ede3]/90 leading-relaxed text-base lg:text-lg mb-4">
                 Du finner oss i Elvegangen 9 på Bærums Verk, rett ovenfor Baker Hansen og ved siden av våre gode naboer
                 i Verket Blomster.
               </p>
-              <p className="text-[#f5ede3]/90 leading-relaxed text-lg">
+              <p className="text-[#f5ede3]/90 leading-relaxed text-base lg:text-lg">
                 Vi holder til i et koselig lokale med god plass både inne i varmen, og ute i solveggen,
                 med utsikt til elva!
               </p>
             </div>
-            <div className="w-100 h-100 rounded-full overflow-hidden shadow-2xl mx-auto">
+            <div className="w-72 h-72 lg:w-100 lg:h-100 rounded-full overflow-hidden shadow-2xl mx-auto">
               <iframe
                 src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
                 className="w-full h-full border-0"

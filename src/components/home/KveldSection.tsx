@@ -20,38 +20,38 @@ export default function KveldSection() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#543a3e] flex items-center">
-      <div className="max-w-6xl mx-auto px-6 w-full grid grid-cols-2 gap-16 items-center py-24">
-        <div>
-          <h2 className="text-5xl font-bold font-special-elite text-[#FBAF75] leading-tight mb-6">
+    <div className="bg-[#543a3e]">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center pt-12 pb-16 md:py-16 lg:py-24">
+        <div className="max-md:text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#FBAF75] leading-tight mb-6">
             Onsdag- og<br />torsdagskvelder<br />hos oss!
           </h2>
-          <p className="text-[#f0e8d8]/80 leading-relaxed text-lg mb-10">
+          <p className="text-[#f0e8d8]/80 leading-relaxed text-base lg:text-lg mb-10">
             Kom og nyt en koselig kveld med pizza, vin og gode venner. Vi har nemlig kveldsåpent
             helt til kl. 23 på onsdager og torsdager. Reserver bord til deg og din gjeng nå!
           </p>
           <Link
             href="/booking/bordreservasjon"
-            className="inline-block px-8 pt-3 pb-2 bg-[#FAF7F2] text-[#3d1f08] text-lg font-special-elite rounded-full hover:bg-[#F0E8D8] transition-colors"
+            className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-[#FAF7F2] text-[#3d1f08] text-base lg:text-lg font-special-elite rounded-full hover:bg-[#F0E8D8] transition-colors"
           >
             Reserver bord
           </Link>
         </div>
-        <div className="relative px-16 py-20">
-          <div className="absolute -top-10 -right-10 w-56 h-56 rounded-full overflow-hidden z-20 opacity-80">
+        <div className="relative px-8 py-12 lg:px-16 lg:py-20">
+          <div className="absolute max-md:-top-4 -top-6 max-md:right-0 -right-2 md:-top-2 md:right-0 lg:-top-10 lg:-right-10 w-32 h-32 lg:w-56 lg:h-56 rounded-full overflow-hidden z-20 opacity-80">
             <Image src={kunst2} alt="" fill sizes="224px" className="object-cover" />
           </div>
-          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full overflow-hidden z-0 opacity-80">
+          <div className="absolute -bottom-4 lg:-bottom-10 left-1/2 -translate-x-1/2 w-32 h-32 lg:w-56 lg:h-56 rounded-full overflow-hidden z-0 opacity-80">
             <Image src={kunst1} alt="" fill sizes="224px" className="object-cover" />
           </div>
-          <div className="relative z-10 aspect-3/4 overflow-hidden rounded-3xl">
+          <div className="relative z-10 aspect-square md:aspect-3/4 overflow-hidden rounded-3xl">
             {kveldImages.map((src, i) => (
               <div
                 key={i}
                 className="absolute inset-0 transition-opacity duration-500"
                 style={{ opacity: i === kveldIdx ? 1 : 0 }}
               >
-                <Image src={src} alt="" fill sizes="40vw" className="object-cover" />
+                <Image src={src} alt="" fill sizes="(max-width: 1024px) 80vw, 40vw" className="object-cover" />
               </div>
             ))}
           </div>
