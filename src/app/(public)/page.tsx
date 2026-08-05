@@ -55,47 +55,82 @@ export default async function Home() {
   return (
     <>
       {/* Hero-bakgrunn */}
-      <div className="bg-[#5E3926] -mt-30 pt-30">
-        {/* Hero */}
-        <div className="relative" style={{ height: '50vw' }}>
-          {/* Venstre blob — kakao */}
-          <svg
-            viewBox="0 60 1000 940"
-            style={{ position: 'absolute', top: '-62%', left: '-40%', width: '120vw', height: '120vw', transform: 'rotate(20deg)' }}
-          >
-            <defs>
-              <clipPath id="leftBlobClip">
-                <path
-                  d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z"
-                  transform="rotate(-90 500 500)"
-                />
-              </clipPath>
-            </defs>
-            <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#leftBlobClip)" />
-            <rect x="0" y="0" width="1000" height="1000" clipPath="url(#leftBlobClip)" fill="rgba(0,0,0,0.2)" />
-          </svg>
-          {/* Logo */}
-          <div className="absolute inset-0 flex flex-col items-center justify-start pt-40 z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-            <Image src={logoHvit} alt="Kokeliko" style={{ width: '65vw', height: 'auto' }} priority />
-            <p className="font-special-elite text-white text-6xl tracking-[0.3em] mt-4">KAFFEBAR</p>
-            <p className="font-special-elite text-white text-2xl tracking-[0.2em] mt-2">På Bærums Verk</p>
+      <div className="bg-[#5E3926] -mt-30 pt-30 overflow-hidden">
+        {/* Hero — fyller nøyaktig resten av viewport etter navbar */}
+        <div className="relative h-[calc(100dvh-4.5rem)] md:h-[calc(100dvh-6rem)]">
+
+          {/* === MOBIL (max-md): kakao øverst, marsipan nederst === */}
+          <div className="md:hidden">
+            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-40%', left: 'calc(-0.35 * min(250vw, calc(119dvh - 4.5rem)))', width: 'min(250vw, calc(119dvh - 4.5rem))', height: 'min(250vw, calc(119dvh - 4.5rem))', transform: 'rotate(40deg)' }}>
+              <defs>
+                <clipPath id="blobM1">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(-90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#blobM1)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobM1)" fill="rgba(0,0,0,0.2)" />
+            </svg>
+            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-32%', right: 'calc(-0.33 * min(250vw, calc(119dvh - 4.5rem)))', width: 'min(250vw, calc(119dvh - 4.5rem))', height: 'min(250vw, calc(119dvh - 4.5rem))', transform: 'rotate(25deg)' }}>
+              <defs>
+                <clipPath id="blobM2">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={marsipanImg.src} x="100" y="150" width="650" height="650" clipPath="url(#blobM2)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobM2)" fill="rgba(0,0,0,0.2)" />
+            </svg>
           </div>
-          {/* Høyre blob — marsipanboller */}
-          <svg
-            viewBox="0 50 1000 950"
-            style={{ position: 'absolute', top: '-82%', right: '-45%', width: '130vw', height: '130vw', transform: 'rotate(-20deg)' }}
-          >
-            <defs>
-              <clipPath id="rightBlobClip">
-                <path
-                  d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z"
-                  transform="rotate(90 500 500)"
-                />
-              </clipPath>
-            </defs>
-            <image href={marsipanImg.src} x="100" y="150" width="650" height="650" clipPath="url(#rightBlobClip)" />
-            <rect x="0" y="0" width="1000" height="1000" clipPath="url(#rightBlobClip)" fill="rgba(0,0,0,0.2)" />
-          </svg>
+
+          {/* === IPAD (md til lg): kakao øvre venstre, marsipan nedre høyre === */}
+          <div className="hidden md:block lg:hidden">
+            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-60%', left: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 9.7rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', transform: 'rotate(20deg)' }}>
+              <defs>
+                <clipPath id="blobT1">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(-90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#blobT1)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobT1)" fill="rgba(0,0,0,0.2)" />
+            </svg>
+            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-60%', right: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 9.7rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', transform: 'rotate(20deg)' }}>
+              <defs>
+                <clipPath id="blobT2">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={marsipanImg.src} x="100" y="150" width="650" height="650" clipPath="url(#blobT2)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobT2)" fill="rgba(0,0,0,0.2)" />
+            </svg>
+          </div>
+
+          {/* === DESKTOP (lg+): venstre / høyre === */}
+          <div className="hidden lg:block">
+            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: 'calc(54% - 60vw)', left: '-40%', width: '120vw', height: '120vw', transform: 'rotate(20deg)' }}>
+              <defs>
+                <clipPath id="leftBlobClip">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(-90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#leftBlobClip)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#leftBlobClip)" fill="rgba(0,0,0,0.2)" />
+            </svg>
+            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', top: 'calc(41% - 65vw)', right: '-45%', width: '130vw', height: '130vw', transform: 'rotate(-20deg)' }}>
+              <defs>
+                <clipPath id="rightBlobClip">
+                  <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(90 500 500)" />
+                </clipPath>
+              </defs>
+              <image href={marsipanImg.src} x="100" y="150" width="650" height="650" clipPath="url(#rightBlobClip)" />
+              <rect x="0" y="0" width="1000" height="1000" clipPath="url(#rightBlobClip)" fill="rgba(0,0,0,0.2)" />
+            </svg>
+          </div>
+
+          {/* Logo — alltid vertikalt sentrert */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+            <Image src={logoHvit} alt="Kokeliko" className="w-[90vw] md:w-[78vw] lg:w-[65vw]" style={{ height: 'auto' }} priority />
+            <p className="font-special-elite text-white text-3xl md:text-5xl lg:text-6xl tracking-[0.3em] mt-3 md:mt-4">KAFFEBAR</p>
+            <p className="font-special-elite text-white text-base md:text-xl lg:text-2xl tracking-[0.2em] mt-1 md:mt-2">På Bærums Verk</p>
+          </div>
         </div>
       </div>
 
