@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { IconX } from '@tabler/icons-react'
+import { IconX, IconPhotoOff } from '@tabler/icons-react'
 import type { Category, MenuItem } from '@/types/index'
 
 function ImageModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
@@ -14,18 +14,18 @@ function ImageModal({ item, onClose }: { item: MenuItem; onClose: () => void }) 
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-6"
+      className="fixed inset-0 z-50 bg-1/70 flex items-center justify-center p-6"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl p-2 md:p-3 lg:p-4 w-4/5 max-w-xs md:max-w-md lg:max-w-lg"
+        className="relative bg-4 rounded-2xl p-2 md:p-3 lg:p-4 w-4/5 max-w-xs md:max-w-md lg:max-w-lg"
         onClick={e => e.stopPropagation()}
       >
         <div className="relative w-full aspect-square rounded-xl overflow-hidden">
           <Image src={item.image_url!} alt={item.name} fill sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1024px) 416px, 480px" className="object-cover" />
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-stone-700 hover:text-stone-900 transition-colors"
+            className="absolute top-2 right-2 z-10 p-2 rounded-full bg-4/80 hover:bg-4 text-1 transition-colors"
           >
             <IconX strokeWidth={2.5} className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
           </button>
@@ -55,7 +55,7 @@ export default function MenuTabs({
     <>
       {lightboxItem && <ImageModal item={lightboxItem} onClose={() => setLightboxItem(null)} />}
       {/* Category tabs */}
-      <div className="mt-10 w-full lg:w-fit lg:mx-auto bg-[#FBAF75] rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
+      <div className="mt-10 w-full lg:w-fit lg:mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
         <div className="flex gap-1 w-max lg:w-auto">
           {categories.map(cat => (
             <button
@@ -63,8 +63,8 @@ export default function MenuTabs({
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 pt-1.5 pb-1 text-base md:text-lg lg:text-[1.325rem] lg:px-5 lg:pt-2 lg:pb-1 whitespace-nowrap rounded-md lg:rounded-lg transition-colors font-special-elite cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-[#715055] font-semibold text-white'
-                  : 'font-medium text-[#FAF7F2] hover:text-white'
+                  ? 'bg-5 font-semibold text-4'
+                  : 'font-medium text-1 hover:opacity-70'
               }`}
             >
               {cat.name}
@@ -80,39 +80,41 @@ export default function MenuTabs({
         return (
           <div key={cat.id} className={isActive ? '' : 'hidden'}>
             {cat.description && (
-              <p className="text-stone-500 text-sm md:text-base lg:text-lg mt-4 whitespace-pre-line text-center">
+              <p className="text-2 text-sm md:text-base lg:text-lg mt-4 whitespace-pre-line text-center">
                 {cat.description}
               </p>
             )}
             <div className="mt-4">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
                 {catItems.length === 0 ? (
-                  <p className="py-12 text-center text-stone-400 text-sm italic col-span-full">
+                  <p className="py-12 text-center text-2 text-sm italic col-span-full">
                     Ingen elementer i denne kategorien
                   </p>
                 ) : (
                   catItems.map(item => (
-                    <div key={item.id} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-white rounded-2xl">
+                    <div key={item.id} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-4 rounded-2xl">
                       <div className="flex flex-col items-center gap-1 shrink-0">
                         <div
-                          className={`relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-stone-100 ${item.image_url ? 'cursor-pointer' : ''}`}
+                          className={`relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-2 flex items-center justify-center ${item.image_url ? 'cursor-pointer' : ''}`}
                           onClick={() => item.image_url && setLightboxItem(item)}
                         >
-                          {item.image_url && (
+                          {item.image_url ? (
                             <Image src={item.image_url} alt={item.name} fill sizes="(max-width: 768px) 96px, (max-width: 1024px) 112px, 128px" loading="eager" className="object-cover" />
+                          ) : (
+                            <IconPhotoOff className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 text-3" strokeWidth={1.5} aria-hidden />
                           )}
                         </div>
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="font-semibold font-special-elite text-xl md:text-[22px] lg:text-2xl text-[#2E1608]">{item.name}</h3>
+                        <h3 className="font-semibold font-special-elite text-xl md:text-[22px] lg:text-2xl text-1">{item.name}</h3>
                         {item.description && (
-                          <p className="text-xs md:text-sm lg:text-base text-stone-600 mt-1">{item.description}</p>
+                          <p className="text-xs md:text-sm lg:text-base text-2 mt-1">{item.description}</p>
                         )}
                         {item.allergens && (
-                          <p className="text-[10px] md:text-xs lg:text-sm text-stone-400 mt-1">Allergener: {item.allergens}</p>
+                          <p className="text-[10px] md:text-xs lg:text-sm text-2/80 mt-1">Allergener: {item.allergens}</p>
                         )}
                         {item.price != null && (
-                          <p className="font-semibold text-sm md:text-[15px] lg:text-base text-pink-500 mt-2">{item.price} kr</p>
+                          <p className="font-semibold text-sm md:text-[15px] lg:text-base text-5 mt-2">{item.price} kr</p>
                         )}
                       </div>
                     </div>
