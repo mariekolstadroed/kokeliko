@@ -8,9 +8,9 @@ import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } f
 import img1 from '@/assets/booking/lukket_selskap/lukket-selskap1.jpg'
 import img2 from '@/assets/booking/lukket_selskap/lukket-selskap2.jpg'
 
-const inputClass = 'w-full px-3 py-2.5 border border-stone-200 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-stone-400 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border border-red-300 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-red-400 transition-colors'
-const labelClass = 'block text-sm font-medium text-stone-700 mb-1.5'
+const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 export default function LukketSelskap() {
   const [form, setForm] = useState({ navn: '', epost: '', type_arrangement: '', telefon: '', dato: '', fra_kl: '', til_kl: '', antall: '', onsket_mat: '', annen_info: '', _hp: '' })
@@ -66,7 +66,7 @@ export default function LukketSelskap() {
       <div className="absolute inset-y-0 left-1/2 right-0 max-md:hidden">
         <Image src={img1} alt="" fill sizes="50vw" placeholder="blur" className="object-cover" />
       </div>
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-1/40" />
     </div>
   )
 
@@ -74,9 +74,9 @@ export default function LukketSelskap() {
     return (
       <div className="relative min-h-screen flex items-center justify-center px-6 -mt-24 pt-24">
         {bgImages}
-        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
-          <p className="text-2xl font-bold text-stone-900 mb-3">Takk for din forespørsel!</p>
-          <p className="text-stone-500">Vi tar kontakt med deg så snart som mulig.</p>
+        <div className="relative bg-4/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
+          <p className="text-2xl font-bold text-1 mb-3">Takk for din forespørsel!</p>
+          <p className="text-2">Vi tar kontakt med deg så snart som mulig.</p>
         </div>
       </div>
     )
@@ -87,7 +87,7 @@ export default function LukketSelskap() {
 
   const f = (field: string) => errors[field] ? inputErrorClass : inputClass
   const err = (field: string) => errors[field]
-    ? <p className="mt-1 text-xs text-red-500">{errors[field]}</p>
+    ? <p className="mt-1 text-xs text-5">{errors[field]}</p>
     : null
 
   return (
@@ -95,13 +95,13 @@ export default function LukketSelskap() {
       {bgImages}
 
       <div className="relative w-full md:max-w-md lg:max-w-xl mt-10 md:mt-16">
-        <Link href="/booking" className="mb-3 md:mb-0 md:absolute md:-left-12 md:top-2 inline-flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-white transition-colors">
-          <IconArrowLeft size={18} className="text-stone-700" />
+        <Link href="/booking" className="mb-3 md:mb-0 md:absolute md:-left-12 md:top-2 inline-flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full bg-4/80 hover:bg-4 transition-colors">
+          <IconArrowLeft size={18} className="text-2" />
         </Link>
 
-        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 lg:p-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-2 text-center">Lukket selskap</h1>
-          <p className="text-stone-600 leading-relaxed mb-8 text-center">
+        <div className="relative bg-4/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 lg:p-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-1 mb-2 text-center">Lukket selskap</h1>
+          <p className="text-2 leading-relaxed mb-8 text-center">
             Fyll ut skjemaet så hører du fra oss med mer informasjon.
           </p>
 
@@ -169,16 +169,16 @@ export default function LukketSelskap() {
             </div>
 
             {status === 'error' && (
-              <p className="text-sm text-red-500">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+              <p className="text-sm text-5">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
             )}
             {status === 'rate_limited' && (
-              <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
+              <p className="text-sm text-5 bg-4 border border-5 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
             )}
 
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-2 px-6 py-3 bg-[#3d1f08] text-white text-sm font-medium rounded-lg hover:bg-[#2e1608] transition-colors disabled:opacity-50"
+              className="mt-2 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Send forespørsel'}
             </button>

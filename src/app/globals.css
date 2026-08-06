@@ -13,8 +13,13 @@
 }
 
 body {
-  background-color: var(--color-4);
+  background-color: var(--color-3);
   overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--color-5);
+  color: var(--color-4);
 }
 
 .logo {
@@ -38,6 +43,8 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+
 
 
 
