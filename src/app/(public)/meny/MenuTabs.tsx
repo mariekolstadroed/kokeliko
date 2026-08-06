@@ -2,7 +2,38 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { IconX } from '@tabler/icons-react'
 import type { Category, MenuItem } from '@/types/index'
+
+function ImageModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-6"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-white rounded-2xl p-2 md:p-3 lg:p-4 w-4/5 max-w-xs md:max-w-md lg:max-w-lg"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="relative w-full aspect-square rounded-xl overflow-hidden">
+          <Image src={item.image_url!} alt={item.name} fill sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1024px) 416px, 480px" className="object-cover" />
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-stone-700 hover:text-stone-900 transition-colors"
+          >
+            <IconX strokeWidth={2.5} className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function MenuTabs({
   categories,
@@ -12,6 +43,7 @@ export default function MenuTabs({
   items: MenuItem[]
 }) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [lightboxItem, setLightboxItem] = useState<MenuItem | null>(null)
 
   useEffect(() => {
     if (categories.length > 0 && activeCategory === null) {
@@ -21,6 +53,7 @@ export default function MenuTabs({
 
   return (
     <>
+      {lightboxItem && <ImageModal item={lightboxItem} onClose={() => setLightboxItem(null)} />}
       {/* Category tabs */}
       <div className="mt-10 w-full lg:w-fit lg:mx-auto bg-[#FBAF75] rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
         <div className="flex gap-1 w-max lg:w-auto">
@@ -61,7 +94,10 @@ export default function MenuTabs({
                   catItems.map(item => (
                     <div key={item.id} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-white rounded-2xl">
                       <div className="flex flex-col items-center gap-1 shrink-0">
-                        <div className="relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-stone-100">
+                        <div
+                          className={`relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-stone-100 ${item.image_url ? 'cursor-pointer' : ''}`}
+                          onClick={() => item.image_url && setLightboxItem(item)}
+                        >
                           {item.image_url && (
                             <Image src={item.image_url} alt={item.name} fill sizes="(max-width: 768px) 96px, (max-width: 1024px) 112px, 128px" loading="eager" className="object-cover" />
                           )}

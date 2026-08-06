@@ -10,7 +10,7 @@ const socials: { Icon: Icon; href: string; label: string }[] = [
 
 const contact = [
   { icon: <IconMapPin size={16} />, text: 'Elvegangen 9' },
-  { icon: <IconPhone size={16} />, text: '+47 123 45 678' },
+  { icon: <IconPhone size={16} />, text: '+47 940 88 782' },
   { icon: <IconMail size={16} />, text: 'elin@kokeliko.no' },
 ]
 

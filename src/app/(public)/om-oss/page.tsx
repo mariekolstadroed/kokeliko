@@ -26,10 +26,10 @@ export default function OmOss() {
                   så jeg måtte tenke nytt.
                 </p>
                 <p>
-                  «Kan du ikke starte en kafe da?» var det en kunde som sa. Hmm... jo, DET var lurt, tenkte jeg! 
+                  «Kan du ikke starte en kafé da?» var det en kunde som sa. Hmm... jo, DET var lurt, tenkte jeg! 
                 </p>
                 <p>
-                  Men, hvordan går jeg i gang med det da? Et googlesøk: «Hvordan starte kafe» og det kom opp flere 
+                  Men, hvordan går jeg i gang med det da? Et googlesøk: «Hvordan starte kafé» og det kom opp flere 
                   leverandører av storkjøkkenutstyr. Jeg ringte en av dem, og han roet meg heldigvis ned mine 1000 
                   ideer og sa: «Du starter med å selge kundene dine GOD kaffe, og kanskje noe hjemmebakt. Når kundene 
                   får god kaffe så kommer de tilbake, og DA kan du begynne å tenke videre!».
@@ -59,7 +59,7 @@ export default function OmOss() {
                   jobben, hehe! Men nå måtte jeg følge oppskrifter og gjøre en innsats. Oppskrifter har aldri vært 
                   min greie, men det resulterte heldigvis i MARSIPANBOLLA! Det var egentlig en kringleoppskrift som 
                   jeg modifiserte og gjorde til min egen. Uten marsipanbolla tror jeg ikke Kokeliko hadde vært det vi 
-                  er i dag. Nå er den døpt om til KOKELIKOBOLLA, og vi selger hundrevis av dem i uka.
+                  er i dag. Nå er den døpt om til KOKELIKOBOLLA, og vi selger over 100 av dem i uka!
                 </p>
               </div>
             </div>
