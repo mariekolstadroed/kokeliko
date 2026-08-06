@@ -4,12 +4,40 @@
   --font-special-elite: var(--font-special-elite);
 }
 
+@theme {
+  --color-1: #2e1608; /* mørkest brun */
+  --color-2: #5c3c2b; /* mellombrun */
+  --color-3: #D9C0A0; /* lys tan */
+  --color-4: #F6ECDE; /* krem, lysest */
+  --color-5: #914951; /* dempet murstein-rosa */
+}
+
 body {
-  background-color: #f0e8d8;
+  background-color: var(--color-4);
   overflow-x: clip;
+}
+
+.logo {
+  aspect-ratio: 1019 / 245;
+  background-color: var(--color-4);
+  -webkit-mask-image: url('/logo-hvit.png');
+  mask-image: url('/logo-hvit.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.logo--dark {
+  background-color: var(--color-1);
 }
 
 @keyframes gallery-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+
+

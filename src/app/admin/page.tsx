@@ -2,8 +2,6 @@
 
 import { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Image from 'next/image'
-import logo from '@/assets/logo-svart.png'
 import { supabase } from '@/lib/supabase'
 import MenuSection from './menu/MenuSection'
 import HoursSection from './hours/HoursSection'
@@ -38,7 +36,7 @@ function Dashboard() {
     <div className="min-h-screen bg-stone-50 pb-12">
       <header className="sticky top-0 z-10 flex items-center justify-between px-6 h-14 bg-white border-b border-stone-200">
         <div className="flex items-center gap-2">
-          <Image src={logo} alt="Kokeliko" style={{ height: '32px', width: 'auto' }} priority />
+          <div className="logo logo--dark" style={{ height: '32px' }} role="img" aria-label="Kokeliko" />
           <span className="text-[25px] text-stone-400">admin</span>
         </div>
         <button

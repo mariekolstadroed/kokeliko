@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import logo from '@/assets/logo-hvit.png'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconMapPin, IconPhone, IconMail, type Icon } from '@tabler/icons-react'
 
 const socials: { Icon: Icon; href: string; label: string }[] = [
@@ -16,10 +14,10 @@ const contact = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2e1608]">
+    <footer className="bg-1">
       <div className="px-6 md:px-10 lg:px-6 py-14 max-lg:py-10 grid grid-cols-1 md:grid-cols-3 items-center gap-8 max-w-7xl mx-auto">
 
-        <Image src={logo} alt="Kokeliko" className="brightness-90 w-auto h-10 lg:h-13 max-lg:mx-auto" />
+        <div className="logo brightness-90 w-auto h-10 lg:h-13 max-lg:mx-auto" role="img" aria-label="Kokeliko" />
 
         <div className="flex items-center justify-center gap-4">
           {socials.map(({ Icon, href, label }) => (
@@ -27,7 +25,7 @@ export default function Footer() {
               key={label}
               href={href}
               aria-label={label}
-              className="w-10 h-10 lg:w-14 lg:h-14 rounded-full border border-[#c9a882]/40 flex items-center justify-center text-[#c9a882] hover:border-[#c9a882] transition-colors"
+              className="w-10 h-10 lg:w-14 lg:h-14 rounded-full border border-(--color-4)/40 flex items-center justify-center text-3 hover:border-(--color-4) transition-colors"
             >
               <Icon size={18} className="lg:hidden" />
               <Icon size={26} className="hidden lg:block" />
@@ -35,8 +33,8 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col items-end max-md:items-center gap-3 text-[#c9a882]">
-          <p className="font-special-elite text-xl tracking-wide mb-1">Kontakt</p>
+        <div className="flex flex-col items-end max-md:items-center gap-3 text-3">
+          <p className="font-special-elite text-xl tracking-wide mb-1 text-3">Kontakt</p>
           {contact.map(({ icon, text }) => (
             <div key={text} className="flex items-center gap-2 text-sm">
               {icon}
@@ -47,7 +45,7 @@ export default function Footer() {
 
       </div>
 
-      <div className="border-t border-[#c9a882]/20 py-5 text-center text-[#c9a882]/60 text-xs">
+      <div className="border-t border-(--color-4)/20 py-5 text-center text-3/60 text-xs">
         © {new Date().getFullYear()} Kokeliko
       </div>
     </footer>

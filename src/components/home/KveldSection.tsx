@@ -20,19 +20,19 @@ export default function KveldSection() {
   }, [])
 
   return (
-    <div className="bg-[#543a3e]">
+    <div className="bg-5">
       <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center pt-12 pb-16 md:py-16 lg:py-24">
         <div className="max-md:text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#FBAF75] leading-tight mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-3 leading-tight mb-6">
             Onsdag- og<br />torsdagskvelder<br />hos oss!
           </h2>
-          <p className="text-[#f0e8d8]/80 leading-relaxed text-base lg:text-lg mb-10">
+          <p className="text-4 leading-relaxed text-base lg:text-lg mb-10">
             Kom og nyt en koselig kveld med pizza, vin og gode venner. Vi har nemlig kveldsåpent
             helt til kl. 23 på onsdager og torsdager. Reserver bord til deg og din gjeng nå!
           </p>
           <Link
             href="/booking/bordreservasjon"
-            className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-[#FAF7F2] text-[#3d1f08] text-base lg:text-lg font-special-elite rounded-full hover:bg-[#F0E8D8] transition-colors"
+            className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-1 text-4 text-base lg:text-lg font-special-elite rounded-full hover:brightness-125 transition-all"
           >
             Reserver bord
           </Link>
