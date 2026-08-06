@@ -12,9 +12,9 @@ type Props = {
   onRegistered: () => void
 }
 
-const inputClass = 'w-full px-3 py-2.5 border border-stone-200 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-stone-400 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border border-red-300 rounded-lg text-sm text-stone-800 bg-white focus:outline-none focus:border-red-400 transition-colors'
-const labelClass = 'block text-sm font-medium text-stone-700 mb-1.5'
+const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('nb-NO', {
@@ -89,20 +89,20 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
 
   const f = (field: string) => errors[field] ? inputErrorClass : inputClass
   const err = (field: string) => errors[field]
-    ? <p className="mt-1 text-xs text-red-500">{errors[field]}</p>
+    ? <p className="mt-1 text-xs text-5">{errors[field]}</p>
     : null
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-6"
+      className="fixed inset-0 bg-1/40 flex items-center justify-center z-50 p-6"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-4 rounded-2xl w-full max-w-md shadow-2xl flex flex-col max-h-[90vh]">
 
-        <div className="flex items-start justify-between px-6 py-5 border-b border-stone-200 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-3 shrink-0">
           <div>
-            <div className="text-2xl font-bold font-special-elite text-[#2E1608]">{event.title}</div>
-            <div className="flex flex-wrap items-center gap-3 text-sm text-stone-400 mt-1">
+            <div className="text-2xl font-bold font-special-elite text-1">{event.title}</div>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-2 mt-1">
               <span className="flex items-center gap-1">
                 <IconCalendar size={13} /> {formatDate(event.event_date)}
               </span>
@@ -115,7 +115,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors mt-0.5 shrink-0"
+            className="p-1 rounded-md hover:bg-3 text-2 transition-colors mt-0.5 shrink-0"
           >
             <IconX size={18} />
           </button>
@@ -123,11 +123,11 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
 
         {status === 'ok' ? (
           <div className="p-8 text-center">
-            <p className="text-lg font-bold text-stone-900 mb-2">Påmelding bekreftet!</p>
-            <p className="text-stone-500 text-sm">Du vil motta en bekreftelse på e-post med mulighet for avmelding.</p>
+            <p className="text-lg font-bold text-1 mb-2">Påmelding bekreftet!</p>
+            <p className="text-2 text-sm">Du vil motta en bekreftelse på e-post med mulighet for avmelding.</p>
             <button
               onClick={onClose}
-              className="mt-6 px-5 py-2 text-sm font-medium rounded-lg border border-stone-200 text-stone-700 hover:bg-stone-50 transition-colors"
+              className="mt-6 px-5 py-2 text-sm font-medium rounded-lg border border-3 text-2 hover:bg-3 transition-colors"
             >
               Lukk
             </button>
@@ -154,18 +154,18 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             </div>
 
             {status === 'duplicate' && (
-              <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              <p className="text-sm text-5 bg-4 border border-5 rounded-lg px-3 py-2">
                 Denne e-postadressen er allerede påmeldt dette arrangementet.
               </p>
             )}
             {status === 'error' && (
-              <p className="text-sm text-red-500">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+              <p className="text-sm text-5">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
             )}
 
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-1 px-6 py-3 bg-[#3d1f08] text-white text-sm font-medium rounded-lg hover:bg-[#2e1608] transition-colors disabled:opacity-50"
+              className="mt-1 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Meld deg på'}
             </button>

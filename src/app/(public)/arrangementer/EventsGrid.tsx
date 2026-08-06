@@ -34,12 +34,12 @@ export default function EventsGrid() {
   }
 
   if (loading) {
-    return <div className="text-sm text-stone-400 text-center py-16">Laster…</div>
+    return <div className="text-sm text-2 text-center py-16">Laster…</div>
   }
 
   if (events.length === 0) {
     return (
-      <div className="text-center py-16 text-stone-400 italic text-sm">
+      <div className="text-center py-16 text-2 italic text-sm">
         Ingen kommende arrangementer
       </div>
     )

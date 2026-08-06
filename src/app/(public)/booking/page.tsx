@@ -12,11 +12,11 @@ const cards = [
 
 export default function Booking() {
   return (
-    <div className="bg-3 -mt-30 pt-30">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-1 mb-3 text-center">Booking</h1>
+    <div className="bg-2 -mt-30 pt-30">
+      <div className="min-h-[calc(100dvh-4.5rem)] md:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 md:px-10 lg:px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-3 text-center">Booking</h1>
         <div className="text-center flex flex-col gap-3 mt-4 md:mt-6 lg:mt-8">
-          <p className="text-2 text-base md:text-[17px] lg:text-lg">
+          <p className="text-3 text-base md:text-[17px] lg:text-lg">
             Reserver bord hos oss! Vi tar imot bordreservasjoner i vanlig åpningstid på hverdager, samt onsdag og torsdag kveld.
             Grupper over 10 bes forhåndsbestille mat i skjemaet.<br />
             Vi tilbyr catering til konfirmasjon med f.eks. tapas, bursdag og andre selskap. Skriv ønskede retter og eventuelle
@@ -31,7 +31,7 @@ export default function Booking() {
             <Link
               key={href}
               href={href}
-              className={`relative rounded-3xl overflow-hidden group max-w-sm mx-auto w-full md:max-w-none
+              className={`relative rounded-3xl overflow-hidden shadow-sm group max-w-sm mx-auto w-full md:max-w-none
                 ${i === 0
                   ? 'aspect-square md:col-span-2 md:aspect-3/1 lg:col-span-1 lg:aspect-square'
                   : 'aspect-square'
@@ -48,10 +48,10 @@ export default function Booking() {
                 placeholder="blur"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-1/55" />
+              <div className="absolute inset-0 bg-1/60 mix-blend-multiply" />
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
                 <h3 className="text-4 font-bold font-special-elite text-2xl md:text-3xl leading-snug">{title}</h3>
-                <p className="text-4/80 text-sm md:text-base mt-1">{sub}</p>
+                <p className="text-4 text-sm md:text-base mt-1">{sub}</p>
               </div>
             </Link>
           ))}

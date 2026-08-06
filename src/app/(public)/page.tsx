@@ -262,7 +262,7 @@ export default async function Home() {
           <div className="flex justify-center">
           <a
             href="mailto:elin@kokeliko.no"
-            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-full hover:brightness-95 transition-all"
+            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-full shadow-sm hover:brightness-95 transition-all"
           >
             Send oss dine ønsker
           </a>

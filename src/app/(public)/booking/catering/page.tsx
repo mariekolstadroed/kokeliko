@@ -205,7 +205,7 @@ export default function Catering() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-2 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg hover:brightness-125 transition-colors disabled:opacity-50"
+              className="mt-2 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Send forespørsel'}
             </button>

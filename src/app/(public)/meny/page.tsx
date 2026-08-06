@@ -27,7 +27,7 @@ export default async function MenuPage() {
 
   return (
     <div className="bg-3 -mt-30 pt-30">
-      <div className="max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
+      <div className="min-h-[calc(100dvh-4.5rem)] md:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-1 mb-3 text-center">Meny</h1>
         <MenuTabs categories={categories} items={items} />
       </div>

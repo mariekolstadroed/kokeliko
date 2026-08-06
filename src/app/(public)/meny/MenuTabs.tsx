@@ -55,7 +55,7 @@ export default function MenuTabs({
     <>
       {lightboxItem && <ImageModal item={lightboxItem} onClose={() => setLightboxItem(null)} />}
       {/* Category tabs */}
-      <div className="mt-10 w-full lg:w-fit lg:mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
+      <div className="mt-10 w-full lg:w-fit lg:max-w-full lg:mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
         <div className="flex gap-1 w-max lg:w-auto">
           {categories.map(cat => (
             <button
@@ -63,7 +63,7 @@ export default function MenuTabs({
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 pt-1.5 pb-1 text-base md:text-lg lg:text-[1.325rem] lg:px-5 lg:pt-2 lg:pb-1 whitespace-nowrap rounded-md lg:rounded-lg transition-colors font-special-elite cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-5 font-semibold text-4'
+                  ? 'bg-5 font-semibold text-4 shadow-sm'
                   : 'font-medium text-1 hover:opacity-70'
               }`}
             >
@@ -87,12 +87,12 @@ export default function MenuTabs({
             <div className="mt-4">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
                 {catItems.length === 0 ? (
-                  <p className="py-12 text-center text-2 text-sm italic col-span-full">
+                  <p className="py-12 text-center text-2 text-sm md:text-base lg:text-lg italic col-span-full">
                     Ingen elementer i denne kategorien
                   </p>
                 ) : (
                   catItems.map(item => (
-                    <div key={item.id} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-4 rounded-2xl">
+                    <div key={item.id} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-4 rounded-2xl shadow-sm">
                       <div className="flex flex-col items-center gap-1 shrink-0">
                         <div
                           className={`relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-2 flex items-center justify-center ${item.image_url ? 'cursor-pointer' : ''}`}

@@ -1,4 +1,4 @@
-import { IconCalendar, IconClock, IconUsers } from '@tabler/icons-react'
+import { IconCalendar, IconClock, IconUsers, IconPhotoOff } from '@tabler/icons-react'
 import type { Event } from '@/types'
 
 type Props = {
@@ -18,29 +18,30 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
   const isPast = event.event_date < new Date().toISOString().slice(0, 10)
 
   return (
-    <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
-      <div className="relative h-56 bg-stone-100 overflow-hidden">
+    <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+      <div className="relative h-56 overflow-hidden">
         {event.image_url ? (
           <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-stone-300 text-sm italic">
-            Ingen bilde
+          <div className="w-full h-full flex items-center justify-center bg-2">
+            <IconPhotoOff className="w-14 h-14 text-3" strokeWidth={1.5} aria-hidden />
           </div>
         )}
-        {isPast && <div className="absolute inset-0 bg-white/50" />}
+        {event.image_url && <div className="absolute inset-0 bg-1/20" />}
+        {isPast && <div className="absolute inset-0 bg-4/50" />}
         {isPast && (
-          <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-stone-600/70 text-white">
+          <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-1/70 text-4">
             Arrangementet har vært
           </span>
         )}
       </div>
 
       <div className={`p-6 flex flex-col gap-3 flex-1${isPast ? ' opacity-70' : ''}`}>
-        <h2 className="text-2xl font-bold font-special-elite text-[#2E1608] leading-snug">
+        <h2 className="text-2xl font-bold font-special-elite text-1 leading-snug">
           {event.title}
         </h2>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-stone-500">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-m font-medium text-5">
           <span className="flex items-center gap-1.5">
             <IconCalendar size={15} />
             {formatDate(event.event_date)}
@@ -59,24 +60,24 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
         </div>
 
         {event.description && (
-          <p className="text-stone-600 text-sm leading-relaxed whitespace-pre-line">
+          <p className="text-2 text-sm leading-relaxed whitespace-pre-line">
             {event.description}
           </p>
         )}
 
         <div className="mt-auto pt-4">
           {isPast ? (
-            <span className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-stone-400 border border-stone-200 rounded-lg">
+            <span className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-2 border border-3 rounded-lg">
               Arrangementet har vært
             </span>
           ) : isFull ? (
-            <span className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-stone-400 border border-stone-200 rounded-lg">
+            <span className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-2 border border-3 rounded-lg">
               Fulltegnet
             </span>
           ) : (
             <button
               onClick={onRegister}
-              className="px-5 py-2.5 bg-[#3d1f08] text-white text-sm font-medium rounded-lg hover:bg-[#2e1608] transition-colors"
+              className="px-5 py-2.5 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors"
             >
               Meld deg på
             </button>
