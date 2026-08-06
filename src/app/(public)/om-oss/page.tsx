@@ -15,7 +15,6 @@ export default function OmOss() {
 
         <div className="flex flex-col gap-16 md:gap-24">
 
-          {/* Seksjon 1 — tekst venstre, bilde høyre */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
               <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Tiden flyr…</h2>
@@ -41,7 +40,6 @@ export default function OmOss() {
             </div>
           </div>
 
-          {/* Seksjon 2 — bilde venstre, tekst høyre */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div className="order-2 md:order-1 rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:mr-auto relative">
               <Image src={marsipanbollerImg} alt="Marsipanboller" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
@@ -65,7 +63,6 @@ export default function OmOss() {
             </div>
           </div>
 
-          {/* Seksjon 3 — tekst venstre, bilde høyre */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
               <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Kokeliko på lykke-Verket</h2>

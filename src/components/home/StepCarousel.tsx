@@ -36,7 +36,6 @@ export default function StepCarousel({
     return () => ro.disconnect()
   }, [])
 
-  // Desktop: sliding
   useEffect(() => {
     if (!shouldLoop) return
     const id = setInterval(() => setStep(s => s + 1), 3000)
@@ -58,7 +57,6 @@ export default function StepCarousel({
     return () => cancelAnimationFrame(id)
   }, [noTransition])
 
-  // Mobile: fade
   useEffect(() => {
     const id = setInterval(() => setFadeIdx(i => (i + 1) % items.length), 3000)
     return () => clearInterval(id)

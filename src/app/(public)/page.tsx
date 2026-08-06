@@ -53,12 +53,11 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero-bakgrunn */}
       <div className="bg-1 -mt-30 pt-30 overflow-hidden">
-        {/* Hero — fyller nøyaktig resten av viewport etter navbar */}
+        {/* fyller nøyaktig resten av viewport etter navbar */}
         <div className="relative h-[calc(100dvh-4.5rem)] md:h-[calc(100dvh-6rem)]">
 
-          {/* === MOBIL (max-md): kakao øverst, marsipan nederst === */}
+          {/* Mobil: kakao øverst, marsipan nederst */}
           <div className="md:hidden">
             <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-40%', left: 'calc(-0.35 * min(250vw, calc(119dvh - 4.5rem)))', width: 'min(250vw, calc(119dvh - 4.5rem))', height: 'min(250vw, calc(119dvh - 4.5rem))', transform: 'rotate(40deg)' }}>
               <defs>
@@ -80,7 +79,7 @@ export default async function Home() {
             </svg>
           </div>
 
-          {/* === IPAD (md til lg): kakao øvre venstre, marsipan nedre høyre === */}
+          {/* iPad: kakao øvre venstre, marsipan nedre høyre */}
           <div className="hidden md:block lg:hidden">
             <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-60%', left: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 9.7rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', transform: 'rotate(20deg)' }}>
               <defs>
@@ -102,7 +101,7 @@ export default async function Home() {
             </svg>
           </div>
 
-          {/* === DESKTOP (lg+): venstre / høyre === */}
+          {/* Desktop: venstre / høyre */}
           <div className="hidden lg:block">
             <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: 'calc(54% - 60vw)', left: '-40%', width: '120vw', height: '120vw', transform: 'rotate(20deg)' }}>
               <defs>
@@ -124,7 +123,6 @@ export default async function Home() {
             </svg>
           </div>
 
-          {/* Logo — alltid vertikalt sentrert */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
             <div className="logo w-[90vw] md:w-[78vw] lg:w-[65vw]" role="img" aria-label="Kokeliko" />
             <p className="font-special-elite text-4 text-3xl md:text-5xl lg:text-6xl tracking-[0.3em] mt-3 md:mt-4">KAFFEBAR</p>
@@ -136,10 +134,8 @@ export default async function Home() {
       <div className="bg-4">
       <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16">
 
-        {/* Opening hours */}
         <div className="grid grid-cols-1 md:grid-cols-[auto_auto] md:justify-center lg:grid-cols-[1fr_auto] items-center gap-10 md:gap-16 lg:gap-16">
 
-          {/* Regular hours */}
           <div className="lg:pl-20">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-5 mb-6 lg:mb-8 max-lg:text-center">Åpningstider</h2>
             <div className="max-lg:w-fit max-lg:mx-auto flex flex-col gap-4 lg:gap-5">
@@ -154,7 +150,6 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Special hours */}
           {specialGroups.length > 0 ? (
             <div className="flex flex-col gap-3 lg:gap-4 max-lg:w-fit max-lg:mx-auto lg:max-w-115 lg:pr-20">
               {specialGroups.map(group => (
@@ -192,7 +187,6 @@ export default async function Home() {
       </div>
       </div>
 
-      {/* Våre bestselgere */}
       {gallery.filter(i => i.section === 'bestselgere').length > 0 && (
         <div className="bg-2">
           <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
@@ -202,16 +196,13 @@ export default async function Home() {
         </div>
       )}
 
-      {/* Onsdag og torsdagkvelder — full bredde */}
       <KveldSection />
 
-      {/* Kaffen vår */}
       <div className="relative">
         <Image src={elinPaKaffeImg} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-1/70" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
-            {/* Overlapping circles */}
             <div className="order-2 lg:order-1 relative h-72 w-72 lg:h-120 lg:w-120 mx-auto shrink-0">
               <div className="absolute top-0 left-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
                 <Image src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
@@ -220,7 +211,6 @@ export default async function Home() {
                 <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
               </div>
             </div>
-            {/* Text */}
             <div className="order-1 lg:order-2 max-lg:text-center">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-6">Kaffen vår</h2>
               <p className="text-4/90 leading-relaxed text-base lg:text-lg mb-6">
@@ -240,7 +230,6 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Nyheter i hyllene */}
       {gallery.filter(i => i.section === 'nyheter').length > 0 && (
         <div className="bg-4">
           <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
@@ -250,7 +239,6 @@ export default async function Home() {
         </div>
       )}
 
-      {/* Gaver */}
       <div className="bg-3">
         <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-1 mb-4 text-center">Gaver</h2>
@@ -262,7 +250,7 @@ export default async function Home() {
           <div className="flex justify-center">
           <a
             href="mailto:elin@kokeliko.no"
-            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-full shadow-sm shadow-1/30 hover:brightness-95 transition-all"
+            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-lg shadow-sm shadow-1/30 hover:brightness-95 transition-all"
           >
             Send oss dine ønsker
           </a>
@@ -278,7 +266,6 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Finn oss */}
       <div className="relative">
         <Image src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
         <div className="absolute inset-0 bg-1/70" />

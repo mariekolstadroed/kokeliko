@@ -54,7 +54,6 @@ export default function MenuTabs({
   return (
     <>
       {lightboxItem && <ImageModal item={lightboxItem} onClose={() => setLightboxItem(null)} />}
-      {/* Category tabs */}
       <div className="mt-10 w-full lg:w-fit lg:max-w-full lg:mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
         <div className="flex gap-1 w-max lg:w-auto">
           {categories.map(cat => (
@@ -73,7 +72,6 @@ export default function MenuTabs({
         </div>
       </div>
 
-      {/* Category description + items — alle kategorier rendres, kun aktiv vises */}
       {categories.map(cat => {
         const catItems = items.filter(i => i.category_id === cat.id)
         const isActive = cat.id === activeCategory
