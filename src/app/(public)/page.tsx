@@ -160,7 +160,7 @@ export default async function Home() {
               {specialGroups.map(group => (
                 <div
                   key={group.id}
-                  className="border-[2px] lg:border-[4px] rounded-2xl p-4 lg:p-6 backdrop-blur-sm shadow-lg"
+                  className="border-[2px] lg:border-[4px] rounded-2xl p-4 lg:p-6 backdrop-blur-sm shadow-lg shadow-1/30"
                   style={{ borderColor: group.theme ?? '#D9C0A0', backgroundColor: `${group.theme ?? '#D9C0A0'}33` }}
                 >
                   <h3 className="text-base lg:text-lg font-bold font-special-elite text-5 mb-2 lg:mb-4">{group.title}</h3>
@@ -262,7 +262,7 @@ export default async function Home() {
           <div className="flex justify-center">
           <a
             href="mailto:elin@kokeliko.no"
-            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-full shadow-sm hover:brightness-95 transition-all"
+            className="inline-block mb-12 px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base lg:text-lg rounded-full shadow-sm shadow-1/30 hover:brightness-95 transition-all"
           >
             Send oss dine ønsker
           </a>
@@ -295,13 +295,14 @@ export default async function Home() {
                 med utsikt til elva!
               </p>
             </div>
-            <div className="w-72 h-72 lg:w-100 lg:h-100 rounded-full overflow-hidden shadow-2xl mx-auto">
+            <div className="relative w-72 h-72 lg:w-100 lg:h-100 rounded-full overflow-hidden shadow-2xl shadow-1/30 mx-auto">
               <iframe
                 src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
                 title="Kokeliko kart"
               />
+              <div className="absolute inset-0 bg-2/5 pointer-events-none" />
             </div>
           </div>
         </div>

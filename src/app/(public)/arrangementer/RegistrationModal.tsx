@@ -12,8 +12,8 @@ type Props = {
   onRegistered: () => void
 }
 
-const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 function formatDate(dateStr: string) {
@@ -97,7 +97,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
       className="fixed inset-0 bg-1/40 flex items-center justify-center z-50 p-6"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-4 rounded-2xl w-full max-w-md shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-4 rounded-2xl w-full max-w-md shadow-2xl shadow-1/30 flex flex-col max-h-[90vh]">
 
         <div className="flex items-start justify-between px-6 py-5 border-b border-3 shrink-0">
           <div>
@@ -165,7 +165,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-1 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors disabled:opacity-50"
+              className="mt-1 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Meld deg på'}
             </button>

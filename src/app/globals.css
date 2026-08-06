@@ -10,10 +10,11 @@
   --color-3: #D9C0A0; /* lys tan */
   --color-4: #F6ECDE; /* krem, lysest */
   --color-5: #914951; /* dempet murstein-rosa */
+  --color-6: #FFFEFA; /* nær hvit, varm - navbar og input-felt */
 }
 
 body {
-  background-color: var(--color-3);
+  background-color: var(--color-4);
   overflow-x: clip;
 }
 
@@ -43,6 +44,7 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
 
 
 

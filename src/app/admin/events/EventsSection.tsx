@@ -7,7 +7,7 @@ import EventModal from './EventModal'
 import RegistrationsModal from './RegistrationsModal'
 import {
   IconPlus, IconCalendar, IconClock, IconUsers,
-  IconEdit, IconTrash, IconEye, IconEyeOff, IconPhoto,
+  IconEdit, IconTrash, IconEye, IconEyeOff, IconPhotoOff,
 } from '@tabler/icons-react'
 
 function formatDate(dateStr: string) {
@@ -109,7 +109,7 @@ export default function EventsSection() {
                       <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-stone-300">
-                        <IconPhoto size={28} />
+                        <IconPhotoOff size={28} />
                       </div>
                     )}
                     {isPast && <div className="absolute inset-0 bg-white/50" />}

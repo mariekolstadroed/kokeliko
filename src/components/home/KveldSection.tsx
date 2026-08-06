@@ -32,7 +32,7 @@ export default function KveldSection() {
           </p>
           <Link
             href="/booking/bordreservasjon"
-            className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-1 text-4 text-base lg:text-lg font-special-elite rounded-full shadow-sm hover:brightness-125 transition-all"
+            className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-1 text-4 text-base lg:text-lg font-special-elite rounded-full shadow-sm shadow-1/30 hover:brightness-125 transition-all"
           >
             Reserver bord
           </Link>

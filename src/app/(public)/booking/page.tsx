@@ -31,7 +31,7 @@ export default function Booking() {
             <Link
               key={href}
               href={href}
-              className={`relative rounded-3xl overflow-hidden shadow-sm group max-w-sm mx-auto w-full md:max-w-none
+              className={`relative rounded-3xl overflow-hidden shadow-md shadow-1/30 group max-w-sm mx-auto w-full md:max-w-none
                 ${i === 0
                   ? 'aspect-square md:col-span-2 md:aspect-3/1 lg:col-span-1 lg:aspect-square'
                   : 'aspect-square'

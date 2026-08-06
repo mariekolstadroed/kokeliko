@@ -12,8 +12,8 @@ export default function AvmeldForm({ token }: Props) {
 
   if (!token) {
     return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-10 text-center w-full max-w-sm mx-auto">
-        <p className="text-stone-500">Ugyldig avmeldingslenke.</p>
+      <div className="bg-4/70 backdrop-blur-sm rounded-2xl p-10 text-center w-full max-w-sm mx-auto">
+        <p className="text-2">Ugyldig avmeldingslenke.</p>
       </div>
     )
   }
@@ -31,33 +31,33 @@ export default function AvmeldForm({ token }: Props) {
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-10 text-center w-full max-w-sm mx-auto">
+    <div className="bg-4/70 backdrop-blur-sm rounded-2xl p-10 text-center w-full max-w-sm mx-auto">
       {status === 'ok' ? (
         <>
-          <p className="text-2xl font-bold font-special-elite text-[#2E1608] mb-3">Du er avmeldt</p>
-          <p className="text-stone-500 mb-8">Vi håper å se deg på et annet arrangement.</p>
-          <Link href="/arrangementer" className="text-sm text-stone-500 hover:text-stone-700 underline">
+          <p className="text-2xl font-bold font-special-elite text-1 mb-3">Du er avmeldt</p>
+          <p className="text-2 mb-8">Vi håper å se deg på et annet arrangement.</p>
+          <Link href="/arrangementer" className="text-sm text-2 hover:opacity-70 underline">
             Se alle arrangementer
           </Link>
         </>
       ) : status === 'started' ? (
         <>
-          <p className="text-stone-700 font-medium mb-2">Arrangementet har allerede startet.</p>
-          <p className="text-stone-500 text-sm">Avmelding er ikke lenger mulig.</p>
+          <p className="text-2 font-medium mb-2">Arrangementet har allerede startet.</p>
+          <p className="text-2 text-sm">Avmelding er ikke lenger mulig.</p>
         </>
       ) : status === 'error' ? (
         <>
-          <p className="text-stone-700 font-medium mb-2">Noe gikk galt.</p>
-          <p className="text-stone-500 text-sm">Prøv igjen, eller kontakt oss direkte.</p>
+          <p className="text-2 font-medium mb-2">Noe gikk galt.</p>
+          <p className="text-2 text-sm">Prøv igjen, eller kontakt oss direkte.</p>
         </>
       ) : (
         <>
-          <p className="text-2xl font-bold font-special-elite text-[#2E1608] mb-3">Avmeld deg?</p>
-          <p className="text-stone-500 mb-8">Denne handlingen kan ikke angres.</p>
+          <p className="text-2xl font-bold font-special-elite text-1 mb-3">Avmeld deg?</p>
+          <p className="text-2 mb-8">Denne handlingen kan ikke angres.</p>
           <button
             onClick={handleCancel}
             disabled={status === 'loading'}
-            className="px-6 py-2.5 bg-[#3d1f08] text-white text-sm font-medium rounded-lg hover:bg-[#2e1608] transition-colors disabled:opacity-50"
+            className="px-6 py-2.5 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors disabled:opacity-50"
           >
             {status === 'loading' ? 'Melder av…' : 'Bekreft avmelding'}
           </button>

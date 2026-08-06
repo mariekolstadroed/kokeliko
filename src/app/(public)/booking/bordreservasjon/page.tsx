@@ -9,8 +9,8 @@ import resImg2 from '@/assets/booking/reservasjon/reservasjon2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '@/lib/validation'
 import { useOpeningHours } from '@/hooks/useOpeningHours'
 
-const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-white accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 export default function BordReservasjon() {
@@ -186,7 +186,7 @@ export default function BordReservasjon() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-2 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors disabled:opacity-50"
+              className="mt-2 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Send forespørsel'}
             </button>

@@ -18,7 +18,7 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
   const isPast = event.event_date < new Date().toISOString().slice(0, 10)
 
   return (
-    <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+    <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm shadow-1/30 flex flex-col">
       <div className="relative h-56 overflow-hidden">
         {event.image_url ? (
           <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
@@ -77,7 +77,7 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
           ) : (
             <button
               onClick={onRegister}
-              className="px-5 py-2.5 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm hover:brightness-125 transition-colors"
+              className="px-5 py-2.5 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors"
             >
               Meld deg på
             </button>

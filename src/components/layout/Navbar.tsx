@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 px-6 md:px-10 lg:px-6 pt-5 pb-2">
       {/* Navbar-pille — endrer seg aldri */}
-      <nav className="flex items-center justify-between bg-4/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-sm max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between bg-6/70 backdrop-blur-sm rounded-full px-8 py-4 shadow-md shadow-2/30 max-w-7xl mx-auto">
         <Link href="/" onClick={() => setIsOpen(false)}>
           <div className="logo logo--dark" style={{ height: '2.25rem' }} role="img" aria-label="Kokeliko" />
         </Link>
@@ -53,7 +53,7 @@ export default function Navbar() {
       {/* Mobilmeny — eget panel under pilla, høyrejustert, over innholdet */}
       {isOpen && (
         <div className="lg:hidden absolute top-full left-6 right-6 md:left-10 md:right-10 mt-0 flex justify-end max-w-7xl mx-auto">
-          <div className="bg-4/80 backdrop-blur-sm rounded-2xl shadow-sm px-10 py-6 flex flex-col items-center gap-6">
+          <div className="bg-6/90 backdrop-blur-sm rounded-2xl shadow-sm shadow-1/30 px-10 py-6 flex flex-col items-center gap-6">
             {links.map(({ to, label }) => {
               const isActive = pathname === to || pathname.startsWith(to + '/')
               return (

@@ -5,12 +5,12 @@ import uteImg from '@/assets/omoss/ute.jpg'
 
 export default function OmOss() {
   return (
-    <div className="-mt-30 pt-30">
+    <div className="bg-4 -mt-30 pt-30">
       <div className="min-h-[calc(100dvh-4.5rem)] md:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-24">
 
         <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-[#2E1608] mb-3">Om oss</h1>
-          <p className="text-stone-500 text-base md:text-[17px] lg:text-lg mt-4 md:mt-6 lg:mt-8">Historien om Kokeliko, hilsen daglig leder Elin</p>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-5 mb-3">Om oss</h1>
+          <p className="text-2 text-base md:text-[17px] lg:text-lg mt-4 md:mt-6 lg:mt-8">Historien om Kokeliko, hilsen daglig leder Elin</p>
         </div>
 
         <div className="flex flex-col gap-16 md:gap-24">
@@ -18,8 +18,8 @@ export default function OmOss() {
           {/* Seksjon 1 — tekst venstre, bilde høyre */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
-              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">Tiden flyr…</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
+              <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Tiden flyr…</h2>
+              <div className="flex flex-col gap-4 text-2 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   I 2013 begynte dette Kokeliko-prosjektet som skulle bli en riktig så spennende og innholdsrik reise! 
                   Jeg hadde drevet systue i et lokale på Vøyenenga, men det var ikke økonomi til å drive det videre, 
@@ -47,8 +47,8 @@ export default function OmOss() {
               <Image src={marsipanbollerImg} alt="Marsipanboller" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">Vår egen bolle!</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
+              <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Vår egen bolle!</h2>
+              <div className="flex flex-col gap-4 text-2 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   Dermed kom Mr. Simonelli inn i livet mitt som en skikkelig god kollega! Det er den trofaste 
                   espressomaskinen vår, som sannsynligvis må byttes på et tidspunkt, men som har levert den beste 
@@ -68,8 +68,8 @@ export default function OmOss() {
           {/* Seksjon 3 — tekst venstre, bilde høyre */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div>
-              <h2 className="font-special-elite text-[#2E1608] text-2xl md:text-3xl lg:text-4xl mb-6">Kokeliko på lykke-Verket</h2>
-              <div className="flex flex-col gap-4 text-stone-700 text-base md:text-[17px] lg:text-lg leading-relaxed">
+              <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Kokeliko på lykke-Verket</h2>
+              <div className="flex flex-col gap-4 text-2 text-base md:text-[17px] lg:text-lg leading-relaxed">
                 <p>
                   Mange boller og kaffekopper, og etterhvert thaisalater og rekesmørbrød senere, flyttet vi inn i 
                   Elvegangen 9 på Bærums Verk i 2019, og her har vi lyst til å bli lenge! Fra å være bare meg, er vi nå 20 
