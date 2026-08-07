@@ -158,14 +158,14 @@ export default async function Home() {
                   className="border-[2px] lg:border-[4px] rounded-2xl p-4 lg:p-6 backdrop-blur-sm shadow-lg shadow-1/30"
                   style={{ borderColor: group.theme ?? '#D9C0A0', backgroundColor: `${group.theme ?? '#D9C0A0'}33` }}
                 >
-                  <h3 className="text-base lg:text-lg font-bold font-special-elite text-5 mb-2 lg:mb-4">{group.title}</h3>
+                  <h3 className="text-base lg:text-lg font-bold font-special-elite text-1 mb-2 lg:mb-4">{group.title}</h3>
                   <div className="flex flex-col gap-2 lg:gap-3">
                     {group.hours.map(h => (
                       <div key={h.id} className="flex gap-4 lg:gap-8 text-sm lg:text-base">
-                        <span className="text-2 font-medium w-28 lg:w-36 shrink-0">
+                        <span className="text-1 font-medium w-28 lg:w-36 shrink-0">
                           {h.description ?? (h.date ? formatDate(h.date) : '')}
                         </span>
-                        <span className="text-2">
+                        <span className="text-1">
                           {h.closed ? 'Stengt' : `${formatTime(h.open_time)} – ${formatTime(h.close_time)}`}
                         </span>
                       </div>

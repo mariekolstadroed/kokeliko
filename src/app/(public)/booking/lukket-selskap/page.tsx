@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IconArrowLeft } from '@tabler/icons-react'
@@ -17,6 +17,10 @@ export default function LukketSelskap() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'rate_limited'>('idle')
 
+  useEffect(() => {
+    if (status === 'ok') window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [status])
+
   function set(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }))
@@ -24,6 +28,7 @@ export default function LukketSelskap() {
 
   function validate() {
     const e: Record<string, string> = {}
+    if (!form.navn.trim()) e.navn = 'Navn er påkrevd'
     const epost = validateEmail(form.epost)
     if (epost) e.epost = epost
     const telefon = validatePhone(form.telefon)
@@ -37,6 +42,7 @@ export default function LukketSelskap() {
     if (til) e.til_kl = til
     if (!e.fra_kl && !e.til_kl && form.fra_kl && form.til_kl && form.fra_kl >= form.til_kl)
       e.til_kl = 'Sluttidspunkt må være etter starttidspunkt'
+    if (!form.onsket_mat.trim()) e.onsket_mat = 'Ønsket mat er påkrevd'
     return e
   }
 
@@ -105,7 +111,7 @@ export default function LukketSelskap() {
             Fyll ut skjemaet så hører du fra oss med mer informasjon.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
             <div style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }} aria-hidden="true">
               <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form._hp} onChange={e => set('_hp', e.target.value)} />
             </div>
@@ -159,8 +165,9 @@ export default function LukketSelskap() {
             </div>
 
             <div>
-              <label className={labelClass}>Ønsket mat</label>
-              <textarea className={inputClass + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+              <label className={labelClass}>Ønsket mat *</label>
+              <textarea className={f('onsket_mat') + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+              {err('onsket_mat')}
             </div>
 
             <div>
@@ -169,10 +176,10 @@ export default function LukketSelskap() {
             </div>
 
             {status === 'error' && (
-              <p className="text-sm text-5">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
             )}
             {status === 'rate_limited' && (
-              <p className="text-sm text-5 bg-4 border border-5 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
             )}
 
             <button

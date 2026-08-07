@@ -85,7 +85,7 @@ export default function MenuTabs({
             <div className="mt-4">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
                 {catItems.length === 0 ? (
-                  <p className="py-12 text-center text-2 text-sm md:text-base lg:text-lg italic col-span-full">
+                  <p className="py-12 text-center text-5 font-semibold text-sm md:text-base lg:text-lg italic col-span-full">
                     Ingen elementer i denne kategorien
                   </p>
                 ) : (

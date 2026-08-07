@@ -39,7 +39,7 @@ export default function EventsGrid() {
 
   if (events.length === 0) {
     return (
-      <div className="text-center py-16 text-2 italic text-sm">
+      <div className="text-center py-16 text-5 font-semibold italic text-sm md:text-base lg:text-lg">
         Ingen kommende arrangementer
       </div>
     )
@@ -48,7 +48,7 @@ export default function EventsGrid() {
   return (
     <>
       <div className={events.length === 1
-        ? 'max-w-lg mx-auto'
+        ? 'max-w-lg lg:max-w-2xl mx-auto'
         : 'grid grid-cols-1 md:grid-cols-2 gap-8 items-start'
       }>
         {events.map(event => (

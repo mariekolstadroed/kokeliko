@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IconArrowLeft } from '@tabler/icons-react'
@@ -19,6 +19,10 @@ export default function BordReservasjon() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'rate_limited'>('idle')
   const { forDate } = useOpeningHours()
 
+  useEffect(() => {
+    if (status === 'ok') window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [status])
+
   function set(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }))
@@ -30,6 +34,7 @@ export default function BordReservasjon() {
 
   function validate() {
     const e: Record<string, string> = {}
+    if (!form.navn.trim()) e.navn = 'Navn er påkrevd'
     const epost = validateEmail(form.epost)
     if (epost) e.epost = epost
     const telefon = validatePhone(form.telefon)
@@ -43,9 +48,10 @@ export default function BordReservasjon() {
     if (!e.dato && dayHours?.closed) e.dato = 'Stengt denne dagen'
     if (!form.antall || Number(form.antall) < 1) e.antall = 'Antall må være større enn 0'
     if (Number(form.antall) >= 10 && !form.onsket_mat.trim()) e.onsket_mat = 'Ved bordbestilling for over 10 personer må mat forhåndsbestilles'
-    if (!e.dato && openTime && closeTime && form.klokkeslett) {
-      if (form.klokkeslett < openTime || form.klokkeslett > closeTime)
-        e.klokkeslett = `Åpent ${openTime}–${closeTime}`
+    if (!form.klokkeslett) {
+      e.klokkeslett = 'Klokkeslett er påkrevd'
+    } else if (!e.dato && openTime && closeTime && (form.klokkeslett < openTime || form.klokkeslett > closeTime)) {
+      e.klokkeslett = `Åpent ${openTime}–${closeTime}`
     }
     return e
   }
@@ -113,7 +119,7 @@ export default function BordReservasjon() {
             Fyll ut skjemaet så bekrefter vi reservasjonen din på e-post.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
             <div style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }} aria-hidden="true">
               <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form._hp} onChange={e => set('_hp', e.target.value)} />
             </div>
@@ -177,10 +183,10 @@ export default function BordReservasjon() {
             </div>
 
             {status === 'error' && (
-              <p className="text-sm text-5">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
             )}
             {status === 'rate_limited' && (
-              <p className="text-sm text-5 bg-4 border border-5 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Du har sendt for mange forespørsler på kort tid. Vent litt og prøv igjen.</p>
             )}
 
             <button
