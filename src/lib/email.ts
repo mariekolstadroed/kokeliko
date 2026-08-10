@@ -20,3 +20,13 @@ export function formatEventDate(dateStr: string): string {
 export function formatEventTime(start: string, end: string | null): string {
   return start.slice(0, 5) + (end ? ` – ${end.slice(0, 5)}` : '')
 }
+
+export const DATE_TBD_TEXT = 'Dato og tid kommer'
+
+export function formatEventDateOrTBD(date: string | null): string {
+  return date ? formatEventDate(date) : DATE_TBD_TEXT
+}
+
+export function formatEventTimeOrTBD(start: string | null, end: string | null): string {
+  return start ? formatEventTime(start, end) : DATE_TBD_TEXT
+}

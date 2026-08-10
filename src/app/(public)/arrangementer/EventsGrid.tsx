@@ -21,9 +21,12 @@ export default function EventsGrid() {
     ])
     const today = new Date().toISOString().slice(0, 10)
     const sorted = (evts ?? []).sort((a, b) => {
-      const aPast = a.event_date < today
-      const bPast = b.event_date < today
+      const aPast = !!a.event_date && a.event_date < today
+      const bPast = !!b.event_date && b.event_date < today
       if (aPast !== bPast) return aPast ? 1 : -1
+      if (a.event_date === b.event_date) return 0
+      if (!a.event_date) return 1
+      if (!b.event_date) return -1
       return a.event_date.localeCompare(b.event_date)
     })
     setEvents(sorted)

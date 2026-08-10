@@ -1,5 +1,5 @@
 import { Resend } from 'resend'
-import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventTime } from '@/lib/email'
+import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -62,8 +62,9 @@ export async function POST(req: Request) {
 }
 
 async function handleEventRegistration(fields: Record<string, string>) {
-  const dateStr = formatEventDate(fields.event_date)
-  const timeStr = formatEventTime(fields.event_start_time, fields.event_end_time || null)
+  const hasDate = !!fields.event_date
+  const dateStr = formatEventDateOrTBD(fields.event_date || null)
+  const timeStr = formatEventTimeOrTBD(fields.event_start_time || null, fields.event_end_time || null)
   const cancelUrl = `${SITE_URL}/arrangementer/avmeld?token=${fields.cancellation_token}`
 
   const html = `
@@ -79,6 +80,7 @@ async function handleEventRegistration(fields: Record<string, string>) {
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.event_title}</td>
         </tr>
+        ${hasDate ? `
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Dato</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${dateStr}</td>
@@ -86,8 +88,9 @@ async function handleEventRegistration(fields: Record<string, string>) {
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Tidspunkt</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${timeStr}</td>
-        </tr>
-      </table>
+        </tr>` : ''}
+      </table>${!hasDate ? `
+      <p style="margin-top:12px;font-size:13px;color:#888;">Dato og tid kommer — du får beskjed når det er klart.</p>` : ''}
       <p style="margin-top:24px;font-size:13px;color:#888;">
         Ønsker du å melde deg av? <a href="${cancelUrl}" style="color:#3d1f08;">Klikk her for å avmelde deg</a>.
       </p>
@@ -110,8 +113,8 @@ async function handleEventRegistration(fields: Record<string, string>) {
 }
 
 async function handleEventCancellation(fields: Record<string, string>) {
-  const dateStr = formatEventDate(fields.event_date)
-  const timeStr = formatEventTime(fields.event_start_time, fields.event_end_time || null)
+  const dateStr = formatEventDateOrTBD(fields.event_date || null)
+  const timeStr = formatEventTimeOrTBD(fields.event_start_time || null, fields.event_end_time || null)
 
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;">

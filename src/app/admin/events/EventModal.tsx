@@ -18,6 +18,7 @@ const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 export default function EventModal({ event, registrationCount = 0, onClose, onSaved }: Props) {
   const [title, setTitle] = useState(event?.title ?? '')
   const [description, setDescription] = useState(event?.description ?? '')
+  const [dateTBD, setDateTBD] = useState(!!event && !event.event_date)
   const [eventDate, setEventDate] = useState(event?.event_date ?? '')
   const [startTime, setStartTime] = useState(event?.event_start_time?.slice(0, 5) ?? '')
   const [endTime, setEndTime] = useState(event?.event_end_time?.slice(0, 5) ?? '')
@@ -29,11 +30,11 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
   const [confirmTimeChange, setConfirmTimeChange] = useState(false)
 
   const today = new Date().toISOString().slice(0, 10)
-  const endTimeInvalid = !!endTime && !!startTime && endTime <= startTime
+  const endTimeInvalid = !dateTBD && !!endTime && !!startTime && endTime <= startTime
 
   function validate() {
     const e: { date?: string; maxCapacity?: string } = {}
-    if (eventDate && eventDate < today) e.date = 'Datoen har allerede vært'
+    if (!dateTBD && eventDate && eventDate < today) e.date = 'Datoen har allerede vært'
     if (maxCapacity && Number(maxCapacity) <= 0) e.maxCapacity = 'Må være minst 1'
     setErrors(e)
     return Object.keys(e).length === 0
@@ -60,14 +61,18 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
+  const finalEventDate = dateTBD ? null : (eventDate || null)
+  const finalStartTime = dateTBD ? null : (startTime || null)
+  const finalEndTime = dateTBD ? null : (endTime || null)
+
   const timeChanged = !!event && (
-    eventDate !== event.event_date ||
-    startTime !== event.event_start_time.slice(0, 5) ||
-    endTime !== (event.event_end_time?.slice(0, 5) ?? '')
+    finalEventDate !== event.event_date ||
+    finalStartTime !== (event.event_start_time?.slice(0, 5) ?? null) ||
+    finalEndTime !== (event.event_end_time?.slice(0, 5) ?? null)
   )
 
   function handleSaveClick() {
-    if (!title.trim() || !eventDate || !startTime || endTimeInvalid) return
+    if (!title.trim() || (!dateTBD && (!eventDate || !startTime)) || endTimeInvalid) return
     if (!validate()) return
     if (timeChanged && registrationCount > 0) {
       setConfirmTimeChange(true)
@@ -99,9 +104,9 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
       title: title.trim(),
       description: description.trim() || null,
       image_url: finalImageUrl,
-      event_date: eventDate,
-      event_start_time: startTime,
-      event_end_time: endTime || null,
+      event_date: finalEventDate,
+      event_start_time: finalStartTime,
+      event_end_time: finalEndTime,
       max_capacity: maxCapacity ? Number(maxCapacity) : null,
       published,
     }
@@ -138,7 +143,9 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
               Dette arrangementet har {registrationCount} påmeldt{registrationCount === 1 ? '' : 'e'} som ikke varsles automatisk om denne endringen.
             </p>
             <p className="text-[12.5px] text-stone-500">
-              Lagre uten å varsle, eller avbryt og bruk «Oppdatering til påmeldte» i stedet.
+              {dateTBD
+                ? 'Lagre uten å varsle, eller avbryt og bruk «Avlys» i «Oppdatering til påmeldte» i stedet hvis arrangementet faktisk er avlyst.'
+                : 'Lagre uten å varsle, eller avbryt og bruk «Oppdatering til påmeldte» i stedet.'}
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -172,12 +179,22 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
             />
           </div>
 
+          <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={dateTBD}
+              onChange={e => { setDateTBD(e.target.checked); setErrors({}) }}
+            />
+            Dato ikke bestemt ennå
+          </label>
+
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className={labelClass}>Dato *</label>
+              <label className={labelClass}>Dato {dateTBD ? '' : '*'}</label>
               <input
                 type="date"
-                className={inputClass + (errors.date ? ' border-red-400' : '')}
+                disabled={dateTBD}
+                className={inputClass + (errors.date ? ' border-red-400' : '') + (dateTBD ? ' opacity-50 cursor-not-allowed' : '')}
                 value={eventDate}
                 min={today}
                 onChange={e => { setEventDate(e.target.value); setErrors(prev => ({ ...prev, date: undefined })) }}
@@ -200,10 +217,11 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
 
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className={labelClass}>Starttid *</label>
+              <label className={labelClass}>Starttid {dateTBD ? '' : '*'}</label>
               <input
                 type="time"
-                className={inputClass}
+                disabled={dateTBD}
+                className={inputClass + (dateTBD ? ' opacity-50 cursor-not-allowed' : '')}
                 value={startTime}
                 onChange={e => setStartTime(e.target.value)}
               />
@@ -212,7 +230,8 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
               <label className={labelClass}>Sluttid</label>
               <input
                 type="time"
-                className={inputClass + (endTimeInvalid ? ' border-red-400' : '')}
+                disabled={dateTBD}
+                className={inputClass + (endTimeInvalid ? ' border-red-400' : '') + (dateTBD ? ' opacity-50 cursor-not-allowed' : '')}
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
               />
@@ -264,7 +283,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
           </button>
           <button
             onClick={handleSaveClick}
-            disabled={saving || !title.trim() || !eventDate || !startTime || endTimeInvalid}
+            disabled={saving || !title.trim() || (!dateTBD && (!eventDate || !startTime)) || endTimeInvalid}
             className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Lagrer…' : event ? 'Lagre' : 'Opprett'}

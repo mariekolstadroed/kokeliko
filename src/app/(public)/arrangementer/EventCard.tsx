@@ -15,7 +15,7 @@ function formatDate(dateStr: string) {
 
 export default function EventCard({ event, registrationCount, onRegister }: Props) {
   const isFull = event.max_capacity !== null && registrationCount >= event.max_capacity
-  const isPast = event.event_date < new Date().toISOString().slice(0, 10)
+  const isPast = !!event.event_date && event.event_date < new Date().toISOString().slice(0, 10)
 
   return (
     <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm shadow-1/30 flex flex-col">
@@ -42,15 +42,24 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
         </h2>
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-m font-medium text-5">
-          <span className="flex items-center gap-1.5">
-            <IconCalendar size={15} />
-            {formatDate(event.event_date)}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <IconClock size={15} />
-            {event.event_start_time.slice(0, 5)}
-            {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
-          </span>
+          {event.event_date && event.event_start_time ? (
+            <>
+              <span className="flex items-center gap-1.5">
+                <IconCalendar size={15} />
+                {formatDate(event.event_date)}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <IconClock size={15} />
+                {event.event_start_time.slice(0, 5)}
+                {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
+              </span>
+            </>
+          ) : (
+            <span className="flex items-center gap-1.5 italic">
+              <IconCalendar size={15} />
+              Dato og tid kommer
+            </span>
+          )}
           {event.max_capacity && (
             <span className="flex items-center gap-1.5">
               <IconUsers size={15} />

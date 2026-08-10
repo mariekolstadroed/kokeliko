@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
-import { LOGO_HTML, escapeHtml, formatEventDate, formatEventTime } from '@/lib/email'
+import { LOGO_HTML, escapeHtml, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -29,9 +29,11 @@ export async function DELETE(request: Request) {
 
   if (!ev) return Response.json({ ok: false }, { status: 500 })
 
-  const eventStart = new Date(`${ev.event_date}T${ev.event_start_time}`)
-  if (new Date() >= eventStart) {
-    return Response.json({ ok: false, reason: 'started' }, { status: 409 })
+  if (ev.event_date && ev.event_start_time) {
+    const eventStart = new Date(`${ev.event_date}T${ev.event_start_time}`)
+    if (new Date() >= eventStart) {
+      return Response.json({ ok: false, reason: 'started' }, { status: 409 })
+    }
   }
 
   const { error } = await supabaseAdmin
@@ -41,8 +43,8 @@ export async function DELETE(request: Request) {
 
   if (error) return Response.json({ ok: false }, { status: 500 })
 
-  const dateStr = formatEventDate(ev.event_date)
-  const timeStr = formatEventTime(ev.event_start_time, ev.event_end_time)
+  const dateStr = formatEventDateOrTBD(ev.event_date)
+  const timeStr = formatEventTimeOrTBD(ev.event_start_time, ev.event_end_time)
 
   const safeTitle = escapeHtml(ev.title)
   const safeName = escapeHtml(reg.name)

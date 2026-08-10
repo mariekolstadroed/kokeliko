@@ -71,14 +71,22 @@ export default function RegistrationsModal({ event, onClose }: Props) {
               Påmeldte — {event.title}
             </div>
             <div className="flex items-center gap-3 text-[13px] text-stone-400 mt-1">
-              <span className="flex items-center gap-1">
-                <IconCalendar size={13} /> {formatDate(event.event_date)}
-              </span>
-              <span className="flex items-center gap-1">
-                <IconClock size={13} />
-                {event.event_start_time.slice(0, 5)}
-                {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
-              </span>
+              {event.event_date && event.event_start_time ? (
+                <>
+                  <span className="flex items-center gap-1">
+                    <IconCalendar size={13} /> {formatDate(event.event_date)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <IconClock size={13} />
+                    {event.event_start_time.slice(0, 5)}
+                    {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
+                  </span>
+                </>
+              ) : (
+                <span className="flex items-center gap-1 italic">
+                  <IconCalendar size={13} /> Dato og tid kommer
+                </span>
+              )}
             </div>
           </div>
           <button onClick={onClose} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors mt-0.5">

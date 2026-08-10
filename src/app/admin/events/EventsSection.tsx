@@ -37,7 +37,16 @@ export default function EventsSection() {
       supabase.from('events').select('*').order('event_date'),
       supabase.from('event_registration').select('event_id'),
     ])
-    setEvents(evts ?? [])
+    const sorted = (evts ?? []).sort((a, b) => {
+      const aPast = !!a.event_date && a.event_date < today
+      const bPast = !!b.event_date && b.event_date < today
+      if (aPast !== bPast) return aPast ? 1 : -1
+      if (a.event_date === b.event_date) return 0
+      if (!a.event_date) return 1
+      if (!b.event_date) return -1
+      return a.event_date.localeCompare(b.event_date)
+    })
+    setEvents(sorted)
     const c: Record<string, number> = {}
     ;(regs ?? []).forEach(r => { c[r.event_id] = (c[r.event_id] ?? 0) + 1 })
     setCounts(c)
@@ -81,7 +90,7 @@ export default function EventsSection() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {events.map(event => {
-            const isPast = event.event_date < today
+            const isPast = !!event.event_date && event.event_date < today
             return (
             <div key={event.id} className={`border rounded-xl overflow-hidden shadow-sm flex flex-col ${confirmEventId === event.id ? 'bg-red-50 border-red-200' : 'bg-white border-stone-200'}`}>
 
@@ -133,14 +142,22 @@ export default function EventsSection() {
                     <div className={isPast ? 'opacity-60' : ''}>
                       <div className="text-[14px] font-semibold text-stone-800 leading-snug">{event.title}</div>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-stone-500 mt-1">
-                        <span className="flex items-center gap-1">
-                          <IconCalendar size={12} /> {formatDate(event.event_date)}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <IconClock size={12} />
-                          {formatTime(event.event_start_time)}
-                          {event.event_end_time ? ` – ${formatTime(event.event_end_time)}` : ''}
-                        </span>
+                        {event.event_date && event.event_start_time ? (
+                          <>
+                            <span className="flex items-center gap-1">
+                              <IconCalendar size={12} /> {formatDate(event.event_date)}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <IconClock size={12} />
+                              {formatTime(event.event_start_time)}
+                              {event.event_end_time ? ` – ${formatTime(event.event_end_time)}` : ''}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="flex items-center gap-1 italic">
+                            <IconCalendar size={12} /> Dato og tid kommer
+                          </span>
+                        )}
                       </div>
                     </div>
 

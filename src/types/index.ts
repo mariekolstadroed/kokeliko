@@ -28,8 +28,8 @@ export type Event = {
   title: string
   description: string | null
   image_url: string | null
-  event_date: string
-  event_start_time: string
+  event_date: string | null
+  event_start_time: string | null
   event_end_time: string | null
   max_capacity: number | null
   published: boolean

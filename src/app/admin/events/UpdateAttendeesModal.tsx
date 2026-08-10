@@ -25,14 +25,14 @@ const kindOptions: { id: Kind; label: string; icon: React.ReactNode; description
 export default function UpdateAttendeesModal({ event, registrationCount, onClose, onSent }: Props) {
   const [kind, setKind] = useState<Kind | null>(null)
   const [message, setMessage] = useState('')
-  const [newDate, setNewDate] = useState(event.event_date)
-  const [newStartTime, setNewStartTime] = useState(event.event_start_time.slice(0, 5))
+  const [newDate, setNewDate] = useState(event.event_date ?? '')
+  const [newStartTime, setNewStartTime] = useState(event.event_start_time?.slice(0, 5) ?? '')
   const [newEndTime, setNewEndTime] = useState(event.event_end_time?.slice(0, 5) ?? '')
   const [status, setStatus] = useState<'idle' | 'sending' | 'error' | 'sent'>('idle')
   const [sentCount, setSentCount] = useState(0)
 
   const today = new Date().toISOString().slice(0, 10)
-  const dateInPast = kind === 'reschedule' && newDate < today
+  const dateInPast = kind === 'reschedule' && !!newDate && newDate < today
   const endBeforeStart = kind === 'reschedule' && !!newEndTime && newEndTime <= newStartTime
 
   const canSubmit = kind !== null && message.trim().length > 0

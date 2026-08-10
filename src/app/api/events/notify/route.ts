@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
-import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventTime } from '@/lib/email'
+import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventTime, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -91,8 +91,8 @@ export async function POST(request: Request) {
       .eq('id', event_id)
   }
 
-  const oldDateStr = formatEventDate(event.event_date)
-  const oldTimeStr = formatEventTime(event.event_start_time, event.event_end_time)
+  const oldDateStr = formatEventDateOrTBD(event.event_date)
+  const oldTimeStr = formatEventTimeOrTBD(event.event_start_time, event.event_end_time)
 
   let heading: string
   let rows: string
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
     const newTimeStr = formatEventTime(body.new_start_time!, body.new_end_time ?? null)
     heading = `Ny tid – ${safeTitle}`
     subject = `Ny tid – ${event.title}`
-    rows = row('Arrangement', safeTitle) + row('Tidligere', `${oldDateStr}, ${oldTimeStr}`) + row('Ny tid', `${newDateStr}, ${newTimeStr}`)
+    rows = row('Arrangement', safeTitle) + row('Ny tid', `${newDateStr}, ${newTimeStr}`)
   } else if (kind === 'cancel') {
     heading = `Avlyst – ${safeTitle}`
     subject = `Avlyst – ${event.title}`

@@ -47,7 +47,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (event.event_date < new Date().toISOString().slice(0, 10)) { setStatus('error'); return }
+    if (event.event_date && event.event_date < new Date().toISOString().slice(0, 10)) { setStatus('error'); return }
     const errs = validate()
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setStatus('sending')
@@ -76,8 +76,8 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
         navn: form.navn.trim(),
         epost: form.epost.trim().toLowerCase(),
         event_title: event.title,
-        event_date: event.event_date,
-        event_start_time: event.event_start_time,
+        event_date: event.event_date ?? '',
+        event_start_time: event.event_start_time ?? '',
         event_end_time: event.event_end_time ?? '',
         cancellation_token: token,
       }),
@@ -103,14 +103,22 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
           <div>
             <div className="text-2xl font-bold font-special-elite text-1">{event.title}</div>
             <div className="flex flex-wrap items-center gap-3 text-sm text-2 mt-1">
-              <span className="flex items-center gap-1">
-                <IconCalendar size={13} /> {formatDate(event.event_date)}
-              </span>
-              <span className="flex items-center gap-1">
-                <IconClock size={13} />
-                {event.event_start_time.slice(0, 5)}
-                {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
-              </span>
+              {event.event_date && event.event_start_time ? (
+                <>
+                  <span className="flex items-center gap-1">
+                    <IconCalendar size={13} /> {formatDate(event.event_date)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <IconClock size={13} />
+                    {event.event_start_time.slice(0, 5)}
+                    {event.event_end_time ? ` – ${event.event_end_time.slice(0, 5)}` : ''}
+                  </span>
+                </>
+              ) : (
+                <span className="flex items-center gap-1 italic">
+                  <IconCalendar size={13} /> Dato og tid kommer
+                </span>
+              )}
             </div>
           </div>
           <button
