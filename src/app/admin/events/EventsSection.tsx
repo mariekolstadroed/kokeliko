@@ -5,9 +5,10 @@ import { supabase } from '@/lib/supabase'
 import type { Event } from '@/types'
 import EventModal from './EventModal'
 import RegistrationsModal from './RegistrationsModal'
+import UpdateAttendeesModal from './UpdateAttendeesModal'
 import {
   IconPlus, IconCalendar, IconClock, IconUsers,
-  IconEdit, IconTrash, IconEye, IconEyeOff, IconPhotoOff,
+  IconEdit, IconTrash, IconEye, IconEyeOff, IconPhotoOff, IconMail,
 } from '@tabler/icons-react'
 
 function formatDate(dateStr: string) {
@@ -26,12 +27,12 @@ export default function EventsSection() {
   const [loading, setLoading] = useState(true)
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: Event }>({ open: false })
   const [registrationsEvent, setRegistrationsEvent] = useState<Event | null>(null)
+  const [updateEvent, setUpdateEvent] = useState<Event | null>(null)
   const [confirmEventId, setConfirmEventId] = useState<string | null>(null)
 
   useEffect(() => { fetchAll() }, [])
 
   async function fetchAll() {
-    setLoading(true)
     const [{ data: evts }, { data: regs }] = await Promise.all([
       supabase.from('events').select('*').order('event_date'),
       supabase.from('event_registration').select('event_id'),
@@ -87,6 +88,11 @@ export default function EventsSection() {
               {confirmEventId === event.id ? (
                 <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 aspect-4/3">
                   <p className="text-[13px] text-stone-700 text-center">Slette <span className="font-bold">{event.title}</span>?</p>
+                  {(counts[event.id] ?? 0) > 0 && (
+                    <p className="text-[12px] text-red-600 text-center -mt-2">
+                      {counts[event.id]} påmeldt{counts[event.id] === 1 ? '' : 'e'} varsles ikke om slettingen.
+                    </p>
+                  )}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setConfirmEventId(null)}
@@ -124,25 +130,32 @@ export default function EventsSection() {
                   </div>
 
                   <div className="p-3.5 flex flex-col gap-2 flex-1">
-                    <div className={`flex items-start justify-between gap-2${isPast ? ' opacity-60' : ''}`}>
-                      <div>
-                        <div className="text-[14px] font-semibold text-stone-800 leading-snug">{event.title}</div>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-stone-500 mt-1">
-                          <span className="flex items-center gap-1">
-                            <IconCalendar size={12} /> {formatDate(event.event_date)}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <IconClock size={12} />
-                            {formatTime(event.event_start_time)}
-                            {event.event_end_time ? ` – ${formatTime(event.event_end_time)}` : ''}
-                          </span>
-                        </div>
+                    <div className={isPast ? 'opacity-60' : ''}>
+                      <div className="text-[14px] font-semibold text-stone-800 leading-snug">{event.title}</div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-stone-500 mt-1">
+                        <span className="flex items-center gap-1">
+                          <IconCalendar size={12} /> {formatDate(event.event_date)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <IconClock size={12} />
+                          {formatTime(event.event_start_time)}
+                          {event.event_end_time ? ` – ${formatTime(event.event_end_time)}` : ''}
+                        </span>
                       </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5">
                       <button
                         onClick={() => setRegistrationsEvent(event)}
-                        className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
                       >
                         <IconUsers size={13} /> Se påmeldte
+                      </button>
+                      <button
+                        onClick={() => setUpdateEvent(event)}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+                      >
+                        <IconMail size={13} /> Oppdatering til påmeldte
                       </button>
                     </div>
 
@@ -184,6 +197,7 @@ export default function EventsSection() {
       {eventModal.open && (
         <EventModal
           event={eventModal.event}
+          registrationCount={eventModal.event ? (counts[eventModal.event.id] ?? 0) : 0}
           onClose={() => setEventModal({ open: false })}
           onSaved={fetchAll}
         />
@@ -193,6 +207,15 @@ export default function EventsSection() {
         <RegistrationsModal
           event={registrationsEvent}
           onClose={() => setRegistrationsEvent(null)}
+        />
+      )}
+
+      {updateEvent && (
+        <UpdateAttendeesModal
+          event={updateEvent}
+          registrationCount={counts[updateEvent.id] ?? 0}
+          onClose={() => setUpdateEvent(null)}
+          onSent={fetchAll}
         />
       )}
     </div>

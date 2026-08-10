@@ -18,6 +18,7 @@ export default function RegistrationsModal({ event, onClose }: Props) {
   const [registrations, setRegistrations] = useState<EventRegistration[]>([])
   const [loading, setLoading] = useState(true)
   const [confirmId, setConfirmId] = useState<string | null>(null)
+  const [confirmAll, setConfirmAll] = useState(false)
 
   useEffect(() => { fetchRegistrations() }, [event.id])
 
@@ -52,6 +53,12 @@ export default function RegistrationsModal({ event, onClose }: Props) {
     }
   }
 
+  async function deleteAllRegistrations() {
+    await supabase.from('event_registration').delete().eq('event_id', event.id)
+    setRegistrations([])
+    setConfirmAll(false)
+  }
+
   return (
     <div
       className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-6"
@@ -79,31 +86,59 @@ export default function RegistrationsModal({ event, onClose }: Props) {
           </button>
         </div>
 
-        <div className="px-6 py-3 border-b border-stone-200 shrink-0 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-500" />
-          <span className="text-[13px] text-stone-700">Antall påmeldte: {registrations.length}{event.max_capacity ? ` / ${event.max_capacity}` : ''}</span>
+        <div className={`px-6 py-3 border-b border-stone-200 shrink-0 ${confirmAll && registrations.length > 0 ? 'bg-red-50' : ''}`}>
+          {confirmAll && registrations.length > 0 ? (
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[13px] text-stone-700">Fjerne alle {registrations.length} påmeldinger? Dette kan ikke angres.</p>
+                <p className="text-[12px] text-stone-500 mt-0.5">Ingen får varsel om dette. Bruk «Oppdatering til påmeldte» → «Avlys» hvis du vil varsle.</p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setConfirmAll(false)}
+                  className="px-2.5 py-1 text-[12px] font-medium rounded-md border border-stone-200 text-stone-600 hover:bg-stone-50 transition-colors"
+                >
+                  Avbryt
+                </button>
+                <button
+                  onClick={deleteAllRegistrations}
+                  className="px-2.5 py-1 text-[12px] font-medium rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+                >
+                  Fjern alle
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+                <span className="text-[13px] text-stone-700">Antall påmeldte: {registrations.length}{event.max_capacity ? ` / ${event.max_capacity}` : ''}</span>
+              </span>
+              {registrations.length > 0 && (
+                <button
+                  onClick={() => { setConfirmAll(true); setConfirmId(null) }}
+                  className="shrink-0 px-2.5 py-1 text-[12px] font-medium rounded-md border border-red-200 bg-white text-red-500 hover:bg-red-50 transition-colors whitespace-nowrap"
+                >
+                  Fjern alle
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-auto">
           {loading ? (
             <div className="p-6 text-sm text-stone-400 text-center">Laster…</div>
           ) : registrations.length === 0 ? (
             <div className="p-6 text-sm text-stone-400 text-center italic">Ingen påmeldte ennå</div>
           ) : (
-            <table className="w-full table-fixed border-collapse text-sm">
-              <colgroup>
-                <col className="w-[28%]" />
-                <col className="w-[37%]" />
-                <col className="w-[24%]" />
-                <col className="w-[11%]" />
-              </colgroup>
+            <table className="w-full border-collapse text-sm">
               <thead>
                 <tr>
-                  {['Navn', 'E-post', 'Telefon', ''].map(h => (
-                    <th key={h} className="text-left px-6 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-stone-400 border-b border-stone-200">
-                      {h}
-                    </th>
-                  ))}
+                  <th className="text-left px-6 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-stone-400 border-b border-stone-200 min-w-32">Navn</th>
+                  <th className="text-left px-6 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-stone-400 border-b border-stone-200 min-w-48">E-post</th>
+                  <th className="text-left px-6 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-stone-400 border-b border-stone-200 min-w-28">Telefon</th>
+                  <th className="sticky right-0 bg-white px-3 py-2.5 border-b border-l border-stone-200 w-11"></th>
                 </tr>
               </thead>
               <tbody>
@@ -112,7 +147,10 @@ export default function RegistrationsModal({ event, onClose }: Props) {
                     {confirmId === reg.id ? (
                       <td colSpan={4} className="px-6 py-2.25">
                         <div className="flex items-center justify-between gap-3">
-                          <span className="text-[13px] text-stone-700">Avmelde <span className="font-bold">{reg.name}</span>?</span>
+                          <div>
+                            <p className="text-[13px] text-stone-700">Avmelde <span className="font-bold">{reg.name}</span>?</p>
+                            <p className="text-[12px] text-stone-500 mt-0.5">Bekreftelse sendes til kunden på e-post.</p>
+                          </div>
                           <div className="flex items-center gap-2 shrink-0">
                             <button
                               onClick={() => setConfirmId(null)}
@@ -134,9 +172,9 @@ export default function RegistrationsModal({ event, onClose }: Props) {
                         <td className="px-6 py-3 text-stone-800 font-medium truncate">{reg.name}</td>
                         <td className="px-6 py-3 text-stone-500 truncate">{reg.email}</td>
                         <td className="px-6 py-3 text-stone-500 truncate">{reg.phone ?? '—'}</td>
-                        <td className="px-3 py-3">
+                        <td className="sticky right-0 bg-white px-3 py-3 border-l border-stone-200">
                           <button
-                            onClick={() => setConfirmId(reg.id)}
+                            onClick={() => { setConfirmId(reg.id); setConfirmAll(false) }}
                             className="p-1 rounded-md text-red-400 hover:bg-red-50 transition-colors"
                             title="Meld av"
                           >

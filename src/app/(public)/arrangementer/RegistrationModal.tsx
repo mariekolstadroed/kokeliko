@@ -154,12 +154,12 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             </div>
 
             {status === 'duplicate' && (
-              <p className="text-sm text-5 bg-4 border border-5 rounded-lg px-3 py-2">
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">
                 Denne e-postadressen er allerede påmeldt dette arrangementet.
               </p>
             )}
             {status === 'error' && (
-              <p className="text-sm text-5">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
             )}
 
             <button

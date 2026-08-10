@@ -8,7 +8,7 @@ type Props = {
 }
 
 export default function AvmeldForm({ token }: Props) {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'started' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'started' | 'not_found' | 'error'>('idle')
 
   if (!token) {
     return (
@@ -24,7 +24,7 @@ export default function AvmeldForm({ token }: Props) {
       const res = await fetch(`/api/events/cancel?token=${token}`, { method: 'DELETE' })
       if (res.ok) { setStatus('ok'); return }
       const body = await res.json().catch(() => ({}))
-      setStatus(body.reason === 'started' ? 'started' : 'error')
+      setStatus(body.reason === 'started' ? 'started' : body.reason === 'not_found' ? 'not_found' : 'error')
     } catch {
       setStatus('error')
     }
@@ -44,6 +44,11 @@ export default function AvmeldForm({ token }: Props) {
         <>
           <p className="text-2 font-medium mb-2">Arrangementet har allerede startet.</p>
           <p className="text-2 text-sm">Avmelding er ikke lenger mulig.</p>
+        </>
+      ) : status === 'not_found' ? (
+        <>
+          <p className="text-2 font-medium mb-2">Du er allerede avmeldt.</p>
+          <p className="text-2 text-sm">Denne lenken er ikke lenger gyldig.</p>
         </>
       ) : status === 'error' ? (
         <>

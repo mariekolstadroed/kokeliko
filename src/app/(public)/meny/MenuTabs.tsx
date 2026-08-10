@@ -112,7 +112,7 @@ export default function MenuTabs({
                           <p className="text-[10px] md:text-xs lg:text-sm text-2/80 mt-1">Allergener: {item.allergens}</p>
                         )}
                         {item.price != null && (
-                          <p className="font-semibold text-sm md:text-[15px] lg:text-base text-5 mt-2">{item.price} kr</p>
+                          <p className="font-bold text-sm md:text-base lg:text-lg text-5 mt-2">{item.price} kr</p>
                         )}
                       </div>
                     </div>

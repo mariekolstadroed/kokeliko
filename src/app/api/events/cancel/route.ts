@@ -1,21 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { LOGO_HTML, escapeHtml, formatEventDate, formatEventTime } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 const resend = new Resend(process.env.RESEND_API_KEY)
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -28,7 +19,7 @@ export async function DELETE(request: Request) {
     .eq('cancellation_token', token)
     .single()
 
-  if (!reg) return Response.json({ ok: false }, { status: 404 })
+  if (!reg) return Response.json({ ok: false, reason: 'not_found' }, { status: 404 })
 
   const { data: ev } = await supabaseAdmin
     .from('events')
@@ -50,21 +41,19 @@ export async function DELETE(request: Request) {
 
   if (error) return Response.json({ ok: false }, { status: 500 })
 
-  const months = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
-  const [y, m, d] = ev.event_date.split('-').map(Number)
-  const dateStr = `${d}. ${months[m - 1]} ${y}`
-  const timeStr = ev.event_start_time.slice(0, 5) + (ev.event_end_time ? ` – ${ev.event_end_time.slice(0, 5)}` : '')
+  const dateStr = formatEventDate(ev.event_date)
+  const timeStr = formatEventTime(ev.event_start_time, ev.event_end_time)
 
   const safeTitle = escapeHtml(ev.title)
   const safeName = escapeHtml(reg.name)
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
-    to: process.env.CONTACT_EMAIL!,
-    subject: `Avmelding bekreftet – ${ev.title} (${reg.email})`,
+    to: reg.email,
+    subject: `Avmelding bekreftet – ${ev.title}`,
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:480px;">
-        <img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;margin-bottom:20px;display:block;">
+        ${LOGO_HTML}
         <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Du er avmeldt – ${safeTitle}</h2>
         <table role="presentation" style="width:100%;border-collapse:collapse;">
           <tr>

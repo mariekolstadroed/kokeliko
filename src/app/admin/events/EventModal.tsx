@@ -7,6 +7,7 @@ import { IconX, IconUpload } from '@tabler/icons-react'
 
 type Props = {
   event?: Event
+  registrationCount?: number
   onClose: () => void
   onSaved: () => void
 }
@@ -14,7 +15,7 @@ type Props = {
 const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
-export default function EventModal({ event, onClose, onSaved }: Props) {
+export default function EventModal({ event, registrationCount = 0, onClose, onSaved }: Props) {
   const [title, setTitle] = useState(event?.title ?? '')
   const [description, setDescription] = useState(event?.description ?? '')
   const [eventDate, setEventDate] = useState(event?.event_date ?? '')
@@ -25,10 +26,13 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
   const [saving, setSaving] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [errors, setErrors] = useState<{ date?: string; maxCapacity?: string }>({})
+  const [confirmTimeChange, setConfirmTimeChange] = useState(false)
+
+  const today = new Date().toISOString().slice(0, 10)
+  const endTimeInvalid = !!endTime && !!startTime && endTime <= startTime
 
   function validate() {
     const e: { date?: string; maxCapacity?: string } = {}
-    const today = new Date().toISOString().slice(0, 10)
     if (eventDate && eventDate < today) e.date = 'Datoen har allerede vært'
     if (maxCapacity && Number(maxCapacity) <= 0) e.maxCapacity = 'Må være minst 1'
     setErrors(e)
@@ -56,9 +60,23 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
-  async function handleSave() {
-    if (!title.trim() || !eventDate || !startTime) return
+  const timeChanged = !!event && (
+    eventDate !== event.event_date ||
+    startTime !== event.event_start_time.slice(0, 5) ||
+    endTime !== (event.event_end_time?.slice(0, 5) ?? '')
+  )
+
+  function handleSaveClick() {
+    if (!title.trim() || !eventDate || !startTime || endTimeInvalid) return
     if (!validate()) return
+    if (timeChanged && registrationCount > 0) {
+      setConfirmTimeChange(true)
+      return
+    }
+    doSave()
+  }
+
+  async function doSave() {
     setSaving(true)
     setUploadError(null)
 
@@ -114,6 +132,31 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
           </button>
         </div>
 
+        {confirmTimeChange ? (
+          <div className="p-8 text-center flex flex-col items-center gap-4">
+            <p className="text-[14px] text-stone-700">
+              Dette arrangementet har {registrationCount} påmeldt{registrationCount === 1 ? '' : 'e'} som ikke varsles automatisk om denne endringen.
+            </p>
+            <p className="text-[12.5px] text-stone-500">
+              Lagre uten å varsle, eller avbryt og bruk «Oppdatering til påmeldte» i stedet.
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setConfirmTimeChange(false)}
+                className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+              >
+                Avbryt
+              </button>
+              <button
+                onClick={() => { setConfirmTimeChange(false); doSave() }}
+                className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+              >
+                Lagre uten å varsle
+              </button>
+            </div>
+          </div>
+        ) : (
+        <>
         <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-3.5">
           <div>
             <label className={labelClass}>Tittel *</label>
@@ -136,6 +179,7 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
                 type="date"
                 className={inputClass + (errors.date ? ' border-red-400' : '')}
                 value={eventDate}
+                min={today}
                 onChange={e => { setEventDate(e.target.value); setErrors(prev => ({ ...prev, date: undefined })) }}
               />
               {errors.date && <p className="text-[11.5px] text-red-500 mt-1">{errors.date}</p>}
@@ -157,16 +201,22 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
           <div className="flex gap-3">
             <div className="flex-1">
               <label className={labelClass}>Starttid *</label>
-              <input type="time" className={inputClass} value={startTime} onChange={e => setStartTime(e.target.value)} />
+              <input
+                type="time"
+                className={inputClass}
+                value={startTime}
+                onChange={e => setStartTime(e.target.value)}
+              />
             </div>
             <div className="flex-1">
               <label className={labelClass}>Sluttid</label>
               <input
                 type="time"
-                className={inputClass}
+                className={inputClass + (endTimeInvalid ? ' border-red-400' : '')}
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
               />
+              {endTimeInvalid && <p className="text-[11.5px] text-red-500 mt-1">Må være etter starttid</p>}
             </div>
           </div>
 
@@ -213,13 +263,15 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
             Avbryt
           </button>
           <button
-            onClick={handleSave}
-            disabled={saving || !title.trim() || !eventDate || !startTime}
+            onClick={handleSaveClick}
+            disabled={saving || !title.trim() || !eventDate || !startTime || endTimeInvalid}
             className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Lagrer…' : event ? 'Lagre' : 'Opprett'}
           </button>
         </div>
+        </>
+        )}
 
       </div>
     </div>

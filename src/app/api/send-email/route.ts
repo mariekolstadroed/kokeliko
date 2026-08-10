@@ -1,8 +1,7 @@
 import { Resend } from 'resend'
+import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventTime } from '@/lib/email'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
-const LOGO_HTML = `<img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;margin-bottom:20px;display:block;">`
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
@@ -16,15 +15,6 @@ function checkRateLimit(ip: string): boolean {
   if (entry.count >= 5) return false
   entry.count++
   return true
-}
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
 }
 
 const ALLOWED_TYPES = new Set(['bordreservasjon', 'catering', 'lukket_selskap', 'event_registration', 'event_cancellation'])
@@ -72,10 +62,8 @@ export async function POST(req: Request) {
 }
 
 async function handleEventRegistration(fields: Record<string, string>) {
-  const months = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
-  const [y, m, d] = fields.event_date.split('-').map(Number)
-  const dateStr = `${d}. ${months[m - 1]} ${y}`
-  const timeStr = fields.event_start_time.slice(0, 5) + (fields.event_end_time ? ` – ${fields.event_end_time.slice(0, 5)}` : '')
+  const dateStr = formatEventDate(fields.event_date)
+  const timeStr = formatEventTime(fields.event_start_time, fields.event_end_time || null)
   const cancelUrl = `${SITE_URL}/arrangementer/avmeld?token=${fields.cancellation_token}`
 
   const html = `
@@ -109,8 +97,8 @@ async function handleEventRegistration(fields: Record<string, string>) {
   try {
     const { error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: process.env.CONTACT_EMAIL!,
-      subject: `Påmelding bekreftet – ${fields.event_title} (${fields.epost})`,
+      to: fields.epost,
+      subject: `Påmelding bekreftet – ${fields.event_title}`,
       html,
     })
     if (error) throw error
@@ -122,10 +110,8 @@ async function handleEventRegistration(fields: Record<string, string>) {
 }
 
 async function handleEventCancellation(fields: Record<string, string>) {
-  const months = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
-  const [y, m, d] = fields.event_date.split('-').map(Number)
-  const dateStr = `${d}. ${months[m - 1]} ${y}`
-  const timeStr = fields.event_start_time.slice(0, 5) + (fields.event_end_time ? ` – ${fields.event_end_time.slice(0, 5)}` : '')
+  const dateStr = formatEventDate(fields.event_date)
+  const timeStr = formatEventTime(fields.event_start_time, fields.event_end_time || null)
 
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;">
@@ -155,8 +141,8 @@ async function handleEventCancellation(fields: Record<string, string>) {
   try {
     const { error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: process.env.CONTACT_EMAIL!,
-      subject: `Avmelding bekreftet – ${fields.event_title} (${fields.epost})`,
+      to: fields.epost,
+      subject: `Avmelding bekreftet – ${fields.event_title}`,
       html,
     })
     if (error) throw error
@@ -196,9 +182,7 @@ function buildHtml(type: string, fields: Record<string, string>) {
     .filter(([, value]) => value)
     .map(([key, value]) => {
       if (key === 'dato') {
-        const [y, m, d] = value.split('-').map(Number)
-        const months = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
-        value = `${d}. ${months[m - 1]} ${y}`
+        value = formatEventDate(value)
       }
       return `
       <tr>

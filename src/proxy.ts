@@ -35,6 +35,9 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
+    if (pathname.startsWith('/api/')) {
+      return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
+    }
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
 
@@ -42,5 +45,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*', '/api/events/notify'],
 }

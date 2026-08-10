@@ -49,7 +49,7 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="lg:hidden absolute top-full left-6 right-6 md:left-10 md:right-10 mt-0 flex justify-end max-w-7xl mx-auto">
-          <div className="bg-6/90 backdrop-blur-sm rounded-2xl shadow-sm shadow-1/30 px-10 py-6 flex flex-col items-center gap-6">
+          <div className="bg-6/70 backdrop-blur-sm rounded-2xl shadow-md shadow-2/30 px-10 py-6 flex flex-col items-center gap-6">
             {links.map(({ to, label }) => {
               const isActive = pathname === to || pathname.startsWith(to + '/')
               return (
