@@ -19,8 +19,18 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-5);
-  color: var(--color-4);
+  background-color: color-mix(in srgb, var(--color-5) 40%, transparent);
+  color: var(--color-1);
+}
+
+.admin-root ::selection {
+  background-color: color-mix(in srgb, #ec4899 40%, transparent);
+  color: #1c1917;
+}
+
+.admin-root .login-scope ::selection {
+  background-color: color-mix(in srgb, var(--color-5) 40%, transparent);
+  color: var(--color-1);
 }
 
 .logo {
@@ -44,6 +54,8 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+
 
 
 

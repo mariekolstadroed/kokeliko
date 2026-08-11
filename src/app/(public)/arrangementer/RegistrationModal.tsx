@@ -12,7 +12,7 @@ type Props = {
   onRegistered: () => void
 }
 
-const inputClass = 'w-full px-3 py-2.5 border-[2px] border-3 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputClass = 'w-full px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
@@ -97,7 +97,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
       className="fixed inset-0 bg-1/40 flex items-center justify-center z-50 p-6"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-4 rounded-2xl w-full max-w-md shadow-2xl shadow-1/30 flex flex-col max-h-[90vh]">
+      <div className="bg-4/80 backdrop-blur-sm rounded-2xl w-full max-w-md shadow-2xl shadow-1/30 flex flex-col max-h-[90vh]">
 
         <div className="flex items-start justify-between px-6 py-5 border-b border-3 shrink-0">
           <div>
@@ -141,7 +141,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4 overflow-y-auto">
+          <form onSubmit={handleSubmit} noValidate className="p-6 flex flex-col gap-4 overflow-y-auto">
             <div style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }} aria-hidden="true">
               <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form._hp} onChange={e => set('_hp', e.target.value)} />
             </div>
