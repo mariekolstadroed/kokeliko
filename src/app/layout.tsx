@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
-import { Special_Elite } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const specialElite = Special_Elite({
-  weight: '400',
-  subsets: ['latin'],
+const specialElite = localFont({
+  src: [
+    { path: '../assets/fonts/SpecialElite-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../assets/fonts/SpecialElite-Bold.woff2', weight: '700', style: 'normal' },
+  ],
   variable: '--font-special-elite',
 })
 

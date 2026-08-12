@@ -86,7 +86,7 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
           ) : (
             <button
               onClick={onRegister}
-              className="px-5 py-2.5 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors"
+              className="px-5 py-2.5 bg-1 text-4 text-base font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors"
             >
               Meld deg på
             </button>

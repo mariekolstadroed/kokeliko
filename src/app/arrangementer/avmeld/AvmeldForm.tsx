@@ -62,7 +62,7 @@ export default function AvmeldForm({ token }: Props) {
           <button
             onClick={handleCancel}
             disabled={status === 'loading'}
-            className="px-6 py-2.5 bg-1 text-4 text-sm font-medium font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
+            className="px-6 py-2.5 bg-1 text-4 text-base font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
           >
             {status === 'loading' ? 'Melder av…' : 'Bekreft avmelding'}
           </button>

@@ -30,7 +30,7 @@ export default function Navbar() {
               <Link
                 key={label}
                 href={to}
-                className={`text-1 text-[20px] font-special-elite relative after:absolute after:bottom-1 after:left-0 after:h-[1.5px] after:w-full after:bg-1 after:origin-left ${isActive ? 'after:scale-x-100 after:transition-transform after:duration-500' : 'after:scale-x-0 hover:opacity-60'}`}
+                className={`text-1 text-[22px] font-special-elite relative after:absolute after:bottom-1 after:left-0 after:h-[1.5px] after:w-full after:bg-1 after:origin-left ${isActive ? 'after:scale-x-100 after:transition-transform after:duration-500' : 'after:scale-x-0 hover:opacity-60'}`}
               >
                 {label}
               </Link>

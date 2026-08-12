@@ -62,8 +62,8 @@ export default function MenuTabs({
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 pt-1.5 pb-1 text-base md:text-lg lg:text-[1.325rem] lg:px-5 lg:pt-2 lg:pb-1 whitespace-nowrap rounded-md lg:rounded-lg transition-colors font-special-elite cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-5 font-semibold text-4 shadow-sm shadow-1/30'
-                  : 'font-medium text-1 hover:opacity-70'
+                  ? 'bg-5 text-4 shadow-sm shadow-1/30'
+                  : 'text-1 hover:opacity-70'
               }`}
             >
               {cat.name}

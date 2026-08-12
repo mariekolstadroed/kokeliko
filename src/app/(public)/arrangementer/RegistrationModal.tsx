@@ -135,7 +135,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             <p className="text-2 text-sm">Du vil motta en bekreftelse på e-post med mulighet for avmelding.</p>
             <button
               onClick={onClose}
-              className="mt-6 px-5 py-2 text-sm font-medium rounded-lg border border-3 text-2 hover:bg-3 transition-colors"
+              className="mt-6 px-5 py-2 text-base font-special-elite rounded-lg border border-3 text-2 hover:bg-3 transition-colors"
             >
               Lukk
             </button>
@@ -173,7 +173,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="mt-1 px-6 py-3 bg-1 text-4 text-sm font-medium rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
+              className="mt-1 px-6 py-3 bg-1 text-4 text-base font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors disabled:opacity-50"
             >
               {status === 'sending' ? 'Sender…' : 'Meld deg på'}
             </button>

@@ -50,7 +50,7 @@ export default function Booking() {
               />
               <div className="absolute inset-0 bg-1/60 mix-blend-multiply" />
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                <h3 className="text-4 font-bold font-special-elite text-2xl md:text-3xl leading-snug">{title}</h3>
+                <h3 className="text-4 font-semibold font-special-elite text-2xl md:text-3xl leading-snug">{title}</h3>
                 <p className="text-4 text-sm md:text-base mt-1">{sub}</p>
               </div>
             </Link>
