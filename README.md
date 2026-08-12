@@ -1,38 +1,82 @@
-# README
+<!-- markdownlint-disable MD033 MD041 -->
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<img
+  src=".github/readme-assets/favicon.png"
+  alt="Kokeliko-logo"
+  width="120"
+  align="left"
+  hspace="24"
+/>
 
-## Getting Started
+# Kokeliko
 
-First, run the development server:
+Nettsiden til Kokeliko Kaffebar på Bærums Verk — offentlige sider (meny, booking, arrangementer, om oss) og et adminpanel for å drifte innholdet.
+
+**Live:** [kokeliko.no](https://kokeliko.no)
+
+Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS v4](https://tailwindcss.com), [Supabase](https://supabase.com) (database, autentisering, filopplasting) og [Resend](https://resend.com) (e-post).
+
+<br clear="left" />
+
+## Skjermbilde
+
+<p>
+  <img
+    src=".github/readme-assets/skjermbilde.png"
+    alt="Skjermbilde av nettsiden"
+    width="100%"
+  />
+</p>
+
+<!-- markdownlint-enable MD033 MD041 -->
+
+## Kom i gang lokalt
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Åpne [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Miljøvariabler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Opprett en `.env`-fil i prosjektroten med:
 
-## Learn More
+| Variabel | Beskrivelse |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase-prosjektets URL (Settings → API) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase sin offentlige anon-nøkkel |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase sin service role-nøkkel — kun brukt server-side, aldri eksponert til nettleseren. Hold hemmelig |
+| `RESEND_API_KEY` | API-nøkkel fra Resend, brukes til all utsendt e-post |
+| `CONTACT_EMAIL` | E-postadressen som skal motta bookingforespørsler (`elin@kokeliko.no` i produksjon) |
+| `NEXT_PUBLIC_SITE_URL` | Nettsidens fulle URL, brukes i lenker i e-poster (f.eks. avmeldingslenker) |
 
-To learn more about Next.js, take a look at the following resources:
+## Prosjektstruktur
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+src/
+├─ app/
+│  ├─ (public)/           Offentlige sider: forsiden, meny, booking, arrangementer, om oss
+│  ├─ arrangementer/avmeld/  Selvbetjent avmelding fra arrangement (lenke i e-post)
+│  ├─ admin/               Adminpanel (meny, åpningstider, arrangementer, galleri) — krever innlogging
+│  └─ api/                 API-ruter: e-postutsendelse, avmelding, arrangement-oppdateringer
+├─ components/             Delte UI-komponenter (navbar, forsideseksjoner)
+├─ lib/                    Supabase-klienter, validering, delt e-postlogikk
+└─ proxy.ts                Beskytter /admin-rutene — redirecter uinnloggede til /admin/login
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Admin
 
-## Deploy on Vercel
+`/admin/login` — innlogging skjer med e-post/passord via Supabase Auth. Brukere opprettes manuelt i Supabase → Authentication → Users. Alle innloggede brukere har identisk full tilgang til hele adminpanelet (ingen rollestyring).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Fra adminpanelet kan man administrere:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Meny** — kategorier og retter
+- **Åpningstider** — faste og spesielle åpningstider
+- **Arrangementer** — opprette, redigere, avlyse, og sende oppdateringer til påmeldte
+- **Galleri** — bilder til forsiden
+
+## Deploy
+
+Siden er satt opp for å kjøre på [Vercel](https://vercel.com), koblet direkte til dette repoet. Alle miljøvariablene over må også legges inn i Vercel-prosjektets innstillinger (Production og Preview).
