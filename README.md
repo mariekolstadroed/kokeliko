@@ -1,11 +1,11 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
-<table>
-<tr>
-<td width="140">
-  <img src=".github/readme-assets/favicon.png" alt="Kokeliko-logo" width="120" />
+<table style="border: none;">
+<tr style="border: none;">
+<td width="180" style="border: none;">
+  <img src=".github/readme-assets/favicon.png" alt="Kokeliko-logo" width="160" />
 </td>
-<td>
+<td style="border: none;">
 
 # Kokeliko
 
@@ -23,7 +23,7 @@ Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS 
   <img
     src=".github/readme-assets/skjermbilde.png"
     alt="Skjermbilde av nettsiden"
-    width="50%"
+    width="75%"
   />
 </p>
 
