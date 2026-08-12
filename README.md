@@ -1,13 +1,14 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
-<table style="border: none;">
-<tr style="border: none;">
-<td width="180" style="border: none;">
-  <img src=".github/readme-assets/favicon.png" alt="Kokeliko-logo" width="160" />
-</td>
-<td style="border: none;">
-
 # Kokeliko
+
+<img
+  src=".github/readme-assets/favicon.png"
+  alt="Kokeliko-logo"
+  width="160"
+  align="left"
+  hspace="24"
+/>
 
 Nettsiden til Kokeliko Kaffebar på Bærums Verk — offentlige sider (meny, booking, arrangementer, om oss) og et adminpanel for å drifte innholdet.
 
@@ -15,15 +16,19 @@ Nettsiden til Kokeliko Kaffebar på Bærums Verk — offentlige sider (meny, boo
 
 Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS v4](https://tailwindcss.com), [Supabase](https://supabase.com) (database, autentisering, filopplasting) og [Resend](https://resend.com) (e-post).
 
-</td>
-</tr>
-</table>
+<br clear="left" />
 
 <p>
   <img
-    src=".github/readme-assets/skjermbilde.png"
-    alt="Skjermbilde av nettsiden"
-    width="75%"
+    src=".github/readme-assets/hovedsiden.png"
+    alt="Skjermbilde av hovedsiden"
+    width="40%"
+  />
+  <img
+    src=".github/readme-assets/hero.png"
+    alt="Skjermbilde av hero-seksjonen"
+    width="60%"
+    align="right"
   />
 </p>
 
