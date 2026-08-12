@@ -55,11 +55,11 @@ export default async function Home() {
     <>
       <div className="bg-1 -mt-30 pt-30 overflow-hidden">
         {/* fyller nøyaktig resten av viewport etter navbar */}
-        <div className="relative h-[calc(100dvh-4.5rem)] md:h-[calc(100dvh-6rem)]">
+        <div className="relative h-[calc(100dvh-4.875rem)] md:h-[calc(100dvh-5.4375rem)] lg:h-[calc(100dvh-6rem)]">
 
           {/* Mobil: kakao øverst, marsipan nederst */}
           <div className="md:hidden">
-            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-40%', left: 'calc(-0.35 * min(250vw, calc(119dvh - 4.5rem)))', width: 'min(250vw, calc(119dvh - 4.5rem))', height: 'min(250vw, calc(119dvh - 4.5rem))', transform: 'rotate(40deg)' }}>
+            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-40%', left: 'calc(-0.35 * min(250vw, calc(119dvh - 4.875rem)))', width: 'min(250vw, calc(119dvh - 4.875rem))', height: 'min(250vw, calc(119dvh - 4.875rem))', transform: 'rotate(40deg)' }}>
               <defs>
                 <clipPath id="blobM1">
                   <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(-90 500 500)" />
@@ -68,7 +68,7 @@ export default async function Home() {
               <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#blobM1)" />
               <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobM1)" fill="rgba(0,0,0,0.2)" />
             </svg>
-            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-32%', right: 'calc(-0.33 * min(250vw, calc(119dvh - 4.5rem)))', width: 'min(250vw, calc(119dvh - 4.5rem))', height: 'min(250vw, calc(119dvh - 4.5rem))', transform: 'rotate(25deg)' }}>
+            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-32%', right: 'calc(-0.33 * min(250vw, calc(119dvh - 4.875rem)))', width: 'min(250vw, calc(119dvh - 4.875rem))', height: 'min(250vw, calc(119dvh - 4.875rem))', transform: 'rotate(25deg)' }}>
               <defs>
                 <clipPath id="blobM2">
                   <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(90 500 500)" />
@@ -81,7 +81,7 @@ export default async function Home() {
 
           {/* iPad: kakao øvre venstre, marsipan nedre høyre */}
           <div className="hidden md:block lg:hidden">
-            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-60%', left: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 9.7rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', transform: 'rotate(20deg)' }}>
+            <svg viewBox="0 60 1000 940" style={{ position: 'absolute', top: '-60%', left: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 8.79rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 8.79rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 8.79rem)))', transform: 'rotate(20deg)' }}>
               <defs>
                 <clipPath id="blobT1">
                   <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(-90 500 500)" />
@@ -90,7 +90,7 @@ export default async function Home() {
               <image href={kakaoImg.src} x="145" y="190" width="620" height="620" clipPath="url(#blobT1)" />
               <rect x="0" y="0" width="1000" height="1000" clipPath="url(#blobT1)" fill="rgba(0,0,0,0.2)" />
             </svg>
-            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-60%', right: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 9.7rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 9.7rem)))', transform: 'rotate(20deg)' }}>
+            <svg viewBox="0 50 1000 950" style={{ position: 'absolute', bottom: '-60%', right: 'calc(-0.298 * min(195vw, max(95vw, calc(161dvh - 8.79rem))))', width: 'min(195vw, max(95vw, calc(161dvh - 8.79rem)))', height: 'min(195vw, max(95vw, calc(161dvh - 8.79rem)))', transform: 'rotate(20deg)' }}>
               <defs>
                 <clipPath id="blobT2">
                   <path d="M 500 200 C 550 160, 600 180, 620 240 C 640 300, 630 320, 600 330 C 570 340, 560 350, 580 360 C 620 380, 680 410, 700 450 C 720 490, 710 520, 680 530 C 650 540, 640 550, 660 570 C 680 590, 660 630, 630 660 C 600 690, 570 700, 550 680 C 530 660, 520 650, 500 670 C 480 690, 460 700, 430 680 C 400 660, 370 630, 350 590 C 330 550, 340 530, 370 520 C 400 510, 410 500, 390 480 C 370 460, 340 430, 320 390 C 300 350, 310 330, 340 320 C 370 310, 380 300, 360 290 C 340 280, 320 260, 340 240 C 360 220, 400 210, 440 220 C 480 230, 490 240, 470 250 C 450 260, 440 270, 460 280 C 480 290, 490 260, 500 230 Z" transform="rotate(90 500 500)" />

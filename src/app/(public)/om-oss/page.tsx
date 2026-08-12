@@ -6,7 +6,7 @@ import uteImg from '@/assets/omoss/ute.jpg'
 export default function OmOss() {
   return (
     <div className="bg-4 -mt-30 pt-30">
-      <div className="min-h-[calc(100dvh-4.5rem)] md:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-24">
+      <div className="min-h-[calc(100dvh-4.875rem)] md:min-h-[calc(100dvh-5.4375rem)] lg:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 pt-10 md:pt-12 lg:pt-14 pb-24">
 
         <div className="text-center mb-12 lg:mb-16">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-5 mb-3">Om oss</h1>

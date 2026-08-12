@@ -13,7 +13,7 @@ const cards = [
 export default function Booking() {
   return (
     <div className="bg-2 -mt-30 pt-30">
-      <div className="min-h-[calc(100dvh-4.5rem)] md:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 md:px-10 lg:px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
+      <div className="min-h-[calc(100dvh-4.875rem)] md:min-h-[calc(100dvh-5.4375rem)] lg:min-h-[calc(100dvh-6rem)] max-w-6xl mx-auto px-6 md:px-10 lg:px-6 pt-10 md:pt-12 lg:pt-14 pb-12">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-3 text-center">Booking</h1>
         <div className="text-center flex flex-col gap-3 mt-4 md:mt-6 lg:mt-8">
           <p className="text-3 text-base md:text-[17px] lg:text-lg">
