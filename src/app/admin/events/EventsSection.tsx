@@ -224,6 +224,7 @@ export default function EventsSection() {
         <RegistrationsModal
           event={registrationsEvent}
           onClose={() => setRegistrationsEvent(null)}
+          onCountChange={(eventId, count) => setCounts(prev => ({ ...prev, [eventId]: count }))}
         />
       )}
 

@@ -8,13 +8,14 @@ import { IconX, IconCalendar, IconClock, IconTrash } from '@tabler/icons-react'
 type Props = {
   event: Event
   onClose: () => void
+  onCountChange: (eventId: string, count: number) => void
 }
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })
 }
 
-export default function RegistrationsModal({ event, onClose }: Props) {
+export default function RegistrationsModal({ event, onClose, onCountChange }: Props) {
   const [registrations, setRegistrations] = useState<EventRegistration[]>([])
   const [loading, setLoading] = useState(true)
   const [confirmId, setConfirmId] = useState<string | null>(null)
@@ -35,7 +36,11 @@ export default function RegistrationsModal({ event, onClose }: Props) {
   async function deleteRegistration(id: string) {
     const reg = registrations.find(r => r.id === id)
     await supabase.from('event_registration').delete().eq('id', id)
-    setRegistrations(prev => prev.filter(r => r.id !== id))
+    setRegistrations(prev => {
+      const next = prev.filter(r => r.id !== id)
+      onCountChange(event.id, next.length)
+      return next
+    })
     if (reg) {
       fetch('/api/send-email', {
         method: 'POST',
@@ -56,6 +61,7 @@ export default function RegistrationsModal({ event, onClose }: Props) {
   async function deleteAllRegistrations() {
     await supabase.from('event_registration').delete().eq('event_id', event.id)
     setRegistrations([])
+    onCountChange(event.id, 0)
     setConfirmAll(false)
   }
 
