@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
-import { LOGO_HTML, escapeHtml, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
+import { LOGO_HTML, EMAIL_FROM, escapeHtml, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -50,7 +50,7 @@ export async function DELETE(request: Request) {
   const safeName = escapeHtml(reg.name)
 
   await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: EMAIL_FROM,
     to: reg.email,
     subject: `Avmelding bekreftet – ${ev.title}`,
     html: `

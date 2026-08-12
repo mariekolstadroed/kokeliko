@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
-import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventTime, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
+import { SITE_URL, LOGO_HTML, EMAIL_FROM, escapeHtml, formatEventDate, formatEventTime, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -122,7 +122,7 @@ export async function POST(request: Request) {
         ? `${SITE_URL}/arrangementer/avmeld?token=${reg.cancellation_token}`
         : null
       return resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: EMAIL_FROM,
         to: reg.email,
         subject,
         html: wrapEmail(heading, rows, safeMessage, cancelUrl),

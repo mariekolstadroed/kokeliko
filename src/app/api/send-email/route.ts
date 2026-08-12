@@ -1,5 +1,5 @@
 import { Resend } from 'resend'
-import { SITE_URL, LOGO_HTML, escapeHtml, formatEventDate, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
+import { SITE_URL, LOGO_HTML, EMAIL_FROM, escapeHtml, formatEventDate, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
   try {
     const { error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: EMAIL_FROM,
       to: process.env.CONTACT_EMAIL!,
       replyTo: fields.epost,
       subject: subjects[type],
@@ -99,7 +99,7 @@ async function handleEventRegistration(fields: Record<string, string>) {
 
   try {
     const { error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: EMAIL_FROM,
       to: fields.epost,
       subject: `Påmelding bekreftet – ${fields.event_title}`,
       html,
@@ -143,7 +143,7 @@ async function handleEventCancellation(fields: Record<string, string>) {
 
   try {
     const { error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: EMAIL_FROM,
       to: fields.epost,
       subject: `Avmelding bekreftet – ${fields.event_title}`,
       html,

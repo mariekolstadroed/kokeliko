@@ -1,5 +1,6 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
 export const LOGO_HTML = `<img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;margin-bottom:20px;display:block;">`
+export const EMAIL_FROM = process.env.EMAIL_FROM ?? 'Kokeliko <no-reply@mail.kokeliko.no>'
 
 const MONTHS = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
 
