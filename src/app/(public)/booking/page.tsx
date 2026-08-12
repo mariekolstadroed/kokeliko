@@ -17,7 +17,7 @@ export default function Booking() {
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-3 text-center">Booking</h1>
         <div className="text-center flex flex-col gap-3 mt-4 md:mt-6 lg:mt-8">
           <p className="text-3 text-base md:text-[17px] lg:text-lg">
-            Reserver bord hos oss! Vi tar imot bordreservasjoner i vanlig åpningstid på hverdager, samt onsdag og torsdag kveld.
+            Reserver bord hos oss! Vi tar imot bordreservasjoner i vanlig åpningstid på hverdager, samt torsdag kveld.
             Grupper over 10 bes forhåndsbestille mat i skjemaet.<br />
             Vi tilbyr catering til konfirmasjon med f.eks. tapas, bursdag og andre selskap. Skriv ønskede retter og eventuelle
             tilpasninger i bookingen.<br />

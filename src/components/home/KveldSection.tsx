@@ -24,11 +24,11 @@ export default function KveldSection() {
       <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center pt-12 pb-16 md:py-16 lg:py-24">
         <div className="max-md:text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 leading-tight mb-6">
-            Onsdag- og<br />torsdagskvelder<br />hos oss!
+            Torsdagskvelder<br />hos oss!
           </h2>
           <p className="text-3 leading-relaxed text-base lg:text-lg mb-10">
             Kom og nyt en koselig kveld med pizza, vin og gode venner. Vi har nemlig kveldsåpent
-            helt til kl. 23 på onsdager og torsdager. Reserver bord til deg og din gjeng nå!
+            helt til kl. 23 på torsdager. Reserver bord til deg og din gjeng nå!
           </p>
           <Link
             href="/booking/bordreservasjon"
