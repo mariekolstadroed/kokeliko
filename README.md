@@ -25,7 +25,6 @@ Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS 
     src=".github/readme-assets/hovedsiden.png"
     alt="Skjermbilde av hovedsiden"
     width="38%"
-    align="left"
   />
   <img
     src=".github/readme-assets/hero.png"
@@ -34,8 +33,6 @@ Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS 
     align="right"
   />
 </p>
-
-<br clear="both" />
 
 <!-- markdownlint-enable MD033 MD041 -->
 
