@@ -8,8 +8,8 @@ import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } f
 import img1 from '@/assets/booking/lukket_selskap/lukket-selskap1.jpg'
 import img2 from '@/assets/booking/lukket_selskap/lukket-selskap2.jpg'
 
-const inputClass = 'w-full px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 export default function LukketSelskap() {
@@ -141,19 +141,19 @@ export default function LukketSelskap() {
 
             <div>
               <label className={labelClass}>Dato *</label>
-              <input className={f('dato')} type="date" required min={minDate} value={form.dato} onChange={e => set('dato', e.target.value)} />
+              <input className={f('dato') + ' appearance-none'} type="date" required min={minDate} value={form.dato} onChange={e => set('dato', e.target.value)} />
               {err('dato')}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Fra kl. *</label>
-                <input className={f('fra_kl')} type="time" required min="17:00" max="23:59" value={form.fra_kl} onChange={e => set('fra_kl', e.target.value)} />
+                <input className={f('fra_kl') + ' appearance-none'} type="time" required min="17:00" max="23:59" value={form.fra_kl} onChange={e => set('fra_kl', e.target.value)} />
                 {err('fra_kl')}
               </div>
               <div>
                 <label className={labelClass}>Til kl. *</label>
-                <input className={f('til_kl')} type="time" required min={form.fra_kl || '17:00'} max="23:59" value={form.til_kl} onChange={e => set('til_kl', e.target.value)} />
+                <input className={f('til_kl') + ' appearance-none'} type="time" required min={form.fra_kl || '17:00'} max="23:59" value={form.til_kl} onChange={e => set('til_kl', e.target.value)} />
                 {err('til_kl')}
               </div>
             </div>

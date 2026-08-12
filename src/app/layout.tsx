@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="no" className={specialElite.variable}>
-      <body className="min-h-screen">
+      <body className="min-h-dvh">
         {children}
       </body>
     </html>

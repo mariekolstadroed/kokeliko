@@ -9,8 +9,8 @@ import cateringImg2 from '@/assets/booking/catering/catering2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '@/lib/validation'
 import { useOpeningHours } from '@/hooks/useOpeningHours'
 
-const inputClass = 'w-full px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
-const inputErrorClass = 'w-full px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+const inputErrorClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
 export default function Catering() {
@@ -148,7 +148,7 @@ export default function Catering() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Dato *</label>
-                <input className={f('dato')} type="date" required min={minDate} value={form.dato} onChange={e => set('dato', e.target.value)} />
+                <input className={f('dato') + ' appearance-none'} type="date" required min={minDate} value={form.dato} onChange={e => set('dato', e.target.value)} />
                 {err('dato')}
               </div>
               <div>
@@ -181,7 +181,7 @@ export default function Catering() {
             <div>
               <label className={labelClass}>Henting/leveringstidspunkt *</label>
               <input
-                className={f('tidspunkt')}
+                className={f('tidspunkt') + ' appearance-none'}
                 type="time"
                 required
                 min={openTime}
