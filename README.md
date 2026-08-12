@@ -1,12 +1,11 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
-<img
-  src=".github/readme-assets/favicon.png"
-  alt="Kokeliko-logo"
-  width="120"
-  align="left"
-  hspace="24"
-/>
+<table>
+<tr>
+<td width="140">
+  <img src=".github/readme-assets/favicon.png" alt="Kokeliko-logo" width="120" />
+</td>
+<td>
 
 # Kokeliko
 
@@ -16,15 +15,15 @@ Nettsiden til Kokeliko Kaffebar på Bærums Verk — offentlige sider (meny, boo
 
 Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS v4](https://tailwindcss.com), [Supabase](https://supabase.com) (database, autentisering, filopplasting) og [Resend](https://resend.com) (e-post).
 
-<br clear="left" />
-
-## Skjermbilde
+</td>
+</tr>
+</table>
 
 <p>
   <img
     src=".github/readme-assets/skjermbilde.png"
     alt="Skjermbilde av nettsiden"
-    width="100%"
+    width="50%"
   />
 </p>
 
