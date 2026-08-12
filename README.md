@@ -18,19 +18,24 @@ Bygget med [Next.js](https://nextjs.org) (App Router, Turbopack), [Tailwind CSS 
 
 <br clear="left" />
 
+## Utdrag fra UI
+
 <p>
   <img
     src=".github/readme-assets/hovedsiden.png"
     alt="Skjermbilde av hovedsiden"
-    width="40%"
+    width="38%"
+    align="left"
   />
   <img
     src=".github/readme-assets/hero.png"
     alt="Skjermbilde av hero-seksjonen"
-    width="60%"
+    width="58%"
     align="right"
   />
 </p>
+
+<br clear="both" />
 
 <!-- markdownlint-enable MD033 MD041 -->
 
