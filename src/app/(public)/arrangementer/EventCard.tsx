@@ -60,10 +60,15 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
               Dato og tid kommer
             </span>
           )}
-          {event.max_capacity && (
+          {event.max_capacity ? (
             <span className="flex items-center gap-1.5">
               <IconUsers size={15} />
               {registrationCount} / {event.max_capacity}
+            </span>
+          ) : registrationCount > 0 && (
+            <span className="flex items-center gap-1.5">
+              <IconUsers size={15} />
+              {registrationCount} påmeldt
             </span>
           )}
         </div>
