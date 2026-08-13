@@ -10,9 +10,21 @@ const specialElite = localFont({
   variable: '--font-special-elite',
 })
 
+const TITLE = 'Kokeliko Kaffebar'
+const DESCRIPTION = 'Koselig kafé på Bærums Verk med kjempegod kaffe, smørbrød, salater, pizza, kaker og KokelikoBolla. Bestill bord her! Vi tilbyr også catering og lukket selskap.'
+
 export const metadata: Metadata = {
-  title: 'Kokeliko Kaffebar',
-  description: 'Koselig kafé på Bærums Verk med kjempegod kaffe, smørbrød, salater, pizza, kaker og KokelikoBolla. Bestill bord her! Vi tilbyr også catering og lukket selskap.',
+  title: TITLE,
+  description: DESCRIPTION,
+  metadataBase: new URL('https://kokeliko.no'),
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: 'https://kokeliko.no',
+    siteName: TITLE,
+    type: 'website',
+    locale: 'nb_NO',
+  },
 }
 
 export default function RootLayout({
