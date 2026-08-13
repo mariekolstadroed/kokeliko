@@ -5,6 +5,23 @@ import Image from 'next/image'
 import { IconX, IconPhotoOff } from '@tabler/icons-react'
 import type { Category, MenuItem } from '@/types/index'
 
+const HYPHENATE_MIN_LENGTH = 15
+
+function Hyphenated({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\s+|\/|-)/).map((token, i) => {
+        if (token === '/' || token === '-') {
+          return <span key={i}>{token}<wbr /></span>
+        }
+        return token.length >= HYPHENATE_MIN_LENGTH
+          ? <span key={i} className="hyphens-auto wrap-break-word">{token}</span>
+          : token
+      })}
+    </>
+  )
+}
+
 function ImageModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
@@ -103,10 +120,10 @@ export default function MenuTabs({
                           )}
                         </div>
                       </div>
-                      <div className="flex flex-col justify-center">
-                        <h3 className="font-semibold font-special-elite text-xl md:text-[22px] lg:text-2xl text-1">{item.name}</h3>
+                      <div className="flex flex-col justify-center min-w-0">
+                        <h3 className="font-semibold font-special-elite text-xl md:text-[22px] lg:text-2xl text-1 wrap-break-word"><Hyphenated text={item.name} /></h3>
                         {item.description && (
-                          <p className="text-xs md:text-sm lg:text-base text-2 mt-1">{item.description}</p>
+                          <p className="text-xs md:text-sm lg:text-base text-2 mt-1 wrap-break-word"><Hyphenated text={item.description} /></p>
                         )}
                         {item.allergens && (
                           <p className="text-[10px] md:text-xs lg:text-sm text-2/80 mt-1">Allergener: {item.allergens}</p>
