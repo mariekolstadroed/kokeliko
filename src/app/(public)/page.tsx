@@ -187,7 +187,7 @@ export default async function Home() {
         </div>
 
         <p className="text-sm md:text-base text-2 text-center italic mt-10 md:mt-12">
-          Kjøkkenet stenger én time før stengetid (to timer før på torsdagskvelder).
+          Kjøkkenet stenger én time før stengetid (to timer før på torsdagskvelder)
         </p>
 
       </div>
