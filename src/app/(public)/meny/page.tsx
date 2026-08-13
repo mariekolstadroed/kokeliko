@@ -2,6 +2,8 @@ import { supabaseServer as supabase } from '@/lib/supabase-server'
 import type { Category, MenuItem } from '@/types/index'
 import MenuTabs from './MenuTabs'
 
+export const dynamic = 'force-dynamic'
+
 async function fetchMenuData() {
   const [{ data: cats }, { data: its }] = await Promise.all([
     supabase

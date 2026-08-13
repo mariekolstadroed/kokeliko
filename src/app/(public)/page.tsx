@@ -13,6 +13,8 @@ import halfAndHalfImg from '@/assets/kaffen/half-and-half.png'
 import gavekortImg from '@/assets/home/gavekort.jpg'
 import gaveposerImg from '@/assets/home/gaveposer.jpg'
 
+export const dynamic = 'force-dynamic'
+
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
 
 function formatTime(t: string | null) {
