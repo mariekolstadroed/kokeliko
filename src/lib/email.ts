@@ -1,5 +1,5 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kokeliko.no'
-export const LOGO_HTML = `<div style="display:inline-block;background-color:#ffffff;border-radius:8px;padding:12px 16px;margin-bottom:20px;"><img src="${SITE_URL}/logo-svart.png" alt="Kokeliko" style="height:36px;width:auto;display:block;"></div>`
+export const LOGO_HTML = `<img src="${SITE_URL}/logo-hvit-bakgrunn.png" alt="Kokeliko" style="height:48px;width:auto;display:block;margin-bottom:20px;">`
 export const EMAIL_FROM = process.env.EMAIL_FROM ?? 'Kokeliko <no-reply@mail.kokeliko.no>'
 
 const MONTHS = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember']
