@@ -1,7 +1,12 @@
 import { Resend } from 'resend'
+import { createClient } from '@supabase/supabase-js'
 import { SITE_URL, LOGO_HTML, EMAIL_FROM, escapeHtml, formatEventDate, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
@@ -62,23 +67,41 @@ export async function POST(req: Request) {
 }
 
 async function handleEventRegistration(fields: Record<string, string>) {
-  const hasDate = !!fields.event_date
-  const dateStr = formatEventDateOrTBD(fields.event_date || null)
-  const timeStr = formatEventTimeOrTBD(fields.event_start_time || null, fields.event_end_time || null)
+  if (!fields.cancellation_token) return Response.json({ ok: false }, { status: 400 })
+
+  const { data: reg } = await supabaseAdmin
+    .from('event_registration')
+    .select('name, email, event_id')
+    .eq('cancellation_token', fields.cancellation_token)
+    .single()
+  if (!reg) return Response.json({ ok: false }, { status: 404 })
+
+  const { data: ev } = await supabaseAdmin
+    .from('events')
+    .select('title, event_date, event_start_time, event_end_time')
+    .eq('id', reg.event_id)
+    .single()
+  if (!ev) return Response.json({ ok: false }, { status: 500 })
+
+  const hasDate = !!ev.event_date
+  const dateStr = formatEventDateOrTBD(ev.event_date)
+  const timeStr = formatEventTimeOrTBD(ev.event_start_time, ev.event_end_time)
+  const safeName = escapeHtml(reg.name)
+  const safeTitle = escapeHtml(ev.title)
   const cancelUrl = `${SITE_URL}/arrangementer/avmeld?token=${fields.cancellation_token}`
 
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;">
       ${LOGO_HTML}
-      <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Påmelding bekreftet – ${fields.event_title}</h2>
+      <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Påmelding bekreftet – ${safeTitle}</h2>
       <table role="presentation" style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;width:180px;font-size:14px;">Navn</td>
-          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.navn}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeName}</td>
         </tr>
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
-          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.event_title}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeTitle}</td>
         </tr>
         ${hasDate ? `
         <tr>
@@ -100,8 +123,8 @@ async function handleEventRegistration(fields: Record<string, string>) {
   try {
     const { error } = await resend.emails.send({
       from: EMAIL_FROM,
-      to: fields.epost,
-      subject: `Påmelding bekreftet – ${fields.event_title}`,
+      to: reg.email,
+      subject: `Påmelding bekreftet – ${ev.title}`,
       html,
     })
     if (error) throw error
@@ -113,22 +136,40 @@ async function handleEventRegistration(fields: Record<string, string>) {
 }
 
 async function handleEventCancellation(fields: Record<string, string>) {
-  const hasDate = !!fields.event_date
-  const dateStr = formatEventDateOrTBD(fields.event_date || null)
-  const timeStr = formatEventTimeOrTBD(fields.event_start_time || null, fields.event_end_time || null)
+  if (!fields.registration_id) return Response.json({ ok: false }, { status: 400 })
+
+  const { data: reg } = await supabaseAdmin
+    .from('event_registration')
+    .select('name, email, event_id')
+    .eq('id', fields.registration_id)
+    .single()
+  if (!reg) return Response.json({ ok: false }, { status: 404 })
+
+  const { data: ev } = await supabaseAdmin
+    .from('events')
+    .select('title, event_date, event_start_time, event_end_time')
+    .eq('id', reg.event_id)
+    .single()
+  if (!ev) return Response.json({ ok: false }, { status: 500 })
+
+  const hasDate = !!ev.event_date
+  const dateStr = formatEventDateOrTBD(ev.event_date)
+  const timeStr = formatEventTimeOrTBD(ev.event_start_time, ev.event_end_time)
+  const safeName = escapeHtml(reg.name)
+  const safeTitle = escapeHtml(ev.title)
 
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;">
       ${LOGO_HTML}
-      <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Du er avmeldt – ${fields.event_title}</h2>
+      <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Du er avmeldt – ${safeTitle}</h2>
       <table role="presentation" style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;width:180px;font-size:14px;">Navn</td>
-          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.navn}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeName}</td>
         </tr>
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
-          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.event_title}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeTitle}</td>
         </tr>
         ${hasDate ? `
         <tr>
@@ -146,8 +187,8 @@ async function handleEventCancellation(fields: Record<string, string>) {
   try {
     const { error } = await resend.emails.send({
       from: EMAIL_FROM,
-      to: fields.epost,
-      subject: `Avmelding bekreftet – ${fields.event_title}`,
+      to: reg.email,
+      subject: `Avmelding bekreftet – ${ev.title}`,
       html,
     })
     if (error) throw error

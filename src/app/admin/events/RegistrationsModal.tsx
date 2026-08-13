@@ -34,28 +34,21 @@ export default function RegistrationsModal({ event, onClose, onCountChange }: Pr
   }
 
   async function deleteRegistration(id: string) {
-    const reg = registrations.find(r => r.id === id)
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'event_cancellation',
+        registration_id: id,
+      }),
+    }).catch(() => {})
+
     await supabase.from('event_registration').delete().eq('id', id)
     setRegistrations(prev => {
       const next = prev.filter(r => r.id !== id)
       onCountChange(event.id, next.length)
       return next
     })
-    if (reg) {
-      fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'event_cancellation',
-          navn: reg.name,
-          epost: reg.email,
-          event_title: event.title,
-          event_date: event.event_date,
-          event_start_time: event.event_start_time,
-          event_end_time: event.event_end_time ?? '',
-        }),
-      }).catch(() => {})
-    }
   }
 
   async function deleteAllRegistrations() {
