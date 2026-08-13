@@ -11,8 +11,8 @@ const specialElite = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Kokeliko',
-  description: 'Kokeliko kaffebar',
+  title: 'Kokeliko kaffebar',
+  description: 'Koselig kafé på Bærums Verk med kjempegod kaffe, smørbrød, salater, pizza, kaker og KokelikoBolla. Bestill bord, catering eller lukket selskap!',
 }
 
 export default function RootLayout({
