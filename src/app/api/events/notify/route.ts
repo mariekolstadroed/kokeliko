@@ -91,8 +91,10 @@ export async function POST(request: Request) {
       .eq('id', event_id)
   }
 
+  const hasOldDate = !!event.event_date
   const oldDateStr = formatEventDateOrTBD(event.event_date)
   const oldTimeStr = formatEventTimeOrTBD(event.event_start_time, event.event_end_time)
+  const oldDateRows = hasOldDate ? row('Dato', oldDateStr) + row('Tidspunkt', oldTimeStr) : ''
 
   let heading: string
   let rows: string
@@ -107,11 +109,11 @@ export async function POST(request: Request) {
   } else if (kind === 'cancel') {
     heading = `Avlyst – ${safeTitle}`
     subject = `Avlyst – ${event.title}`
-    rows = row('Arrangement', safeTitle) + row('Dato', oldDateStr) + row('Tidspunkt', oldTimeStr)
+    rows = row('Arrangement', safeTitle) + oldDateRows
   } else {
     heading = `Oppdatering – ${safeTitle}`
     subject = `Oppdatering – ${event.title}`
-    rows = row('Arrangement', safeTitle) + row('Dato', oldDateStr) + row('Tidspunkt', oldTimeStr)
+    rows = row('Arrangement', safeTitle) + oldDateRows
   }
 
   const includeCancelLink = kind !== 'cancel'

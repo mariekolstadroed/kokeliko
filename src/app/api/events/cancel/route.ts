@@ -43,6 +43,7 @@ export async function DELETE(request: Request) {
 
   if (error) return Response.json({ ok: false }, { status: 500 })
 
+  const hasDate = !!ev.event_date
   const dateStr = formatEventDateOrTBD(ev.event_date)
   const timeStr = formatEventTimeOrTBD(ev.event_start_time, ev.event_end_time)
 
@@ -66,6 +67,7 @@ export async function DELETE(request: Request) {
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${safeTitle}</td>
           </tr>
+          ${hasDate ? `
           <tr>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Dato</td>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${dateStr}</td>
@@ -73,7 +75,7 @@ export async function DELETE(request: Request) {
           <tr>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Tidspunkt</td>
             <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${timeStr}</td>
-          </tr>
+          </tr>` : ''}
         </table>
       </div>
     `,

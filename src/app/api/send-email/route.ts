@@ -113,6 +113,7 @@ async function handleEventRegistration(fields: Record<string, string>) {
 }
 
 async function handleEventCancellation(fields: Record<string, string>) {
+  const hasDate = !!fields.event_date
   const dateStr = formatEventDateOrTBD(fields.event_date || null)
   const timeStr = formatEventTimeOrTBD(fields.event_start_time || null, fields.event_end_time || null)
 
@@ -129,6 +130,7 @@ async function handleEventCancellation(fields: Record<string, string>) {
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Arrangement</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${fields.event_title}</td>
         </tr>
+        ${hasDate ? `
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Dato</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${dateStr}</td>
@@ -136,7 +138,7 @@ async function handleEventCancellation(fields: Record<string, string>) {
         <tr>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;color:#888;font-size:14px;">Tidspunkt</td>
           <td style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;">${timeStr}</td>
-        </tr>
+        </tr>` : ''}
       </table>
     </div>
   `
