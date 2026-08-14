@@ -11,7 +11,7 @@ const specialElite = localFont({
 })
 
 const TITLE = 'Kokeliko Kaffebar'
-const DESCRIPTION = 'Koselig kafé på Bærums Verk med kjempegod kaffe, smørbrød, salater, pizza, kaker og KokelikoBolla. Bestill bord her! Vi tilbyr også catering og lukket selskap.'
+const DESCRIPTION = 'Koselig kafé på Bærums Verk med god kaffe, smørbrød, salater, pizza, kaker og KokelikoBolla. Reserver bord her! Tilbyr også catering/lukket selskap.'
 
 export const metadata: Metadata = {
   title: TITLE,
