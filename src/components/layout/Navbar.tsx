@@ -19,9 +19,9 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 px-6 md:px-10 lg:px-6 pt-4 pb-1.5 md:pt-4.5 md:pb-1.75 lg:pt-5 lg:pb-2">
       <nav className="flex items-center justify-between bg-6/70 backdrop-blur-sm rounded-full px-6 py-3 md:px-7 md:py-3.5 lg:px-8 lg:py-4 shadow-md shadow-2/30 max-w-7xl mx-auto">
-        <Link href="/" onClick={() => setIsOpen(false)}>
+        <a href="/" onClick={() => setIsOpen(false)}>
           <div className="logo logo--dark h-8 md:h-8.5 lg:h-9" role="img" aria-label="Kokeliko" />
-        </Link>
+        </a>
 
         <div className="hidden lg:flex items-center gap-20 translate-y-0.5">
           {links.map(({ to, label }) => {
