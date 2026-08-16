@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import type { GalleryItem } from '@/types'
 import { IconX, IconUpload } from '@tabler/icons-react'
@@ -91,7 +92,7 @@ export default function GalleryItemModal({ item, section, onClose, onSaved }: Pr
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
             {previewSrc ? (
               <div className="relative rounded-lg overflow-hidden border border-stone-200 aspect-square w-40">
-                <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+                <Image src={previewSrc} alt="" fill unoptimized sizes="160px" className="object-cover" />
                 <button
                   onClick={handleRemoveImage}
                   className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"

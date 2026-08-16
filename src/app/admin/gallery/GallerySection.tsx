@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import type { GalleryItem } from '@/types'
 import GalleryItemModal from './GalleryItemModal'
@@ -136,9 +137,9 @@ export default function GallerySection() {
                         </button>
                       </div>
 
-                      <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-stone-100">
+                      <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-stone-100">
                         {item.image_url && (
-                          <img src={item.image_url} alt="" className="w-full h-full object-cover" />
+                          <Image src={item.image_url} alt="" fill sizes="80px" className="object-cover" />
                         )}
                       </div>
 

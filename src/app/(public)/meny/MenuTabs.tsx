@@ -59,14 +59,8 @@ export default function MenuTabs({
   categories: Category[]
   items: MenuItem[]
 }) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string | null>(() => categories[0]?.id ?? null)
   const [lightboxItem, setLightboxItem] = useState<MenuItem | null>(null)
-
-  useEffect(() => {
-    if (categories.length > 0 && activeCategory === null) {
-      setActiveCategory(categories[0].id)
-    }
-  }, [categories, activeCategory])
 
   return (
     <>

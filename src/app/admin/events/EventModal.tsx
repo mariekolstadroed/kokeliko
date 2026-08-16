@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import type { Event } from '@/types'
 import { IconX, IconUpload } from '@tabler/icons-react'
@@ -245,7 +246,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
             <div className="w-88 max-w-full">
               {previewSrc ? (
                 <div className="relative rounded-lg overflow-hidden border border-stone-200 aspect-video">
-                  <img src={previewSrc} alt="" className="w-full h-full object-cover" />
+                  <Image src={previewSrc} alt="" fill unoptimized sizes="352px" className="object-cover" />
                   <button
                     onClick={handleRemoveImage}
                     className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors shadow-sm"

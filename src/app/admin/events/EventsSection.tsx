@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import type { Event } from '@/types'
 import EventModal from './EventModal'
@@ -121,7 +122,7 @@ export default function EventsSection() {
                 <>
                   <div className="relative aspect-video bg-stone-100 overflow-hidden">
                     {event.image_url ? (
-                      <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
+                      <Image src={event.image_url} alt={event.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-stone-300">
                         <IconPhotoOff size={28} />

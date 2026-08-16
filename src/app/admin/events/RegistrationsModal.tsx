@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { Event, EventRegistration } from '@/types'
 import { IconX, IconCalendar, IconClock, IconTrash } from '@tabler/icons-react'
@@ -21,9 +21,7 @@ export default function RegistrationsModal({ event, onClose, onCountChange }: Pr
   const [confirmId, setConfirmId] = useState<string | null>(null)
   const [confirmAll, setConfirmAll] = useState(false)
 
-  useEffect(() => { fetchRegistrations() }, [event.id])
-
-  async function fetchRegistrations() {
+  const fetchRegistrations = useCallback(async () => {
     const { data } = await supabase
       .from('event_registration')
       .select('*')
@@ -31,7 +29,10 @@ export default function RegistrationsModal({ event, onClose, onCountChange }: Pr
       .order('name')
     setRegistrations(data ?? [])
     setLoading(false)
-  }
+  }, [event.id])
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { fetchRegistrations() }, [fetchRegistrations])
 
   async function deleteRegistration(id: string) {
     await fetch('/api/send-email', {
