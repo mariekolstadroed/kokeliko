@@ -25,7 +25,7 @@ export default function Footer() {
               key={label}
               href={href}
               aria-label={label}
-              className="w-10 h-10 lg:w-14 lg:h-14 rounded-full border border-(--color-4)/40 flex items-center justify-center text-3 hover:border-(--color-4) transition-colors"
+              className="w-10 h-10 lg:w-14 lg:h-14 rounded-full border border-4/40 flex items-center justify-center text-3 hover:border-4 transition-colors"
             >
               <Icon size={18} className="lg:hidden" />
               <Icon size={26} className="hidden lg:block" />
@@ -45,7 +45,7 @@ export default function Footer() {
 
       </div>
 
-      <div className="border-t border-(--color-4)/20 py-5 text-center text-3/60 text-xs">
+      <div className="border-t border-4/20 py-5 text-center text-3/60 text-xs">
         © {new Date().getFullYear()} Kokeliko
       </div>
     </footer>

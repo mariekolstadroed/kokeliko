@@ -16,6 +16,38 @@ import gaveposerImg from '@/assets/home/gaveposer.jpg'
 export const dynamic = 'force-dynamic'
 
 const DAY_NAMES = ['', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag']
+const DAY_NAMES_EN = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+function buildStructuredData(regularHours: OpeningHour[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CafeOrCoffeeShop',
+    name: 'Kokeliko Kaffebar',
+    image: 'https://kokeliko.no/opengraph-image.png',
+    url: 'https://kokeliko.no',
+    telephone: '+4794088782',
+    email: 'elin@kokeliko.no',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Elvegangen 9',
+      addressLocality: 'Bærums Verk',
+      addressCountry: 'NO',
+    },
+    sameAs: [
+      'https://www.instagram.com/kokelikokaffebar/',
+      'https://www.facebook.com/kokeliko.no',
+      'https://www.tiktok.com/@kokelikokaffebar',
+    ],
+    openingHoursSpecification: regularHours
+      .filter(h => !h.closed && h.open_time && h.close_time)
+      .map(h => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: DAY_NAMES_EN[h.day],
+        opens: h.open_time!.slice(0, 5),
+        closes: h.close_time!.slice(0, 5),
+      })),
+  }
+}
 
 function formatTime(t: string | null) {
   if (!t) return ''
@@ -55,6 +87,10 @@ export default async function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildStructuredData(regularHours)) }}
+      />
       <div className="bg-1 -mt-30 pt-30 overflow-hidden">
         {/* fyller nøyaktig resten av viewport etter navbar */}
         <div className="relative h-[calc(100dvh-4.875rem)] md:h-[calc(100dvh-5.4375rem)] lg:h-[calc(100dvh-6rem)]">

@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import voyenengaImg from '@/assets/omoss/voyenenga.jpg'
 import marsipanbollerImg from '@/assets/omoss/marsipanboller.jpg'
 import uteImg from '@/assets/omoss/ute.jpg'
+
+export const metadata: Metadata = {
+  title: 'Om oss – Kokeliko Kaffebar',
+  description: 'Historien om Kokeliko – fra symaskin til kaffebar på Bærums Verk. Møt Elin og gjengen bak stedet.',
+  alternates: { canonical: '/om-oss' },
+}
 
 export default function OmOss() {
   return (

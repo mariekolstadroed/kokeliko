@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import { supabaseServer as supabase } from '@/lib/supabase-server'
 import type { Category, MenuItem } from '@/types/index'
 import MenuTabs from './MenuTabs'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Meny – Kokeliko Kaffebar',
+  description: 'Se hele menyen til Kokeliko: kaffe, smørbrød, salater, pizza, kaker og den populære KokelikoBolla.',
+  alternates: { canonical: '/meny' },
+}
 
 async function fetchMenuData() {
   const [{ data: cats }, { data: its }] = await Promise.all([

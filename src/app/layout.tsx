@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const specialElite = localFont({
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   metadataBase: new URL('https://kokeliko.no'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -36,6 +40,7 @@ export default function RootLayout({
     <html lang="no" className={specialElite.variable}>
       <body className="min-h-dvh">
         {children}
+        <Analytics />
       </body>
     </html>
   )
