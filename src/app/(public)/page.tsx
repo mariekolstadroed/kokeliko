@@ -27,9 +27,12 @@ function buildStructuredData(regularHours: OpeningHour[]) {
     url: 'https://kokeliko.no',
     telephone: '+4794088782',
     email: 'elin@kokeliko.no',
+    priceRange: 'kr 100–250',
+    servesCuisine: 'Kaffe, lunsj og kaker',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Elvegangen 9',
+      postalCode: '1353',
       addressLocality: 'Bærums Verk',
       addressCountry: 'NO',
     },
