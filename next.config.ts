@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   allowedDevOrigins: ['192.168.1.179'],
   images: {
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       {
         protocol: 'https',
