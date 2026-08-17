@@ -39,10 +39,10 @@ export default function KveldSection() {
         </div>
         <div className="relative px-8 py-12 lg:px-16 lg:py-20">
           <div className="absolute max-md:-top-4 -top-6 max-md:right-0 -right-2 md:-top-2 md:right-0 lg:-top-10 lg:-right-10 w-32 h-32 lg:w-56 lg:h-56 rounded-full overflow-hidden z-20 opacity-80">
-            <Image src={kunst2} alt="" fill sizes="224px" className="object-cover" />
+            <Image unoptimized src={kunst2} alt="" fill sizes="224px" className="object-cover" />
           </div>
           <div className="absolute -bottom-4 lg:-bottom-10 left-1/2 -translate-x-1/2 w-32 h-32 lg:w-56 lg:h-56 rounded-full overflow-hidden z-0 opacity-80">
-            <Image src={kunst1} alt="" fill sizes="224px" className="object-cover" />
+            <Image unoptimized src={kunst1} alt="" fill sizes="224px" className="object-cover" />
           </div>
           <div className="relative z-10 aspect-square md:aspect-3/4 overflow-hidden rounded-3xl">
             {kveldImages.map((src, i) => (
@@ -51,7 +51,7 @@ export default function KveldSection() {
                 className="absolute inset-0 transition-opacity duration-500"
                 style={{ opacity: i === kveldIdx ? 1 : 0 }}
               >
-                <Image src={src} alt="" fill sizes="(max-width: 1024px) 80vw, 40vw" className="object-cover" />
+                <Image unoptimized src={src} alt="" fill sizes="(max-width: 1024px) 80vw, 40vw" className="object-cover" />
               </div>
             ))}
           </div>

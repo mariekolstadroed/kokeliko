@@ -67,10 +67,10 @@ export default function LukketSelskap() {
   const bgImages = (
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0 md:right-1/2">
-        <Image src={img2} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" placeholder="blur" className="object-cover" />
+        <Image unoptimized src={img2} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" placeholder="blur" className="object-cover" />
       </div>
       <div className="absolute inset-y-0 left-1/2 right-0 max-md:hidden">
-        <Image src={img1} alt="" fill sizes="50vw" placeholder="blur" className="object-cover" />
+        <Image unoptimized src={img1} alt="" fill sizes="50vw" placeholder="blur" className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-1/40" />
     </div>

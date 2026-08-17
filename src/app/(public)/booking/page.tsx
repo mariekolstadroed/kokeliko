@@ -41,10 +41,7 @@ export default function Booking() {
                 src={img}
                 alt={title}
                 fill
-                sizes={i === 0
-                  ? '(max-width: 768px) 80vw, (max-width: 1024px) 100vw, 33vw'
-                  : '(max-width: 768px) 80vw, (max-width: 1024px) 50vw, 33vw'
-                }
+                unoptimized
                 placeholder="blur"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />

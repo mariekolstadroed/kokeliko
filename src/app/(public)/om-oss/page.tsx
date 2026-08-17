@@ -43,13 +43,13 @@ export default function OmOss() {
               </div>
             </div>
             <div className="rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:ml-auto relative">
-              <Image src={voyenengaImg} alt="Vøyenenga" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" loading="eager" />
+              <Image unoptimized src={voyenengaImg} alt="Vøyenenga" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" loading="eager" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-8 lg:gap-0">
             <div className="order-2 md:order-1 rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:mr-auto relative">
-              <Image src={marsipanbollerImg} alt="Marsipanboller" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+              <Image unoptimized src={marsipanbollerImg} alt="Marsipanboller" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="order-1 md:order-2">
               <h2 className="font-special-elite text-2 text-2xl md:text-3xl lg:text-4xl mb-6">Vår egen bolle!</h2>
@@ -91,7 +91,7 @@ export default function OmOss() {
               </div>
             </div>
             <div className="rounded-2xl overflow-hidden aspect-square md:aspect-3/4 lg:aspect-square w-full lg:w-4/5 lg:ml-auto relative">
-              <Image src={uteImg} alt="Ute" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+              <Image unoptimized src={uteImg} alt="Ute" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
           </div>
 

@@ -218,7 +218,7 @@ export default async function Home() {
           ) : (
             <div className="hidden md:block lg:pr-20">
               <div className="w-60 lg:w-100">
-                <Image src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
+                <Image unoptimized src={kokelikoSirkel} alt="" className="w-full h-auto" priority />
               </div>
             </div>
           )}
@@ -244,16 +244,16 @@ export default async function Home() {
       <KveldSection />
 
       <div className="relative">
-        <Image src={elinPaKaffeImg} alt="" fill className="object-cover" />
+        <Image unoptimized src={elinPaKaffeImg} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-1/70" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
             <div className="order-2 lg:order-1 relative h-72 w-72 lg:h-120 lg:w-120 mx-auto shrink-0">
               <div className="absolute top-0 left-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
+                <Image unoptimized src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
               </div>
               <div className="absolute bottom-0 right-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
+                <Image unoptimized src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
               </div>
             </div>
             <div className="order-1 lg:order-2 max-lg:text-center">
@@ -302,17 +302,17 @@ export default async function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
-              <Image src={gavekortImg} alt="Gavekort" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+              <Image unoptimized src={gavekortImg} alt="Gavekort" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="relative rounded-2xl aspect-4/3 w-full overflow-hidden">
-              <Image src={gaveposerImg} alt="Gaveposer" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+              <Image unoptimized src={gaveposerImg} alt="Gaveposer" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
           </div>
         </div>
       </div>
 
       <div className="relative">
-        <Image src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
+        <Image unoptimized src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
         <div className="absolute inset-0 bg-1/70" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-25">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-16">
