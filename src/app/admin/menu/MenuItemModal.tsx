@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
+import { compressImage, ImageDecodeError } from '@/lib/compressImage'
 import type { Category, MenuItem } from '@/types'
 import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react'
 
@@ -34,11 +35,18 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
 
   const previewSrc = localPreview ?? existingImageUrl
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-    setSelectedFile(file)
-    setLocalPreview(URL.createObjectURL(file))
+    setUploadError(null)
+    try {
+      const compressed = await compressImage(file)
+      setSelectedFile(compressed)
+      setLocalPreview(URL.createObjectURL(compressed))
+    } catch (err) {
+      setUploadError(err instanceof ImageDecodeError ? err.message : 'Bildet kunne ikke leses.')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
   }
 
   function handleRemoveImage() {
@@ -57,7 +65,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
     if (selectedFile) {
       const ext = selectedFile.name.split('.').pop()
       const path = `menu/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const { data, error } = await supabase.storage.from('images').upload(path, selectedFile)
+      const { data, error } = await supabase.storage.from('images').upload(path, selectedFile, { cacheControl: '2678400' })
       if (error) {
         setUploadError(`Bildeopplasting feilet: ${error.message}`)
         setSaving(false)

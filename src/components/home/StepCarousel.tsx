@@ -76,7 +76,7 @@ export default function StepCarousel({
               style={{ opacity: i === fadeIdx ? 1 : 0 }}
             >
               {item.image_url && (
-                <Image src={item.image_url} alt={item.title ?? ''} fill sizes="calc(100vw - 48px)" className="object-cover" priority={i === 0} />
+                <Image unoptimized src={item.image_url} alt={item.title ?? ''} fill sizes="calc(100vw - 48px)" className="object-cover" priority={i === 0} />
               )}
             </div>
           ))}
@@ -100,7 +100,7 @@ export default function StepCarousel({
             <div key={i} className="shrink-0" style={{ width: itemW }}>
               <div className={`relative rounded-2xl overflow-hidden ${containerBgClass}`} style={{ width: itemW, height: itemW }}>
                 {item.image_url && (
-                  <Image src={item.image_url} alt={item.title ?? ''} fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover" priority={i === 0} />
+                  <Image unoptimized src={item.image_url} alt={item.title ?? ''} fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover" priority={i === 0} />
                 )}
               </div>
               {item.title && (

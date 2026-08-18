@@ -122,7 +122,7 @@ export default function EventsSection() {
                 <>
                   <div className="relative aspect-video bg-stone-100 overflow-hidden">
                     {event.image_url ? (
-                      <Image src={event.image_url} alt={event.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                      <Image unoptimized src={event.image_url} alt={event.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-stone-300">
                         <IconPhotoOff size={28} />

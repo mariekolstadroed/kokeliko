@@ -139,7 +139,7 @@ export default function GallerySection() {
 
                       <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-stone-100">
                         {item.image_url && (
-                          <Image src={item.image_url} alt="" fill sizes="80px" className="object-cover" />
+                          <Image unoptimized src={item.image_url} alt="" fill sizes="80px" className="object-cover" />
                         )}
                       </div>
 

@@ -38,8 +38,8 @@ function ImageModal({ item, onClose }: { item: MenuItem; onClose: () => void }) 
         className="relative bg-4 rounded-2xl p-2 md:p-3 lg:p-4 w-4/5 max-w-xs md:max-w-md lg:max-w-lg"
         onClick={e => e.stopPropagation()}
       >
-        <div className="relative w-full aspect-square rounded-xl overflow-hidden">
-          <Image src={item.image_url!} alt={item.name} fill sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1024px) 416px, 480px" className="object-cover" />
+        <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-2">
+          <Image unoptimized src={item.image_url!} alt={item.name} fill sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1024px) 416px, 480px" className="object-cover" />
           <button
             onClick={onClose}
             className="absolute top-2 right-2 z-10 p-2 rounded-full bg-4/80 hover:bg-4 text-1 transition-colors"
@@ -84,10 +84,10 @@ export default function MenuTabs({
       </div>
 
       {categories.map(cat => {
+        if (cat.id !== activeCategory) return null
         const catItems = items.filter(i => i.category_id === cat.id)
-        const isActive = cat.id === activeCategory
         return (
-          <div key={cat.id} className={isActive ? '' : 'hidden'}>
+          <div key={cat.id}>
             {cat.description && (
               <p className="text-2 text-sm md:text-base lg:text-lg mt-4 whitespace-pre-line text-center">
                 {cat.description}
@@ -108,7 +108,7 @@ export default function MenuTabs({
                           onClick={() => item.image_url && setLightboxItem(item)}
                         >
                           {item.image_url ? (
-                            <Image src={item.image_url} alt={item.name} fill sizes="(max-width: 768px) 96px, (max-width: 1024px) 112px, 128px" loading="eager" className="object-cover" />
+                            <Image unoptimized src={item.image_url} alt={item.name} fill sizes="(max-width: 768px) 96px, (max-width: 1024px) 112px, 128px" className="object-cover" />
                           ) : (
                             <IconPhotoOff className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 text-3" strokeWidth={1.5} aria-hidden />
                           )}

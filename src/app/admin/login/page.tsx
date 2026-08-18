@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <div className="login-scope h-dvh flex items-center justify-center px-4 relative overflow-y-auto overflow-x-hidden">
-      <Image src={bakgrunn} alt="" fill className="object-cover" priority />
+      <Image unoptimized src={bakgrunn} alt="" fill className="object-cover" priority />
       <div className="absolute inset-0 bg-1/30" />
       <div className="absolute inset-0 bg-black/30" />
       <div className="relative z-10 w-full max-w-xs md:max-w-sm my-auto">

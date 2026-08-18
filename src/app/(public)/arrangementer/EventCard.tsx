@@ -20,9 +20,9 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
 
   return (
     <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm shadow-1/30 flex flex-col">
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-56 overflow-hidden bg-2">
         {event.image_url ? (
-          <Image src={event.image_url} alt={event.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+          <Image unoptimized src={event.image_url} alt={event.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-2">
             <IconPhotoOff className="w-14 h-14 text-3" strokeWidth={1.5} aria-hidden />
