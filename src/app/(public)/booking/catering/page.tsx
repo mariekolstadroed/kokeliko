@@ -89,7 +89,7 @@ export default function Catering() {
         {bgImages}
         <div className="relative bg-4/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
           <p className="text-2xl font-bold text-1 mb-3">Takk for din forespørsel!</p>
-          <p className="text-2">Vi tar kontakt med deg så snart som mulig.</p>
+          <p className="text-2">Vi tar kontakt med et tilbud på e-post. Bestillingen er ikke bekreftet før du har hørt fra oss.</p>
         </div>
       </div>
     )
@@ -114,7 +114,7 @@ export default function Catering() {
         <div className="relative bg-4/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 lg:p-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-1 mb-2 text-center">Catering</h1>
           <p className="text-2 leading-relaxed mb-8 text-center">
-            Fyll ut skjemaet så setter vi sammen et tilbud til deg.
+            Fyll ut skjemaet så tar vi kontakt med deg på e-post.
           </p>
 
           <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">

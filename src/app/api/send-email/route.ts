@@ -1,12 +1,17 @@
 import { Resend } from 'resend'
 import { createClient } from '@supabase/supabase-js'
 import { SITE_URL, LOGO_HTML, EMAIL_FROM, escapeHtml, formatEventDate, formatEventDateOrTBD, formatEventTimeOrTBD } from '@/lib/email'
+import { validateEmail } from '@/lib/validation'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
+
+function safeReplyTo(email: string): string | undefined {
+  return validateEmail(email) ? undefined : email
+}
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
@@ -43,20 +48,24 @@ export async function POST(req: Request) {
 
   if (type === 'event_registration') return handleEventRegistration(fields)
   if (type === 'event_cancellation') return handleEventCancellation(fields)
+  if (type === 'bordreservasjon') return handleBordreservasjon(fields)
 
   const subjects: Record<string, string> = {
-    bordreservasjon: '♥️BORDRESERVASJON♥️',
     catering: '♥️CATERING♥️',
     lukket_selskap: '♥️LUKKET SELSKAP♥️',
+  }
+  const manualConfirmNotes: Record<string, string> = {
+    catering: 'Svar kunden for å bekrefte cateringbestillingen.',
+    lukket_selskap: 'Svar kunden for å planlegge selskapet.',
   }
 
   try {
     const { error } = await resend.emails.send({
       from: EMAIL_FROM,
       to: process.env.CONTACT_EMAIL!,
-      replyTo: fields.epost,
+      replyTo: safeReplyTo(fields.epost),
       subject: subjects[type],
-      html: buildHtml(type, fields),
+      html: buildHtml(type, fields) + `<p style="margin-top:16px;font-size:13px;color:#888;">${manualConfirmNotes[type]}</p>`,
     })
     if (error) throw error
     return Response.json({ ok: true })
@@ -199,6 +208,38 @@ async function handleEventCancellation(fields: Record<string, string>) {
   }
 }
 
+async function handleBordreservasjon(fields: Record<string, string>) {
+  const confirmation = await resend.emails.send({
+    from: EMAIL_FROM,
+    to: fields.epost,
+    replyTo: process.env.CONTACT_EMAIL!,
+    subject: 'Bordreservasjonen din er bekreftet – Kokeliko',
+    html: buildBordreservasjonConfirmationHtml(fields),
+  })
+  const confirmationOk = !confirmation.error
+  if (confirmation.error) console.error('Resend error (customer confirmation):', confirmation.error)
+
+  const followUpNote = confirmationOk
+    ? '<p style="margin-top:16px;font-size:13px;color:#888;">Kunden har fått automatisk bekreftelse på e-post.</p>'
+    : '<p style="margin-top:16px;font-size:13px;color:#b00020;">OBS: automatisk bekreftelse til kunden feilet å sende. Følg opp manuelt!</p>'
+
+  try {
+    const { error } = await resend.emails.send({
+      from: EMAIL_FROM,
+      to: process.env.CONTACT_EMAIL!,
+      replyTo: safeReplyTo(fields.epost),
+      subject: '♥️BORDRESERVASJON♥️',
+      html: buildHtml('bordreservasjon', fields) + followUpNote,
+    })
+    if (error) throw error
+  } catch (err) {
+    console.error('Resend error (owner notification):', err)
+    return Response.json({ ok: false }, { status: 500 })
+  }
+
+  return Response.json({ ok: confirmationOk }, { status: confirmationOk ? 200 : 500 })
+}
+
 const LABELS: Record<string, string> = {
   navn: 'Navn',
   epost: 'E-post',
@@ -217,14 +258,8 @@ const LABELS: Record<string, string> = {
   melding: 'Melding',
 }
 
-function buildHtml(type: string, fields: Record<string, string>) {
-  const typeLabels: Record<string, string> = {
-    bordreservasjon: 'Bordreservasjon',
-    catering: 'Catering',
-    lukket_selskap: 'Lukket selskap',
-  }
-
-  const rows = Object.entries(fields)
+function buildRows(fields: Record<string, string>) {
+  return Object.entries(fields)
     .filter(([, value]) => value)
     .map(([key, value]) => {
       if (key === 'dato') {
@@ -237,14 +272,42 @@ function buildHtml(type: string, fields: Record<string, string>) {
       </tr>
     `
     }).join('')
+}
+
+function buildHtml(type: string, fields: Record<string, string>) {
+  const typeLabels: Record<string, string> = {
+    bordreservasjon: 'Bordreservasjon',
+    catering: 'Catering',
+    lukket_selskap: 'Lukket selskap',
+  }
 
   return `
     <div style="font-family:system-ui,sans-serif;max-width:480px;">
       ${LOGO_HTML}
       <h2 style="margin:0 0 20px;font-size:18px;">${typeLabels[type] ?? type}</h2>
       <table role="presentation" style="width:100%;border-collapse:collapse;">
-        ${rows}
+        ${buildRows(fields)}
       </table>
+    </div>
+  `
+}
+
+function buildBordreservasjonConfirmationHtml(fields: Record<string, string>) {
+  const details = Object.fromEntries(
+    Object.entries(fields).filter(([key]) => key !== 'navn' && key !== 'epost')
+  )
+
+  return `
+    <div style="font-family:system-ui,sans-serif;max-width:480px;">
+      ${LOGO_HTML}
+      <h2 style="margin:0 0 20px;font-size:18px;color:#2E1608;">Bordreservasjonen din er bekreftet!</h2>
+      <p style="font-size:14px;color:#2E1608;margin:0 0 16px;">Hei ${fields.navn ?? ''},</p>
+      <p style="font-size:14px;color:#2E1608;margin:0 0 16px;">Takk for bordreservasjonen din hos Kokeliko. Vi har notert:</p>
+      <table role="presentation" style="width:100%;border-collapse:collapse;">
+        ${buildRows(details)}
+      </table>
+      <p style="margin-top:20px;font-size:13px;color:#888;">Skulle det være noe vi må avklare med bordreservasjonen din, tar vi kontakt på denne e-posten.</p>
+      <p style="margin-top:16px;font-size:14px;color:#2E1608;">Vi gleder oss til å se dere!</p>
     </div>
   `
 }

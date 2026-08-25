@@ -91,8 +91,8 @@ export default function BordReservasjon() {
       <div className="relative min-h-screen flex items-center justify-center px-6 -mt-24 pt-24">
         {bgImages}
         <div className="relative bg-4/80 backdrop-blur-sm rounded-2xl p-10 text-center max-w-sm">
-          <p className="text-2xl font-bold text-1 mb-3">Takk for din forespørsel!</p>
-          <p className="text-2">Vi tar kontakt med deg så snart som mulig.</p>
+          <p className="text-2xl font-bold text-1 mb-3">Takk for din bordreservasjon!</p>
+          <p className="text-2">Du får automatisk bekreftelse på e-post!</p>
         </div>
       </div>
     )
