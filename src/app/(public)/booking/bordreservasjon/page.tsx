@@ -13,6 +13,14 @@ const inputClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-4 rounded-lg tex
 const inputErrorClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const labelClass = 'block text-sm font-medium text-2 mb-1.5'
 
+function hoursBefore(time: string, hours: number): string {
+  const [h, m] = time.split(':').map(Number)
+  const totalMinutes = Math.max(h * 60 + m - hours * 60, 0)
+  const hh = Math.floor(totalMinutes / 60).toString().padStart(2, '0')
+  const mm = (totalMinutes % 60).toString().padStart(2, '0')
+  return `${hh}:${mm}`
+}
+
 export default function BordReservasjon() {
   const [form, setForm] = useState({ navn: '', epost: '', telefon: '', dato: '', klokkeslett: '', antall: '', onsket_mat: '', melding: '', _hp: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -31,6 +39,9 @@ export default function BordReservasjon() {
   const dayHours = forDate(form.dato)
   const openTime = dayHours?.open_time?.slice(0, 5)
   const closeTime = dayHours?.close_time?.slice(0, 5)
+  const weekday = form.dato ? new Date(form.dato).getUTCDay() : undefined
+  const isThursday = weekday === 4
+  const lastBookableTime = closeTime ? hoursBefore(closeTime, isThursday ? 2 : 1) : undefined
 
   function validate() {
     const e: Record<string, string> = {}
@@ -41,17 +52,16 @@ export default function BordReservasjon() {
     if (telefon) e.telefon = telefon
     const dato = validateFutureDate(form.dato, true)
     if (dato) e.dato = dato
-    if (!e.dato && form.dato) {
-      const day = new Date(form.dato).getUTCDay()
-      if (day === 0 || day === 6) e.dato = 'Det er dessverre ikke mulig å reservere bord i helger'
+    if (!e.dato && weekday !== undefined) {
+      if (weekday === 0 || weekday === 6) e.dato = 'Det er dessverre ikke mulig å reservere bord i helger'
     }
     if (!e.dato && dayHours?.closed) e.dato = 'Stengt denne dagen'
     if (!form.antall || Number(form.antall) < 1) e.antall = 'Antall må være større enn 0'
     if (Number(form.antall) >= 10 && !form.onsket_mat.trim()) e.onsket_mat = 'Ved bordbestilling for over 10 personer må mat forhåndsbestilles'
     if (!form.klokkeslett) {
       e.klokkeslett = 'Klokkeslett er påkrevd'
-    } else if (!e.dato && openTime && closeTime && (form.klokkeslett < openTime || form.klokkeslett > closeTime)) {
-      e.klokkeslett = `Åpent ${openTime}–${closeTime}`
+    } else if (!e.dato && openTime && lastBookableTime && (form.klokkeslett < openTime || form.klokkeslett > lastBookableTime)) {
+      e.klokkeslett = `Åpent for bordbestilling ${openTime}–${lastBookableTime}`
     }
     return e
   }
@@ -155,7 +165,7 @@ export default function BordReservasjon() {
                   type="time"
                   required
                   min={openTime}
-                  max={closeTime}
+                  max={lastBookableTime}
                   value={form.klokkeslett}
                   onChange={e => set('klokkeslett', e.target.value)}
                 />
