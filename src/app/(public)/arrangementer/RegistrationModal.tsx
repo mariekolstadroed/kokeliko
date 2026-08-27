@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import type { Event } from '@/types'
 import { IconX, IconCalendar, IconClock } from '@tabler/icons-react'
 import { validateEmail, validatePhone } from '@/lib/validation'
+import { toLocalISODate } from '@/lib/date'
 
 type Props = {
   event: Event
@@ -47,7 +48,7 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (event.event_date && event.event_date < new Date().toISOString().slice(0, 10)) { setStatus('error'); return }
+    if (event.event_date && event.event_date < toLocalISODate(new Date())) { setStatus('error'); return }
     const errs = validate()
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setStatus('sending')

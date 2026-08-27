@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
+import { toLocalISODate } from '@/lib/date'
 import type { Event } from '@/types'
 import EventModal from './EventModal'
 import RegistrationsModal from './RegistrationsModal'
@@ -20,7 +21,7 @@ function formatTime(t: string) {
   return t.slice(0, 5)
 }
 
-const today = new Date().toISOString().slice(0, 10)
+const today = toLocalISODate(new Date())
 
 export default function EventsSection() {
   const [events, setEvents] = useState<Event[]>([])

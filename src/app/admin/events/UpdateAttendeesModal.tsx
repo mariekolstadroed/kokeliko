@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toLocalISODate } from '@/lib/date'
 import type { Event } from '@/types'
 import { IconX, IconClockHour4, IconInfoCircle, IconBan } from '@tabler/icons-react'
 
@@ -31,7 +32,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
   const [status, setStatus] = useState<'idle' | 'sending' | 'error' | 'sent'>('idle')
   const [sentCount, setSentCount] = useState(0)
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = toLocalISODate(new Date())
   const dateInPast = kind === 'reschedule' && !!newDate && newDate < today
   const endBeforeStart = kind === 'reschedule' && !!newEndTime && newEndTime <= newStartTime
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { toLocalISODate } from '@/lib/date'
 import type { Event } from '@/types'
 import EventCard from './EventCard'
 import RegistrationModal from './RegistrationModal'
@@ -19,7 +20,7 @@ export default function EventsGrid() {
       supabase.from('events').select('*').eq('published', true).order('event_date'),
       fetch('/api/events/counts'),
     ])
-    const today = new Date().toISOString().slice(0, 10)
+    const today = toLocalISODate(new Date())
     const sorted = (evts ?? []).sort((a, b) => {
       const aPast = !!a.event_date && a.event_date < today
       const bPast = !!b.event_date && b.event_date < today

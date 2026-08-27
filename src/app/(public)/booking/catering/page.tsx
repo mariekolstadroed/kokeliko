@@ -8,6 +8,7 @@ import cateringImg1 from '@/assets/booking/catering/catering1.jpg'
 import cateringImg2 from '@/assets/booking/catering/catering2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '@/lib/validation'
 import { useOpeningHours } from '@/hooks/useOpeningHours'
+import { toLocalISODate } from '@/lib/date'
 
 const inputClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const inputErrorClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
@@ -96,7 +97,7 @@ export default function Catering() {
   }
 
   const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1)
-  const minDate = tomorrow.toISOString().split('T')[0]
+  const minDate = toLocalISODate(tomorrow)
   const f = (field: string) => errors[field] ? inputErrorClass : inputClass
   const err = (field: string) => errors[field]
     ? <p className="mt-1 text-xs text-5">{errors[field]}</p>

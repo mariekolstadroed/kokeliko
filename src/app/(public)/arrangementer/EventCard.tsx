@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { IconCalendar, IconClock, IconUsers, IconPhotoOff } from '@tabler/icons-react'
+import { toLocalISODate } from '@/lib/date'
 import type { Event } from '@/types'
 
 type Props = {
@@ -16,7 +17,7 @@ function formatDate(dateStr: string) {
 
 export default function EventCard({ event, registrationCount, onRegister }: Props) {
   const isFull = event.max_capacity !== null && registrationCount >= event.max_capacity
-  const isPast = !!event.event_date && event.event_date < new Date().toISOString().slice(0, 10)
+  const isPast = !!event.event_date && event.event_date < toLocalISODate(new Date())
 
   return (
     <div className="bg-4 border border-3 rounded-2xl overflow-hidden shadow-sm shadow-1/30 flex flex-col">

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { IconArrowLeft } from '@tabler/icons-react'
 import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } from '@/lib/validation'
+import { toLocalISODate } from '@/lib/date'
 import img1 from '@/assets/booking/lukket_selskap/lukket-selskap1.jpg'
 import img2 from '@/assets/booking/lukket_selskap/lukket-selskap2.jpg'
 
@@ -89,7 +90,7 @@ export default function LukketSelskap() {
   }
 
   const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1)
-  const minDate = tomorrow.toISOString().split('T')[0]
+  const minDate = toLocalISODate(tomorrow)
 
   const f = (field: string) => errors[field] ? inputErrorClass : inputClass
   const err = (field: string) => errors[field]

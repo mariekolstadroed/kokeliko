@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { compressImage, ImageDecodeError } from '@/lib/compressImage'
+import { toLocalISODate } from '@/lib/date'
 import type { Event } from '@/types'
 import { IconX, IconUpload } from '@tabler/icons-react'
 
@@ -31,7 +32,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
   const [errors, setErrors] = useState<{ date?: string; maxCapacity?: string }>({})
   const [confirmTimeChange, setConfirmTimeChange] = useState(false)
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = toLocalISODate(new Date())
   const endTimeInvalid = !dateTBD && !!endTime && !!startTime && endTime <= startTime
 
   function validate() {
