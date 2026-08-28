@@ -162,6 +162,7 @@ export default function BookingIpad() {
     else if (view === 'uke') d.setDate(d.getDate() - 7)
     else d.setMonth(d.getMonth() - 1, 1)
     setSelectedDate(toLocalISODate(d))
+    fetchBookings()
   }
 
   function goToNext() {
@@ -170,6 +171,7 @@ export default function BookingIpad() {
     else if (view === 'uke') d.setDate(d.getDate() + 7)
     else d.setMonth(d.getMonth() + 1, 1)
     setSelectedDate(toLocalISODate(d))
+    fetchBookings()
   }
 
   useEffect(() => {
