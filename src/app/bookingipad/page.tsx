@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { toLocalISODate } from '@/lib/date'
 import type { Booking } from '@/types'
@@ -134,6 +134,7 @@ export default function BookingIpad() {
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState<View>('dag')
   const router = useRouter()
+  const fetchIdRef = useRef(0)
 
   const now = new Date()
   const today = toLocalISODate(now)
@@ -148,7 +149,6 @@ export default function BookingIpad() {
   function setViewAndPersist(v: View) {
     setView(v)
     window.localStorage.setItem('bookingipad-view', v)
-    fetchBookings()
   }
 
   function goToDay(date: string) {
@@ -162,7 +162,6 @@ export default function BookingIpad() {
     else if (view === 'uke') d.setDate(d.getDate() - 7)
     else d.setMonth(d.getMonth() - 1, 1)
     setSelectedDate(toLocalISODate(d))
-    fetchBookings()
   }
 
   function goToNext() {
@@ -171,7 +170,6 @@ export default function BookingIpad() {
     else if (view === 'uke') d.setDate(d.getDate() + 7)
     else d.setMonth(d.getMonth() + 1, 1)
     setSelectedDate(toLocalISODate(d))
-    fetchBookings()
   }
 
   useEffect(() => {
@@ -181,6 +179,7 @@ export default function BookingIpad() {
   }, [])
 
   const fetchBookings = useCallback(async () => {
+    const requestId = ++fetchIdRef.current
     const { data } = await supabase
       .from('bookings')
       .select('*')
@@ -189,11 +188,12 @@ export default function BookingIpad() {
       .lte('date', fetchEnd)
       .order('date')
       .order('start_time')
+    if (fetchIdRef.current !== requestId) return
     setBookings(data ?? [])
     setLoading(false)
   }, [fetchStart, fetchEnd])
 
-  useEffect(() => { fetchBookings() }, [fetchBookings])
+  useEffect(() => { fetchBookings() }, [selectedDate, view, fetchBookings])
 
   useEffect(() => {
     const interval = setInterval(() => window.location.reload(), RELOAD_INTERVAL_MS)
