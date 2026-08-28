@@ -148,6 +148,7 @@ export default function BookingIpad() {
   function setViewAndPersist(v: View) {
     setView(v)
     window.localStorage.setItem('bookingipad-view', v)
+    fetchBookings()
   }
 
   function goToDay(date: string) {
@@ -190,13 +191,20 @@ export default function BookingIpad() {
     setLoading(false)
   }, [fetchStart, fetchEnd])
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchBookings() }, [fetchBookings])
 
   useEffect(() => {
     const interval = setInterval(() => window.location.reload(), RELOAD_INTERVAL_MS)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible') fetchBookings()
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [fetchBookings])
 
   async function handleLogout() {
     await supabase.auth.signOut()
