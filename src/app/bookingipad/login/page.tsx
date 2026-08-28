@@ -1,0 +1,69 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { supabase } from '@/lib/supabase'
+import bakgrunn from '@/assets/events/bakgrunn.jpg'
+
+const inputClass = 'w-full px-3 py-2 md:py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
+
+export default function BookingIpadLogin() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) {
+      setError('Feil e-post eller passord')
+    } else {
+      router.push('/bookingipad')
+    }
+  }
+
+  return (
+    <div className="login-scope h-dvh flex items-center justify-center px-4 relative overflow-y-auto overflow-x-hidden">
+      <Image unoptimized src={bakgrunn} alt="" fill className="object-cover" priority />
+      <div className="absolute inset-0 bg-1/30" />
+      <div className="absolute inset-0 bg-black/30" />
+      <div className="relative z-10 w-full max-w-xs md:max-w-sm my-auto">
+      <div className="bg-4/70 backdrop-blur-sm p-5 md:p-8 rounded-2xl shadow w-full">
+        <div className="logo logo--dark w-44 md:w-64 mx-auto mb-3 md:mb-4" role="img" aria-label="Kokeliko" />
+        <h1 className="text-2xl md:text-3xl font-bold font-special-elite text-2 mb-4 md:mb-6 text-center">iPad - Booking</h1>
+        {error && <p className="bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2 mb-3 md:mb-4 text-sm">{error}</p>}
+        <form onSubmit={handleLogin} noValidate className="flex flex-col gap-3 md:gap-4">
+          <div>
+            <input
+              type="email"
+              placeholder="E-post"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className={inputClass}
+              autoCapitalize="none"
+              autoCorrect="off"
+            />
+          </div>
+          <input
+            type="password"
+            placeholder="Passord"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className={inputClass}
+            autoCapitalize="none"
+            autoCorrect="off"
+          />
+          <button
+            type="submit"
+            className="px-5 py-2.5 md:px-6 md:py-3 bg-1 text-4 text-sm md:text-base font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors mt-1"
+          >
+            Logg inn
+          </button>
+        </form>
+      </div>
+      </div>
+    </div>
+  )
+}

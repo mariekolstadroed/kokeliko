@@ -13,6 +13,30 @@ function safeReplyTo(email: string): string | undefined {
   return validateEmail(email) ? undefined : email
 }
 
+async function saveBooking(type: string, status: 'ikke_bekreftet' | 'bekreftet', fields: Record<string, string>) {
+  try {
+    const { error } = await supabaseAdmin.from('bookings').insert({
+      type,
+      status,
+      name: fields.navn,
+      email: fields.epost,
+      phone: fields.telefon || null,
+      date: fields.dato,
+      start_time: fields.klokkeslett || fields.tidspunkt || fields.fra_kl,
+      end_time: fields.til_kl || null,
+      party_size: Number(fields.antall),
+      requested_food: fields.onsket_mat || null,
+      message: fields.melding || fields.annen_info || null,
+      event_type: fields.type_arrangement || null,
+      delivery_method: fields.levering || null,
+      address: fields.adresse || null,
+    })
+    if (error) console.error('Supabase error (save booking):', error)
+  } catch (err) {
+    console.error('Supabase error (save booking):', err)
+  }
+}
+
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 function checkRateLimit(ip: string): boolean {
@@ -58,6 +82,8 @@ export async function POST(req: Request) {
     catering: 'Svar kunden for å bekrefte cateringbestillingen.',
     lukket_selskap: 'Svar kunden for å planlegge selskapet.',
   }
+
+  await saveBooking(type, 'ikke_bekreftet', fields)
 
   try {
     const { error } = await resend.emails.send({
@@ -209,6 +235,8 @@ async function handleEventCancellation(fields: Record<string, string>) {
 }
 
 async function handleBordreservasjon(fields: Record<string, string>) {
+  await saveBooking('bordreservasjon', 'bekreftet', fields)
+
   const confirmation = await resend.emails.send({
     from: EMAIL_FROM,
     to: fields.epost,

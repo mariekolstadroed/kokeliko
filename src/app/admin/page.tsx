@@ -7,13 +7,15 @@ import MenuSection from './menu/MenuSection'
 import HoursSection from './hours/HoursSection'
 import EventsSection from './events/EventsSection'
 import GallerySection from './gallery/GallerySection'
-import { IconLogout, IconToolsKitchen2, IconClock, IconCalendarEvent, IconPhoto } from '@tabler/icons-react'
+import BookingsSection from './bookings/BookingsSection'
+import { IconLogout, IconToolsKitchen2, IconClock, IconCalendarEvent, IconPhoto, IconCalendarCheck } from '@tabler/icons-react'
 
-type Tab = 'menu' | 'hours' | 'events' | 'gallery'
+type Tab = 'menu' | 'hours' | 'events' | 'gallery' | 'bookings'
 
 const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'menu', label: 'Meny', icon: <IconToolsKitchen2 size={15} /> },
   { id: 'hours', label: 'Åpningstider', icon: <IconClock size={15} /> },
+  { id: 'bookings', label: 'Bookinger', icon: <IconCalendarCheck size={15} /> },
   { id: 'events', label: 'Arrangementer', icon: <IconCalendarEvent size={15} /> },
   { id: 'gallery', label: 'Galleri', icon: <IconPhoto size={15} /> },
 ]
@@ -67,6 +69,7 @@ function Dashboard() {
       {tab === 'hours' && <HoursSection />}
       {tab === 'events' && <EventsSection />}
       {tab === 'gallery' && <GallerySection />}
+      {tab === 'bookings' && <BookingsSection />}
     </div>
   )
 }

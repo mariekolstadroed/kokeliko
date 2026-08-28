@@ -44,6 +44,26 @@ export type EventRegistration = {
   cancellation_token: string
 }
 
+export type Booking = {
+  id: string
+  type: 'bordreservasjon' | 'catering' | 'lukket_selskap'
+  status: 'ikke_bekreftet' | 'bekreftet' | 'avbestilt'
+  visible_on_ipad: boolean
+  name: string
+  email: string | null
+  phone: string | null
+  date: string
+  start_time: string
+  end_time: string | null
+  party_size: number | null
+  requested_food: string | null
+  message: string | null
+  event_type: string | null
+  delivery_method: string | null
+  address: string | null
+  created_at: string
+}
+
 export type Category = {
   id: string
   name: string

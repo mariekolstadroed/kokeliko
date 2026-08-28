@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server'
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (pathname.startsWith('/admin/login')) {
+  if (pathname.startsWith('/admin/login') || pathname.startsWith('/bookingipad/login')) {
     return NextResponse.next()
   }
 
@@ -38,12 +38,13 @@ export async function proxy(request: NextRequest) {
     if (pathname.startsWith('/api/')) {
       return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
     }
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+    const loginPath = pathname.startsWith('/bookingipad') ? '/bookingipad/login' : '/admin/login'
+    return NextResponse.redirect(new URL(loginPath, request.url))
   }
 
   return response
 }
 
 export const config = {
-  matcher: ['/admin', '/admin/:path*', '/api/events/notify'],
+  matcher: ['/admin', '/admin/:path*', '/bookingipad', '/bookingipad/:path*', '/api/events/notify'],
 }
