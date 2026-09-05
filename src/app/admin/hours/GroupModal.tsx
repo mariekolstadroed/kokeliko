@@ -165,12 +165,19 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
                 {dates.map((row, i) => (
                   <div key={i} className="p-3 bg-stone-50 rounded-lg border border-stone-200 flex flex-col gap-2 min-w-0">
                     <div className="flex items-center gap-2 min-w-0">
-                      <input
-                        type="date"
-                        value={row.date}
-                        onChange={e => updateRow(i, { date: e.target.value })}
-                        className={inputClass + ' shrink-0'}
-                      />
+                      <div className="relative shrink-0 min-w-25 md:min-w-0">
+                        <input
+                          type="date"
+                          value={row.date}
+                          onChange={e => updateRow(i, { date: e.target.value })}
+                          className={inputClass + ' w-full'}
+                        />
+                        {!row.date && (
+                          <span className="absolute inset-0 flex items-center pl-2 text-sm text-stone-400 pointer-events-none md:hidden">
+                            Dato
+                          </span>
+                        )}
+                      </div>
                       <input
                         value={row.description}
                         onChange={e => updateRow(i, { description: e.target.value })}
