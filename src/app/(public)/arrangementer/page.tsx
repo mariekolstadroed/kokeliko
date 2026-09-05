@@ -1,10 +1,16 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import EventsGrid from './EventsGrid'
 
 export const metadata: Metadata = {
   title: 'Arrangementer – Kokeliko Kaffebar',
   description: 'Se kommende arrangementer hos Kokeliko på Bærums Verk og meld deg på.',
   alternates: { canonical: '/arrangementer' },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function Arrangementer() {

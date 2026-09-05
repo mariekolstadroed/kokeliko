@@ -79,7 +79,7 @@ export default function EventsSection() {
         <div className="text-[13px] text-stone-400">{events.length} arrangementer</div>
         <button
           onClick={() => setEventModal({ open: true })}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
         >
           <IconPlus size={14} /> Nytt arrangement
         </button>

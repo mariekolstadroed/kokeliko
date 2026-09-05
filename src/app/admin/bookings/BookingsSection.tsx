@@ -109,9 +109,9 @@ export default function BookingsSection() {
           </div>
         ) : (
           <>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-1.5">
           <span className="text-[14px] font-semibold text-stone-800">{b.name}</span>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ${b.visible_on_ipad ? 'bg-stone-100 text-stone-600' : 'bg-stone-300 text-stone-700'}`}>
               {b.visible_on_ipad ? <IconEye size={11} /> : <IconEyeOff size={11} />}
               {b.visible_on_ipad ? 'Synlig på iPad' : 'Skjult på iPad'}
@@ -138,50 +138,50 @@ export default function BookingsSection() {
             {b.message && <div className="whitespace-pre-line"><span className="font-semibold">Melding:</span><br />{b.message}</div>}
           </div>
         )}
-        <div className="flex items-center gap-1.5 pt-1">
+        <div className="flex items-center gap-1 md:gap-1.25 pt-1 flex-wrap">
           <button
             onClick={() => setModal({ open: true, booking: b })}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+            className="inline-flex items-center gap-1 md:gap-1.25 px-1.5 md:px-2 py-1 md:py-1.25 text-[11px] md:text-[12px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
           >
-            <IconEdit size={13} /> Rediger
+            <IconEdit className="w-2.75 h-2.75 md:w-3 md:h-3" /> Rediger
           </button>
           {b.status === 'ikke_bekreftet' && (
             <button
               onClick={() => setStatus(b.id, 'bekreftet', true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-green-200 bg-white text-green-600 hover:bg-green-50 transition-colors"
+              className="inline-flex items-center gap-1 md:gap-1.25 px-1.5 md:px-2 py-1 md:py-1.25 text-[11px] md:text-[12px] font-medium rounded-md border border-green-200 bg-white text-green-600 hover:bg-green-50 transition-colors"
             >
-              <IconCheck size={13} /> Godkjenn
+              <IconCheck className="w-2.75 h-2.75 md:w-3 md:h-3" /> Godkjenn
             </button>
           )}
           {b.status === 'bekreftet' && (
             <button
               onClick={() => setStatus(b.id, 'ikke_bekreftet', true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+              className="inline-flex items-center gap-1 md:gap-1.25 px-1.5 md:px-2 py-1 md:py-1.25 text-[11px] md:text-[12px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
             >
-              <IconArrowBackUp size={13} /> Sett til ikke bekreftet
+              <IconArrowBackUp className="w-2.75 h-2.75 md:w-3 md:h-3" /> Sett til ikke bekreftet
             </button>
           )}
           {b.status !== 'avbestilt' && (
             <button
               onClick={() => setStatus(b.id, 'avbestilt', false)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-red-500 hover:bg-red-50 transition-colors"
+              className="inline-flex items-center gap-1 md:gap-1.25 px-1.5 md:px-2 py-1 md:py-1.25 text-[11px] md:text-[12px] font-medium rounded-md border border-stone-200 bg-white text-red-500 hover:bg-red-50 transition-colors"
             >
-              <IconBan size={13} /> Avbestill
+              <IconBan className="w-2.75 h-2.75 md:w-3 md:h-3" /> Avbestill
             </button>
           )}
           {b.status === 'avbestilt' && (
             <button
               onClick={() => setStatus(b.id, 'bekreftet', true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+              className="inline-flex items-center gap-1 md:gap-1.25 px-1.5 md:px-2 py-1 md:py-1.25 text-[11px] md:text-[12px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
             >
-              <IconRotateClockwise size={13} /> Gjenopprett
+              <IconRotateClockwise className="w-2.75 h-2.75 md:w-3 md:h-3" /> Gjenopprett
             </button>
           )}
           <button
             onClick={() => setConfirmDeleteId(b.id)}
-            className="inline-flex items-center p-1.5 rounded-md text-red-500 hover:bg-red-50 transition-colors ml-auto"
+            className="inline-flex items-center p-1 md:p-1.25 rounded-md text-red-500 hover:bg-red-50 transition-colors ml-auto"
           >
-            <IconTrash size={13} />
+            <IconTrash className="w-2.75 h-2.75 md:w-3 md:h-3" />
           </button>
         </div>
           </>
@@ -191,15 +191,15 @@ export default function BookingsSection() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 flex flex-col gap-4">
-      <div className="flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-1.5">
+    <div className="max-w-3xl mx-auto p-4 md:p-6 flex flex-col gap-4">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-2">
+        <div className="flex items-center justify-center gap-1.5 flex-wrap">
           {(['ikke_bekreftet', 'bekreftet', 'avbestilt'] as const).map(s => (
             <button
               key={s}
               onClick={() => setFilter(s)}
               className={`px-2.5 py-1.5 text-[13px] font-medium rounded-md border transition-colors ${
-                filter === s ? 'bg-pink-500 border-pink-500 text-white' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'
+                filter === s ? 'border-admin-accent bg-admin-accent-lighter text-admin-accent-dark' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'
               }`}
             >
               {STATUS_LABELS[s]} ({counts[s]})
@@ -208,7 +208,7 @@ export default function BookingsSection() {
         </div>
         <button
           onClick={() => setModal({ open: true })}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
         >
           <IconPlus size={14} /> Legg til booking
         </button>

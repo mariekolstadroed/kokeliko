@@ -195,7 +195,7 @@ export default function MenuSection() {
                 </button>
                 <button
                   onClick={() => setItemModal({ open: true, categoryId: cat.id })}
-                  className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+                  className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
                 >
                   <IconPlus size={12} aria-hidden /> <span className="hidden md:inline">Legg til</span>
                 </button>

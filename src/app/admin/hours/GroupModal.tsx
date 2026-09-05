@@ -26,7 +26,7 @@ const THEMES = [
   '#e7b81e', '#735932',
 ]
 
-const inputClass = 'px-2 py-1.5 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'px-2 py-1.5 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 function newRow(): DateRow {
@@ -117,7 +117,7 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-5 flex flex-col gap-4">
           <div>
             <label className={labelClass}>Tittel *</label>
             <input
@@ -152,7 +152,7 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
               <label className={labelClass + ' mb-0'}>Datoer</label>
               <button
                 onClick={() => setDates(prev => [...prev, newRow()])}
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
               >
                 <IconPlus size={11} /> Legg til dato
               </button>
@@ -163,33 +163,28 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
             ) : (
               <div className="flex flex-col gap-2">
                 {dates.map((row, i) => (
-                  <div key={i} className="p-3 bg-stone-50 rounded-lg border border-stone-200 flex flex-col gap-2">
-                    <div className="flex items-center gap-2">
+                  <div key={i} className="p-3 bg-stone-50 rounded-lg border border-stone-200 flex flex-col gap-2 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
                       <input
                         type="date"
                         value={row.date}
                         onChange={e => updateRow(i, { date: e.target.value })}
-                        className={inputClass}
+                        className={inputClass + ' shrink-0'}
                       />
                       <input
                         value={row.description}
                         onChange={e => updateRow(i, { description: e.target.value })}
                         placeholder="eks. skjærtorsdag, mandag - fredag"
-                        className={inputClass + ' flex-1' + (!row.date && !row.description.trim() ? ' border-red-300' : '')}
+                        className={inputClass + ' flex-1 min-w-0' + (!row.date && !row.description.trim() ? ' border-red-300' : '')}
                       />
-                      <button
-                        onClick={() => setDates(prev => prev.filter((_, idx) => idx !== i))}
-                        className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0"
-                      >
-                        <IconTrash size={13} />
-                      </button>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <label className="flex items-center gap-1.5 text-[13px] text-stone-600 cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <label className="flex items-center gap-1 text-xs text-stone-600 cursor-pointer shrink-0">
                         <input
                           type="checkbox"
                           checked={row.closed}
                           onChange={e => updateRow(i, { closed: e.target.checked })}
+                          className="h-3.5 w-3.5 accent-admin-accent"
                         />
                         Stengt
                       </label>
@@ -199,17 +194,23 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
                             type="time"
                             value={row.open_time}
                             onChange={e => updateRow(i, { open_time: e.target.value })}
-                            className={inputClass}
+                            className={inputClass + ' min-w-0'}
                           />
-                          <span className="text-stone-400 text-sm">–</span>
+                          <span className="text-stone-400 text-sm shrink-0">–</span>
                           <input
                             type="time"
                             value={row.close_time}
                             onChange={e => updateRow(i, { close_time: e.target.value })}
-                            className={inputClass}
+                            className={inputClass + ' min-w-0'}
                           />
                         </>
                       )}
+                      <button
+                        onClick={() => setDates(prev => prev.filter((_, idx) => idx !== i))}
+                        className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0 ml-auto"
+                      >
+                        <IconTrash size={13} />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -229,7 +230,7 @@ export default function GroupModal({ group, onClose, onSaved }: Props) {
           <button
             onClick={handleSave}
             disabled={saving || !title.trim()}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Lagrer…' : group ? 'Lagre' : 'Opprett'}
           </button>

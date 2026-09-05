@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import type { Category } from '@/types'
 import { IconX } from '@tabler/icons-react'
 
@@ -11,7 +12,7 @@ type Props = {
   onSaved: () => void
 }
 
-const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 function toSlug(name: string) {
@@ -26,6 +27,7 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
   const [name, setName] = useState(category?.name ?? '')
   const [description, setDescription] = useState(category?.description ?? '')
   const [saving, setSaving] = useState(false)
+  const descriptionRef = useAutoGrowTextarea(description)
 
   async function handleSave() {
     if (!name.trim()) return
@@ -63,7 +65,8 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
           <div>
             <label className={labelClass}>Beskrivelse</label>
             <textarea
-              className={inputClass + ' block resize-y min-h-17'}
+              ref={descriptionRef}
+              className={inputClass + ' block resize-none overflow-hidden min-h-17'}
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Vises på menysiden under kategorinavnet"
@@ -81,7 +84,7 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
           <button
             onClick={handleSave}
             disabled={saving || !name.trim()}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Lagrer…' : category ? 'Lagre' : 'Opprett'}
           </button>

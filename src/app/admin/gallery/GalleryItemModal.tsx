@@ -14,7 +14,7 @@ type Props = {
   onSaved: () => void
 }
 
-const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 export default function GalleryItemModal({ item, section, onClose, onSaved }: Props) {
@@ -126,7 +126,7 @@ export default function GalleryItemModal({ item, section, onClose, onSaved }: Pr
           </div>
 
           <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
-            <input type="checkbox" checked={published} onChange={e => setPublished(e.target.checked)} />
+            <input type="checkbox" checked={published} onChange={e => setPublished(e.target.checked)} className="accent-admin-accent" />
             Synlig på forsiden
           </label>
         </div>
@@ -147,7 +147,7 @@ export default function GalleryItemModal({ item, section, onClose, onSaved }: Pr
           <button
             onClick={handleSave}
             disabled={saving}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50"
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50"
           >
             {saving ? 'Lagrer…' : item ? 'Lagre' : 'Opprett'}
           </button>

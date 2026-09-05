@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { compressImage, ImageDecodeError } from '@/lib/compressImage'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import type { Category, MenuItem } from '@/types'
 import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react'
 
@@ -15,7 +16,7 @@ type Props = {
   onSaved: () => void
 }
 
-const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 export default function MenuItemModal({ item, categories, defaultCategoryId, onClose, onSaved }: Props) {
@@ -32,6 +33,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [localPreview, setLocalPreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const descriptionRef = useAutoGrowTextarea(description ?? '')
 
   const previewSrc = localPreview ?? existingImageUrl
 
@@ -120,7 +122,8 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           <div>
             <label className={labelClass}>Innhold</label>
             <textarea
-              className={inputClass + ' block resize-y min-h-17'}
+              ref={descriptionRef}
+              className={inputClass + ' block resize-none overflow-hidden min-h-17'}
               value={description ?? ''}
               onChange={e => setDescription(e.target.value)}
             />
@@ -178,7 +181,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
                 </select>
               </div>
               <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
-                <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} />
+                <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} className="accent-admin-accent" />
                 Synlig på menyen
               </label>
             </div>
@@ -200,7 +203,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           <button
             onClick={handleSave}
             disabled={saving || !name.trim()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (
               <>

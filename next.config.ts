@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
-  allowedDevOrigins: ['192.168.1.179'],
+  allowedDevOrigins: ['192.168.1.179', '192.168.1.152'],
   images: {
     minimumCacheTTL: 2678400,
     remotePatterns: [

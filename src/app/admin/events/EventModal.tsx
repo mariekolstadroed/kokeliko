@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { compressImage, ImageDecodeError } from '@/lib/compressImage'
 import { toLocalISODate } from '@/lib/date'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import type { Event } from '@/types'
 import { IconX, IconUpload } from '@tabler/icons-react'
 
@@ -15,7 +16,7 @@ type Props = {
   onSaved: () => void
 }
 
-const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 export default function EventModal({ event, registrationCount = 0, onClose, onSaved }: Props) {
@@ -31,6 +32,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [errors, setErrors] = useState<{ date?: string; maxCapacity?: string }>({})
   const [confirmTimeChange, setConfirmTimeChange] = useState(false)
+  const descriptionRef = useAutoGrowTextarea(description)
 
   const today = toLocalISODate(new Date())
   const endTimeInvalid = !dateTBD && !!endTime && !!startTime && endTime <= startTime
@@ -166,7 +168,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
               </button>
               <button
                 onClick={() => { setConfirmTimeChange(false); doSave() }}
-                className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+                className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
               >
                 Lagre uten å varsle
               </button>
@@ -183,7 +185,8 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
           <div>
             <label className={labelClass}>Beskrivelse</label>
             <textarea
-              className={inputClass + ' resize-y min-h-18'}
+              ref={descriptionRef}
+              className={inputClass + ' resize-none overflow-hidden min-h-18'}
               value={description ?? ''}
               onChange={e => setDescription(e.target.value)}
             />
@@ -194,6 +197,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
               type="checkbox"
               checked={dateTBD}
               onChange={e => { setDateTBD(e.target.checked); setErrors({}) }}
+              className="accent-admin-accent"
             />
             Dato ikke bestemt ennå
           </label>
@@ -276,7 +280,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
           </div>
 
           <label className="flex items-center gap-2 text-[13.5px] text-stone-700 cursor-pointer">
-            <input type="checkbox" checked={published} onChange={e => setPublished(e.target.checked)} />
+            <input type="checkbox" checked={published} onChange={e => setPublished(e.target.checked)} className="accent-admin-accent" />
             Publisert
           </label>
         </div>
@@ -294,7 +298,7 @@ export default function EventModal({ event, registrationCount = 0, onClose, onSa
           <button
             onClick={handleSaveClick}
             disabled={saving || !title.trim() || (!dateTBD && (!eventDate || !startTime)) || endTimeInvalid}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Lagrer…' : event ? 'Lagre' : 'Opprett'}
           </button>

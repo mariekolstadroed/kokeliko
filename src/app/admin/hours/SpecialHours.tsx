@@ -51,7 +51,7 @@ export default function SpecialHours() {
         <div className="text-[15px] font-semibold text-stone-800">Spesielle åpningstider</div>
         <button
           onClick={() => setModal({ open: true })}
-          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors"
+          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors"
         >
           <IconPlus size={12} /> Ny periode
         </button>

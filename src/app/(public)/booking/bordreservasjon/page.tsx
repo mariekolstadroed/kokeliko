@@ -8,6 +8,7 @@ import resImg1 from '@/assets/booking/reservasjon/reservasjon1.jpg'
 import resImg2 from '@/assets/booking/reservasjon/reservasjon2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '@/lib/validation'
 import { useOpeningHours } from '@/hooks/useOpeningHours'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import { toLocalISODate } from '@/lib/date'
 
 const inputClass = 'w-full h-11 px-3 py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
@@ -27,6 +28,8 @@ export default function BordReservasjon() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'rate_limited'>('idle')
   const { forDate } = useOpeningHours()
+  const onsketMatRef = useAutoGrowTextarea(form.onsket_mat)
+  const meldingRef = useAutoGrowTextarea(form.melding)
 
   useEffect(() => {
     if (status === 'ok') window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -183,14 +186,14 @@ export default function BordReservasjon() {
             {Number(form.antall) >= 10 && (
               <div>
                 <label className={labelClass}>Ønsket mat *</label>
-                <textarea className={f('onsket_mat') + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+                <textarea ref={onsketMatRef} className={f('onsket_mat') + ' block resize-none overflow-hidden min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
                 {err('onsket_mat')}
               </div>
             )}
 
             <div>
               <label className={labelClass}>Melding</label>
-              <textarea className={inputClass + ' block resize-none min-h-20'} value={form.melding} onChange={e => set('melding', e.target.value)} />
+              <textarea ref={meldingRef} className={inputClass + ' block resize-none overflow-hidden min-h-20'} value={form.melding} onChange={e => set('melding', e.target.value)} />
             </div>
 
             {status === 'error' && (

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { toLocalISODate } from '@/lib/date'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import type { Event } from '@/types'
 import { IconX, IconClockHour4, IconInfoCircle, IconBan } from '@tabler/icons-react'
 
@@ -14,7 +15,7 @@ type Props = {
 
 type Kind = 'reschedule' | 'info' | 'cancel'
 
-const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-pink-400 transition-colors font-[inherit]'
+const inputClass = 'w-full px-2.5 py-2 border border-stone-200 rounded-md text-sm text-stone-800 bg-white focus:outline-none focus:border-admin-accent-light transition-colors font-[inherit]'
 const labelClass = 'block text-[12.5px] font-semibold text-stone-700 mb-1'
 
 const kindOptions: { id: Kind; label: string; icon: React.ReactNode; description: string }[] = [
@@ -31,6 +32,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
   const [newEndTime, setNewEndTime] = useState(event.event_end_time?.slice(0, 5) ?? '')
   const [status, setStatus] = useState<'idle' | 'sending' | 'error' | 'sent'>('idle')
   const [sentCount, setSentCount] = useState(0)
+  const messageRef = useAutoGrowTextarea(message)
 
   const today = toLocalISODate(new Date())
   const dateInPast = kind === 'reschedule' && !!newDate && newDate < today
@@ -110,7 +112,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
                     disabled
                       ? 'border-stone-100 text-stone-300 cursor-not-allowed'
                       : kind === opt.id
-                        ? 'border-pink-500 bg-pink-50 text-pink-700'
+                        ? 'border-admin-accent bg-admin-accent-lighter text-admin-accent-dark'
                         : 'border-stone-200 text-stone-600 hover:bg-stone-50'
                   }`}
                 >
@@ -165,7 +167,8 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
                 {kind === 'cancel' ? 'Begrunnelse *' : 'Melding *'}
               </label>
               <textarea
-                className={inputClass + ' resize-y min-h-24'}
+                ref={messageRef}
+                className={inputClass + ' resize-none overflow-hidden min-h-24'}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder={
@@ -189,7 +192,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
           <button
             onClick={handleSubmit}
             disabled={!canSubmit || status === 'sending'}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'sending' ? 'Sender…' : 'Send'}
           </button>

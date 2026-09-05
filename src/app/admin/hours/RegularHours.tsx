@@ -87,7 +87,7 @@ export default function RegularHours() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-pink-500 border border-pink-500 text-white hover:bg-pink-600 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-admin-accent border border-admin-accent text-white hover:bg-admin-accent-hover transition-colors disabled:opacity-50"
             >
               <IconCheck size={12} /> {saving ? 'Lagrer…' : 'Lagre'}
             </button>
@@ -104,33 +104,36 @@ export default function RegularHours() {
 
       {editing ? (
         draft.map(row => (
-          <div key={row.day} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4.5 py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
-            <div className="w-24 font-medium text-stone-800">{DAY_NAMES[row.day]}</div>
-            <label className="flex items-center gap-1.5 text-stone-600 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={row.closed}
-                onChange={e => updateRow(row.day, { closed: e.target.checked })}
-              />
-              Stengt
-            </label>
-            {!row.closed && (
-              <>
+          <div key={row.day} className="flex flex-nowrap items-center gap-x-2 px-4.5 py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
+            <div className="w-16 shrink-0 font-medium text-stone-800">{DAY_NAMES[row.day]}</div>
+            <div className="flex items-center gap-2 min-w-0 ml-auto">
+              <label className="flex items-center gap-1 text-xs text-stone-600 cursor-pointer shrink-0">
                 <input
-                  type="time"
-                  value={row.open_time}
-                  onChange={e => updateRow(row.day, { open_time: e.target.value })}
-                  className="px-2 py-1 border border-stone-200 rounded-md text-sm focus:outline-none focus:border-pink-400"
+                  type="checkbox"
+                  checked={row.closed}
+                  onChange={e => updateRow(row.day, { closed: e.target.checked })}
+                  className="h-3.5 w-3.5 accent-admin-accent"
                 />
-                <span className="text-stone-400">–</span>
-                <input
-                  type="time"
-                  value={row.close_time}
-                  onChange={e => updateRow(row.day, { close_time: e.target.value })}
-                  className="px-2 py-1 border border-stone-200 rounded-md text-sm focus:outline-none focus:border-pink-400"
-                />
-              </>
-            )}
+                Stengt
+              </label>
+              {!row.closed && (
+                <div className="flex items-center gap-1 min-w-0">
+                  <input
+                    type="time"
+                    value={row.open_time}
+                    onChange={e => updateRow(row.day, { open_time: e.target.value })}
+                    className="min-w-0 px-1.5 py-1 border border-stone-200 rounded-md text-sm focus:outline-none focus:border-admin-accent-light"
+                  />
+                  <span className="text-stone-400 shrink-0">–</span>
+                  <input
+                    type="time"
+                    value={row.close_time}
+                    onChange={e => updateRow(row.day, { close_time: e.target.value })}
+                    className="min-w-0 px-1.5 py-1 border border-stone-200 rounded-md text-sm focus:outline-none focus:border-admin-accent-light"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         ))
       ) : (
@@ -141,9 +144,9 @@ export default function RegularHours() {
             <div key={day} className="flex items-center px-4.5 py-2.5 border-b border-stone-200 last:border-b-0 text-sm">
               <div className="w-28 shrink-0 font-medium text-stone-800">{DAY_NAMES[day]}</div>
               {!h || h.closed ? (
-                <span className="text-stone-400">Stengt</span>
+                <span className="text-stone-400 ml-auto">Stengt</span>
               ) : (
-                <span className="font-medium text-stone-800">
+                <span className="font-medium text-stone-800 ml-auto">
                   {h.open_time?.slice(0, 5)} – {h.close_time?.slice(0, 5)}
                 </span>
               )}

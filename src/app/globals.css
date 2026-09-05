@@ -11,6 +11,12 @@
   --color-4: #F6ECDE; /* krem, lysest */
   --color-5: #A04D56; /* dempet murstein-rosa */
   --color-6: #FFFEFA; /* nær hvit, varm - navbar og input-felt */
+
+  --color-admin-accent: #b548af; /* lilla aksentfarge - adminpanelet */
+  --color-admin-accent-hover: #983891; /* mørkere, hover */
+  --color-admin-accent-light: #cd66c9; /* lysere, fokusramme på input */
+  --color-admin-accent-lighter: #faf0f8; /* svært lys bakgrunn, badges */
+  --color-admin-accent-dark: #7a2d74; /* mørk tekst på lys bakgrunn */
 }
 
 body {
@@ -48,6 +54,17 @@ body {
 
 .logo--dark {
   background-color: var(--color-1);
+}
+
+/* Nettlesere legger på egen intern padding på dato/klokkeslett-felt som gjør
+   dem høyere enn andre input-felt, uansett CSS-padding vi setter selv.
+   -webkit-appearance/appearance: none overlater boksmodellen helt til vår
+   egen CSS, uten å fjerne selve dato-/klokkevelgeren. Gjelder alle nettlesere
+   som forstår disse egenskapene. */
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @keyframes gallery-scroll {

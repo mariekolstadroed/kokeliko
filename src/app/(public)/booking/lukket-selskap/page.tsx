@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { IconArrowLeft } from '@tabler/icons-react'
 import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } from '@/lib/validation'
+import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import { toLocalISODate } from '@/lib/date'
 import img1 from '@/assets/booking/lukket_selskap/lukket-selskap1.jpg'
 import img2 from '@/assets/booking/lukket_selskap/lukket-selskap2.jpg'
@@ -17,6 +18,8 @@ export default function LukketSelskap() {
   const [form, setForm] = useState({ navn: '', epost: '', type_arrangement: '', telefon: '', dato: '', fra_kl: '', til_kl: '', antall: '', onsket_mat: '', annen_info: '', _hp: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'rate_limited'>('idle')
+  const onsketMatRef = useAutoGrowTextarea(form.onsket_mat)
+  const annenInfoRef = useAutoGrowTextarea(form.annen_info)
 
   useEffect(() => {
     if (status === 'ok') window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -167,13 +170,13 @@ export default function LukketSelskap() {
 
             <div>
               <label className={labelClass}>Ønsket mat *</label>
-              <textarea className={f('onsket_mat') + ' block resize-y min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
+              <textarea ref={onsketMatRef} className={f('onsket_mat') + ' block resize-none overflow-hidden min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
               {err('onsket_mat')}
             </div>
 
             <div>
               <label className={labelClass}>Annen informasjon</label>
-              <textarea className={inputClass + ' block resize-y min-h-20'} value={form.annen_info} onChange={e => set('annen_info', e.target.value)} />
+              <textarea ref={annenInfoRef} className={inputClass + ' block resize-none overflow-hidden min-h-20'} value={form.annen_info} onChange={e => set('annen_info', e.target.value)} />
             </div>
 
             {status === 'error' && (

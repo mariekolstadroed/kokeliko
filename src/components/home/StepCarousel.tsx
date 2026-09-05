@@ -82,7 +82,7 @@ export default function StepCarousel({
           ))}
         </div>
         {items[fadeIdx]?.title && (
-          <p className={`mt-3 ${titleColorClass} text-xl font-medium text-center`}>{items[fadeIdx].title}</p>
+          <p className={`mt-3 ${titleColorClass} text-lg font-medium text-center`}>{items[fadeIdx].title}</p>
         )}
       </div>
 
@@ -104,7 +104,7 @@ export default function StepCarousel({
                 )}
               </div>
               {item.title && (
-                <p className={`mt-3 ${titleColorClass} text-xl font-medium text-center`}>{item.title}</p>
+                <p className={`mt-3 ${titleColorClass} text-lg lg:text-xl font-medium text-center`}>{item.title}</p>
               )}
             </div>
           ))}
