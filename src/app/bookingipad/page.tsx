@@ -249,7 +249,13 @@ export default function BookingIpad() {
           ))}
         </div>
         <div className="flex items-center gap-2 justify-self-end">
-          {userEmail && <span className="text-xs text-1/50">{userEmail.replace('@', '@​')}</span>}
+          {userEmail && (
+            <span
+              className="text-xs text-1/50 no-detect"
+              data-local={userEmail.split('@')[0]}
+              data-domain={userEmail.split('@')[1]}
+            />
+          )}
           <button
             onClick={handleLogout}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-1/15 bg-6/50 shadow-sm text-1/60 transition-colors"

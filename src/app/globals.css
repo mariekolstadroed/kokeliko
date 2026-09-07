@@ -72,6 +72,10 @@ select {
   padding-right: 2rem;
 }
 
+.no-detect::before {
+  content: attr(data-local) "@" attr(data-domain);
+}
+
 @keyframes gallery-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

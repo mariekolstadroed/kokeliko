@@ -47,7 +47,13 @@ function Dashboard() {
           <span className="text-[25px] text-stone-400">admin</span>
         </button>
         <div className="flex items-center gap-2">
-          {userEmail && <span className="hidden sm:inline text-[11px] text-stone-400">{userEmail.replace('@', '@​')}</span>}
+          {userEmail && (
+            <span
+              className="hidden sm:inline text-[11px] text-stone-400 no-detect"
+              data-local={userEmail.split('@')[0]}
+              data-domain={userEmail.split('@')[1]}
+            />
+          )}
           <button
             onClick={handleLogout}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 transition-colors"
