@@ -13,7 +13,7 @@ function safeReplyTo(email: string): string | undefined {
   return validateEmail(email) ? undefined : email
 }
 
-async function saveBooking(type: string, status: 'ikke_bekreftet' | 'bekreftet', fields: Record<string, string>) {
+async function saveBooking(type: string, status: 'ikke_bekreftet' | 'bekreftet', fields: Record<string, string>): Promise<boolean> {
   try {
     const { error } = await supabaseAdmin.from('bookings').insert({
       type,
@@ -31,9 +31,14 @@ async function saveBooking(type: string, status: 'ikke_bekreftet' | 'bekreftet',
       delivery_method: fields.levering || null,
       address: fields.adresse || null,
     })
-    if (error) console.error('Supabase error (save booking):', error)
+    if (error) {
+      console.error('Supabase error (save booking):', error)
+      return false
+    }
+    return true
   } catch (err) {
     console.error('Supabase error (save booking):', err)
+    return false
   }
 }
 
@@ -83,7 +88,8 @@ export async function POST(req: Request) {
     lukket_selskap: 'Svar kunden for å planlegge selskapet.',
   }
 
-  await saveBooking(type, 'ikke_bekreftet', fields)
+  const saved = await saveBooking(type, 'ikke_bekreftet', fields)
+  if (!saved) return Response.json({ ok: false }, { status: 500 })
 
   try {
     const { error } = await resend.emails.send({
@@ -235,7 +241,8 @@ async function handleEventCancellation(fields: Record<string, string>) {
 }
 
 async function handleBordreservasjon(fields: Record<string, string>) {
-  await saveBooking('bordreservasjon', 'bekreftet', fields)
+  const saved = await saveBooking('bordreservasjon', 'bekreftet', fields)
+  if (!saved) return Response.json({ ok: false }, { status: 500 })
 
   const confirmation = await resend.emails.send({
     from: EMAIL_FROM,

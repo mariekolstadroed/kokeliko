@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="no" className={specialElite.variable}>
+    <html lang="no" className={specialElite.variable} suppressHydrationWarning>
       <body className="min-h-dvh">
         {children}
         <Analytics />

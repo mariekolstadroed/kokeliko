@@ -133,8 +133,13 @@ export default function BookingIpad() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState<View>('dag')
+  const [userEmail, setUserEmail] = useState<string | null>(null)
   const router = useRouter()
   const fetchIdRef = useRef(0)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUserEmail(data.user?.email ?? null))
+  }, [])
 
   const now = new Date()
   const today = toLocalISODate(now)
@@ -243,12 +248,15 @@ export default function BookingIpad() {
             </button>
           ))}
         </div>
-        <button
-          onClick={handleLogout}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-1/15 bg-6/50 shadow-sm text-1/60 transition-colors justify-self-end"
-        >
-          <IconLogout size={16} aria-hidden /> Logg ut
-        </button>
+        <div className="flex items-center gap-2 justify-self-end">
+          {userEmail && <span className="text-xs text-1/50">{userEmail}</span>}
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-1/15 bg-6/50 shadow-sm text-1/60 transition-colors"
+          >
+            <IconLogout size={16} aria-hidden /> Logg ut
+          </button>
+        </div>
       </header>
 
       <div className="flex-1 min-h-0">

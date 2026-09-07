@@ -1,19 +1,21 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { validateEmail } from '@/lib/validation'
+import { ALLOWED_ADMIN_EMAILS } from '@/lib/adminAuth'
 import bakgrunn from '@/assets/events/bakgrunn.jpg'
 
 const inputClass = 'w-full px-3 py-2 md:py-2.5 border-[2px] border-4 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 const inputErrorClass = 'w-full px-3 py-2 md:py-2.5 border-[2px] border-5 rounded-lg text-sm text-1 bg-6 accent-1 focus:outline-none focus:border-5 transition-colors'
 
-export default function Login() {
+function LoginForm() {
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(searchParams.get('denied') ? 'Du ble logget ut fordi denne kontoen ikke har tilgang til admin.' : '')
   const [emailError, setEmailError] = useState('')
   const router = useRouter()
 
@@ -22,12 +24,16 @@ export default function Login() {
     const epostErr = validateEmail(email)
     if (epostErr) { setEmailError(epostErr); return }
     setEmailError('')
+    if (!ALLOWED_ADMIN_EMAILS.includes(email.trim().toLowerCase())) {
+      setError('Feil e-post eller passord')
+      return
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       setError('Feil e-post eller passord')
-    } else {
-      router.push('/admin')
+      return
     }
+    router.push('/admin')
   }
 
   return (
@@ -72,5 +78,13 @@ export default function Login() {
       </div>
       </div>
     </div>
+  )
+}
+
+export default function Login() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   )
 }

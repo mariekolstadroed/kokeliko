@@ -87,8 +87,8 @@ export default function EventCard({ event, registrationCount, onRegister }: Prop
               Arrangementet har vært
             </span>
           ) : isFull ? (
-            <span className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-2 border border-3 rounded-lg">
-              Fulltegnet
+            <span className="inline-flex items-center px-5 py-2.5 text-sm font-special-elite text-2 border border-3 rounded-lg">
+              Fullt
             </span>
           ) : (
             <button

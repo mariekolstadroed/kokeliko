@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import MenuSection from './menu/MenuSection'
@@ -24,6 +24,11 @@ function Dashboard() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const tab = (searchParams.get('tab') as Tab) ?? 'menu'
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUserEmail(data.user?.email ?? null))
+  }, [])
 
   function setTab(t: Tab) {
     router.replace(`/admin?tab=${t}`)
@@ -41,12 +46,15 @@ function Dashboard() {
           <div className="logo logo--dark" style={{ height: '32px' }} role="img" aria-label="Kokeliko" />
           <span className="text-[25px] text-stone-400">admin</span>
         </div>
-        <button
-          onClick={handleLogout}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 transition-colors"
-        >
-          <IconLogout size={14} aria-hidden /> Logg ut
-        </button>
+        <div className="flex items-center gap-2">
+          {userEmail && <span className="hidden sm:inline text-[11px] text-stone-400">{userEmail}</span>}
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 transition-colors"
+          >
+            <IconLogout size={14} aria-hidden /> Logg ut
+          </button>
+        </div>
       </header>
 
       <div className="flex px-6 bg-white border-b border-stone-200 overflow-x-auto overflow-y-hidden touch-pan-x scrollbar-none">

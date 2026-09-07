@@ -1,4 +1,5 @@
 import type { Viewport } from 'next'
+import AdminAuthGuard from './AdminAuthGuard'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -7,5 +8,9 @@ export const viewport: Viewport = {
 }
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <div className="admin-root">{children}</div>
+  return (
+    <div className="admin-root">
+      <AdminAuthGuard>{children}</AdminAuthGuard>
+    </div>
+  )
 }

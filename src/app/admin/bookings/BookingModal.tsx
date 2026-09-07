@@ -34,7 +34,7 @@ export default function BookingModal({ booking, onClose, onSaved }: Props) {
   const requestedFoodRef = useAutoGrowTextarea(requestedFood)
   const messageRef = useAutoGrowTextarea(message)
 
-  const valid = !!name.trim() && (!!email.trim() || !!phone.trim()) && !!date && !!startTime
+  const valid = !!name.trim() && !!date && !!startTime
 
   async function handleSave() {
     if (!valid) return
@@ -95,13 +95,13 @@ export default function BookingModal({ booking, onClose, onSaved }: Props) {
               <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
             </div>
             <div className="flex-1">
-              <label className={`${labelClass} min-h-9`}>Telefon (e-post eller telefon påkrevd)</label>
+              <label className={`${labelClass} min-h-9`}>Telefon</label>
               <input className={inputClass} value={phone} onChange={e => setPhone(e.target.value)} />
             </div>
           </div>
 
           <div>
-            <label className={labelClass}>E-post (e-post eller telefon påkrevd)</label>
+            <label className={labelClass}>E-post</label>
             <input type="email" className={inputClass} value={email} onChange={e => setEmail(e.target.value)} />
           </div>
 

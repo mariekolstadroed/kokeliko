@@ -26,7 +26,7 @@ function formatDate(dateStr: string) {
 export default function RegistrationModal({ event, onClose, onRegistered }: Props) {
   const [form, setForm] = useState({ navn: '', epost: '', telefon: '', _hp: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'duplicate' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'ok_email_failed' | 'duplicate' | 'full' | 'error'>('idle')
 
   function set(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -66,26 +66,31 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
       })
 
     if (error?.code === '23505') { setStatus('duplicate'); return }
+    if (error?.message?.includes('EVENT_FULL')) { setStatus('full'); return }
     if (error) { setStatus('error'); return }
 
-    await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: 'event_registration',
-        _hp: form._hp,
-        navn: form.navn.trim(),
-        epost: form.epost.trim().toLowerCase(),
-        event_title: event.title,
-        event_date: event.event_date ?? '',
-        event_start_time: event.event_start_time ?? '',
-        event_end_time: event.event_end_time ?? '',
-        cancellation_token: token,
-      }),
-    })
-
-    setStatus('ok')
     onRegistered()
+
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'event_registration',
+          _hp: form._hp,
+          navn: form.navn.trim(),
+          epost: form.epost.trim().toLowerCase(),
+          event_title: event.title,
+          event_date: event.event_date ?? '',
+          event_start_time: event.event_start_time ?? '',
+          event_end_time: event.event_end_time ?? '',
+          cancellation_token: token,
+        }),
+      })
+      setStatus(res.ok ? 'ok' : 'ok_email_failed')
+    } catch {
+      setStatus('ok_email_failed')
+    }
   }
 
   const f = (field: string) => errors[field] ? inputErrorClass : inputClass
@@ -130,10 +135,14 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
           </button>
         </div>
 
-        {status === 'ok' ? (
+        {(status === 'ok' || status === 'ok_email_failed') ? (
           <div className="p-8 text-center">
             <p className="text-lg font-bold text-1 mb-2">Påmelding bekreftet!</p>
-            <p className="text-2 text-sm">Du vil motta en bekreftelse på e-post med mulighet for avmelding.</p>
+            <p className="text-2 text-sm">
+              {status === 'ok'
+                ? 'Du vil motta en bekreftelse på e-post med mulighet for avmelding.'
+                : 'Vi klarte derimot ikke å sende deg en bekreftelse på e-post. Ta gjerne kontakt med oss hvis du er usikker på om påmeldingen din er registrert.'}
+            </p>
             <button
               onClick={onClose}
               className="mt-6 px-5 py-2 text-base font-special-elite rounded-lg border border-3 text-2 hover:bg-3 transition-colors"
@@ -166,6 +175,9 @@ export default function RegistrationModal({ event, onClose, onRegistered }: Prop
               <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">
                 Denne e-postadressen er allerede påmeldt dette arrangementet.
               </p>
+            )}
+            {status === 'full' && (
+              <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Beklager, arrangementet ble akkurat fullt. Kontakt oss direkte hvis du likevel ønsker plass.</p>
             )}
             {status === 'error' && (
               <p className="text-sm bg-4 text-5 border-[2px] border-5 rounded-lg px-3 py-2">Noe gikk galt. Prøv igjen eller kontakt oss direkte.</p>
