@@ -231,10 +231,10 @@ export default function BookingIpad() {
   return (
     <div className="h-screen overflow-hidden bg-[linear-gradient(rgba(255,255,255,0.25),rgba(255,255,255,0.25)),url('/ipad-background.jpg')] bg-cover bg-center flex flex-col pb-[env(safe-area-inset-bottom)]">
       <header className="shrink-0 grid grid-cols-3 items-center px-6 h-[calc(4rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)]">
-        <div className="flex items-center gap-2 justify-self-start">
+        <button onClick={() => goToDay(today)} className="flex items-center gap-2 justify-self-start cursor-pointer">
           <div className="logo logo--dark" style={{ height: '32px' }} role="img" aria-label="Kokeliko" />
           <span className="text-[25px] text-1/70">bookinger</span>
-        </div>
+        </button>
         <div className="flex items-center gap-1.5 justify-self-center">
           {(['dag', 'uke', 'maned'] as const).map(v => (
             <button
@@ -249,7 +249,7 @@ export default function BookingIpad() {
           ))}
         </div>
         <div className="flex items-center gap-2 justify-self-end">
-          {userEmail && <span className="text-xs text-1/50">{userEmail}</span>}
+          {userEmail && <span className="text-xs text-1/50">{userEmail.replace('@', '@​')}</span>}
           <button
             onClick={handleLogout}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-1/15 bg-6/50 shadow-sm text-1/60 transition-colors"

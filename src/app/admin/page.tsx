@@ -42,12 +42,12 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-stone-50 pb-12">
       <header className="sticky top-0 z-10 flex items-center justify-between px-6 h-14 bg-white border-b border-stone-200">
-        <div className="flex items-center gap-2">
+        <button onClick={() => { setTab('menu'); window.scrollTo({ top: 0 }) }} className="flex items-center gap-2 cursor-pointer">
           <div className="logo logo--dark" style={{ height: '32px' }} role="img" aria-label="Kokeliko" />
           <span className="text-[25px] text-stone-400">admin</span>
-        </div>
+        </button>
         <div className="flex items-center gap-2">
-          {userEmail && <span className="hidden sm:inline text-[11px] text-stone-400">{userEmail}</span>}
+          {userEmail && <span className="hidden sm:inline text-[11px] text-stone-400">{userEmail.replace('@', '@​')}</span>}
           <button
             onClick={handleLogout}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 transition-colors"
