@@ -5,12 +5,15 @@ import { supabase } from '@/lib/supabase'
 import type { Category, MenuItem } from '@/types'
 import MenuItemModal from './MenuItemModal'
 import CategoryModal from './CategoryModal'
-import { IconCategory, IconPlus, IconEdit, IconTrash, IconChevronUp, IconChevronDown } from '@tabler/icons-react'
+import { IconCategory, IconPlus, IconEdit, IconTrash, IconChevronUp, IconChevronDown, IconEye, IconEyeOff } from '@tabler/icons-react'
+
+type MenuKind = 'standard' | 'catering'
 
 export default function MenuSection() {
   const [categories, setCategories] = useState<Category[]>([])
   const [items, setItems] = useState<MenuItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeMenu, setActiveMenu] = useState<MenuKind>('standard')
   const [itemModal, setItemModal] = useState<{ open: boolean; item?: MenuItem; categoryId?: string }>({ open: false })
   const [categoryModal, setCategoryModal] = useState<{ open: boolean; category?: Category }>({ open: false })
   const [confirmItemId, setConfirmItemId] = useState<string | null>(null)
@@ -43,7 +46,9 @@ export default function MenuSection() {
   }
 
   function sortedCategories() {
-    return [...categories].sort((a, b) => {
+    return categories
+      .filter(c => c.is_catering === (activeMenu === 'catering'))
+      .sort((a, b) => {
       if (a.sort_order === null && b.sort_order === null) return a.name.localeCompare(b.name)
       if (a.sort_order === null) return 1
       if (b.sort_order === null) return -1
@@ -102,6 +107,11 @@ export default function MenuSection() {
     await supabase.from('menu_items').update({ available: !item.available }).eq('id', item.id)
   }
 
+  async function toggleCategoryPublished(cat: Category) {
+    setCategories(prev => prev.map(c => c.id === cat.id ? { ...c, published: !c.published } : c))
+    await supabase.from('categories').update({ published: !cat.published }).eq('id', cat.id)
+  }
+
   async function deleteItem(id: string) {
     setItems(prev => prev.filter(i => i.id !== id))
     await supabase.from('menu_items').delete().eq('id', id)
@@ -121,11 +131,28 @@ export default function MenuSection() {
     )
   }
 
+  const visibleCategories = sortedCategories()
+  const visibleItemCount = items.filter(i => visibleCategories.some(c => c.id === i.category_id)).length
+
   return (
     <div className="max-w-3xl mx-auto p-6 flex flex-col gap-4">
+      <div className="flex items-center gap-1.5">
+        {([['standard', 'Vanlig meny'], ['catering', 'Catering-meny']] as const).map(([kind, label]) => (
+          <button
+            key={kind}
+            onClick={() => setActiveMenu(kind)}
+            className={`px-3 py-1.5 text-[13px] font-medium rounded-md border transition-colors ${
+              activeMenu === kind ? 'border-admin-accent bg-admin-accent-lighter text-admin-accent-dark' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="text-[13px] text-stone-400">
-          {categories.length} kategorier · {items.length} elementer
+          {visibleCategories.length} kategorier · {visibleItemCount} elementer
         </div>
         <button
           onClick={() => setCategoryModal({ open: true })}
@@ -135,13 +162,13 @@ export default function MenuSection() {
         </button>
       </div>
 
-      {categories.length === 0 ? (
+      {visibleCategories.length === 0 ? (
         <div className="bg-white border border-stone-200 rounded-xl shadow-sm p-8 text-sm text-stone-400 text-center italic">
           Ingen kategorier ennå. Legg til en kategori for å komme i gang.
         </div>
-      ) : sortedCategories().map((cat, catIdx) => {
+      ) : visibleCategories.map((cat, catIdx) => {
         const catItems = sortedCatItems(cat.id)
-        const totalCats = categories.length
+        const totalCats = visibleCategories.length
         return (
           <div key={cat.id} className={`border rounded-xl overflow-hidden shadow-sm ${confirmCatId === cat.id ? 'bg-red-50 border-red-200' : 'bg-white border-stone-200'}`}>
             {confirmCatId === cat.id ? (
@@ -185,8 +212,17 @@ export default function MenuSection() {
                   </button>
                 </div>
                 <div className="text-[15px] font-semibold text-stone-800">{cat.name}</div>
+                <span className={`px-1 py-0.5 rounded-full text-[10px] font-semibold ${cat.published ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'}`}>
+                  {cat.published ? 'Publisert' : 'Skjult'}
+                </span>
               </div>
               <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => toggleCategoryPublished(cat)}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors text-xs font-medium"
+                >
+                  {cat.published ? <><IconEyeOff size={12} /><span className="hidden md:inline">Skjul</span></> : <><IconEye size={12} /><span className="hidden md:inline">Publiser</span></>}
+                </button>
                 <button
                   onClick={() => setCategoryModal({ open: true, category: cat })}
                   className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
@@ -313,7 +349,7 @@ export default function MenuSection() {
       {itemModal.open && (
         <MenuItemModal
           item={itemModal.item}
-          categories={categories}
+          categories={visibleCategories}
           defaultCategoryId={itemModal.categoryId}
           onClose={() => setItemModal({ open: false })}
           onSaved={fetchAll}
@@ -323,6 +359,7 @@ export default function MenuSection() {
       {categoryModal.open && (
         <CategoryModal
           category={categoryModal.category}
+          defaultIsCatering={activeMenu === 'catering'}
           onClose={() => setCategoryModal({ open: false })}
           onSaved={fetchAll}
         />

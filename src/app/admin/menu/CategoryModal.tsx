@@ -8,6 +8,7 @@ import { IconX } from '@tabler/icons-react'
 
 type Props = {
   category?: Category
+  defaultIsCatering: boolean
   onClose: () => void
   onSaved: () => void
 }
@@ -23,16 +24,17 @@ function toSlug(name: string) {
     .replace(/^-|-$/g, '')
 }
 
-export default function CategoryModal({ category, onClose, onSaved }: Props) {
+export default function CategoryModal({ category, defaultIsCatering, onClose, onSaved }: Props) {
   const [name, setName] = useState(category?.name ?? '')
   const [description, setDescription] = useState(category?.description ?? '')
+  const [isCatering, setIsCatering] = useState(category?.is_catering ?? defaultIsCatering)
   const [saving, setSaving] = useState(false)
   const descriptionRef = useAutoGrowTextarea(description)
 
   async function handleSave() {
     if (!name.trim()) return
     setSaving(true)
-    const base = { name: name.trim(), slug: toSlug(name), description: description.trim() || null }
+    const base = { name: name.trim(), slug: toSlug(name), description: description.trim() || null, is_catering: isCatering }
     if (category) {
       await supabase.from('categories').update(base).eq('id', category.id)
     } else {
@@ -61,6 +63,29 @@ export default function CategoryModal({ category, onClose, onSaved }: Props) {
           <div>
             <label className={labelClass}>Navn *</label>
             <input className={inputClass} value={name} onChange={e => setName(e.target.value)} />
+          </div>
+          <div>
+            <label className={labelClass}>Meny</label>
+            <div className="flex gap-1.5">
+              <button
+                type="button"
+                onClick={() => setIsCatering(false)}
+                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md border transition-colors ${
+                  !isCatering ? 'border-admin-accent bg-admin-accent-lighter text-admin-accent-dark' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                Vanlig meny
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsCatering(true)}
+                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md border transition-colors ${
+                  isCatering ? 'border-admin-accent bg-admin-accent-lighter text-admin-accent-dark' : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                Catering-meny
+              </button>
+            </div>
           </div>
           <div>
             <label className={labelClass}>Beskrivelse</label>

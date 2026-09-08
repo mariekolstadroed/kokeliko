@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { IconArrowLeft } from '@tabler/icons-react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import { validateEmail, validatePhone, validateFutureDate, validateTimeRange } from '@/lib/validation'
 import { useAutoGrowTextarea } from '@/hooks/useAutoGrowTextarea'
 import { toLocalISODate } from '@/lib/date'
@@ -172,6 +172,15 @@ export default function LukketSelskap() {
               <label className={labelClass}>Ønsket mat *</label>
               <textarea ref={onsketMatRef} className={f('onsket_mat') + ' block resize-none overflow-hidden min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
               {err('onsket_mat')}
+              <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                <p className="hidden md:block text-sm text-2">Vil du se cateringmenyen? Gå til</p>
+                <Link
+                  href="/meny/catering"
+                  className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 bg-2 text-4 text-xs font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors whitespace-nowrap"
+                >
+                  Cateringmeny <IconArrowRight size={14} />
+                </Link>
+              </div>
             </div>
 
             <div>

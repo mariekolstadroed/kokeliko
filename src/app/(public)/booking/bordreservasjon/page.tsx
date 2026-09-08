@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { IconArrowLeft } from '@tabler/icons-react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import resImg1 from '@/assets/booking/reservasjon/reservasjon1.jpg'
 import resImg2 from '@/assets/booking/reservasjon/reservasjon2.jpg'
 import { validateEmail, validatePhone, validateFutureDate } from '@/lib/validation'
@@ -188,6 +188,15 @@ export default function BordReservasjon() {
                 <label className={labelClass}>Ønsket mat *</label>
                 <textarea ref={onsketMatRef} className={f('onsket_mat') + ' block resize-none overflow-hidden min-h-20'} value={form.onsket_mat} onChange={e => set('onsket_mat', e.target.value)} />
                 {err('onsket_mat')}
+                <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                  <p className="hidden md:block text-sm text-2">Vil du se menyen? Gå til</p>
+                  <Link
+                    href="/meny"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 bg-2 text-4 text-xs font-special-elite rounded-lg shadow-sm shadow-1/30 hover:brightness-125 transition-colors whitespace-nowrap"
+                  >
+                    Meny <IconArrowRight size={14} />
+                  </Link>
+                </div>
               </div>
             )}
 

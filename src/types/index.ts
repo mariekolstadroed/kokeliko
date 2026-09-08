@@ -70,6 +70,8 @@ export type Category = {
   slug: string
   description: string | null
   sort_order: number | null
+  is_catering: boolean
+  published: boolean
 }
 
 export type GalleryItem = {

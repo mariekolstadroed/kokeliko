@@ -65,8 +65,8 @@ export default function MenuTabs({
   return (
     <>
       {lightboxItem && <ImageModal item={lightboxItem} onClose={() => setLightboxItem(null)} />}
-      <div className="mt-10 w-full lg:w-fit lg:max-w-full lg:mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
-        <div className="flex gap-1 w-max lg:w-auto">
+      <div className="mt-10 w-fit max-w-full mx-auto bg-4 rounded-lg lg:rounded-xl p-1 overflow-x-auto scrollbar-none">
+        <div className="flex gap-1 w-max">
           {categories.map(cat => (
             <button
               key={cat.id}
