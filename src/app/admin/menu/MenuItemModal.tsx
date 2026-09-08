@@ -108,7 +108,7 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
           <div className="text-[15px] font-semibold text-stone-800">
             {item ? 'Rediger element' : 'Nytt element'}
           </div>
-          <button onClick={onClose} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors">
+          <button onClick={onClose} disabled={saving} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
             <IconX size={16} />
           </button>
         </div>
@@ -196,7 +196,8 @@ export default function MenuItemModal({ item, categories, defaultCategoryId, onC
         <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200 shrink-0">
           <button
             onClick={onClose}
-            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors"
+            disabled={saving}
+            className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Avbryt
           </button>

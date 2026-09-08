@@ -94,7 +94,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
             <div className="text-[15px] font-semibold text-stone-800">Oppdatering til påmeldte</div>
             <div className="text-[12px] text-stone-400 mt-0.5">{event.title} · {registrationCount} påmeldt{registrationCount === 1 ? '' : 'e'}</div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors">
+          <button onClick={onClose} disabled={status === 'sending'} className="p-1 rounded-md hover:bg-stone-100 text-stone-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
             <IconX size={16} />
           </button>
         </div>
@@ -186,7 +186,7 @@ export default function UpdateAttendeesModal({ event, registrationCount, onClose
         </div>
 
         <div className="flex justify-end gap-2 px-5 py-3.5 border-t border-stone-200 shrink-0">
-          <button onClick={onClose} className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors">
+          <button onClick={onClose} disabled={status === 'sending'} className="inline-flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             Avbryt
           </button>
           <button
