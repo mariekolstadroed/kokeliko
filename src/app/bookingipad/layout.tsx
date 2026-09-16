@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import BookingIpadAuthGuard from './BookingIpadAuthGuard'
 
 export const metadata: Metadata = {
   title: 'Bookinger',
@@ -22,5 +23,5 @@ export default function BookingIpadLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return <BookingIpadAuthGuard>{children}</BookingIpadAuthGuard>
 }
