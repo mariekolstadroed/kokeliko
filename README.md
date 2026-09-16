@@ -65,23 +65,29 @@ src/
 ├─ app/
 │  ├─ (public)/           Offentlige sider: forsiden, meny, booking, arrangementer, om oss
 │  ├─ arrangementer/avmeld/  Selvbetjent avmelding fra arrangement (lenke i e-post)
-│  ├─ admin/               Adminpanel (meny, åpningstider, arrangementer, galleri) — krever innlogging
+│  ├─ admin/               Adminpanel (meny, åpningstider, bookinger, arrangementer, galleri) — krever innlogging
+│  ├─ bookingipad/         Forenklet booking-oversikt for iPad i baren, som krever innlogging med egen konto
 │  └─ api/                 API-ruter: e-postutsendelse, avmelding, arrangement-oppdateringer
 ├─ components/             Delte UI-komponenter (navbar, forsideseksjoner)
 ├─ lib/                    Supabase-klienter, validering, delt e-postlogikk
-└─ proxy.ts                Beskytter /admin-rutene — redirecter uinnloggede til /admin/login
+└─ proxy.ts                Beskytter /admin- og /bookingipad-rutene og redirecter uinnloggede til riktig login-side
 ```
 
 ## Admin
 
-`/admin/login` — innlogging skjer med e-post/passord via Supabase Auth. Brukere opprettes manuelt i Supabase → Authentication → Users. Alle innloggede brukere har identisk full tilgang til hele adminpanelet (ingen rollestyring).
+`/admin/login`: innlogging skjer med e-post/passord via Supabase Auth. Brukere opprettes manuelt i Supabase → Authentication → Users, og må i tillegg legges til i `ALLOWED_ADMIN_EMAILS` (`src/lib/adminAuth.ts`) for å slippe inn.
 
 Fra adminpanelet kan man administrere:
 
 - **Meny** — kategorier og retter
 - **Åpningstider** — faste og spesielle åpningstider
+- **Bookinger** — bordreservasjoner, catering og lukkede selskap
 - **Arrangementer** — opprette, redigere, avlyse, og sende oppdateringer til påmeldte
 - **Galleri** — bilder til forsiden
+
+## iPad-booking
+
+`/bookingipad/login`: egen, forenklet oversikt over bookinger ment for en iPad plassert i baren. Innlogging er begrenset til én konto (`ipad@kokeliko.no`, styrt via `src/lib/ipadAuth.ts`) og er helt separat fra admin-innloggingen.
 
 ## Deploy
 
