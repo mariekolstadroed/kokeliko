@@ -12,6 +12,7 @@ export default async function AvmeldPage({
   return (
     <div className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
       <Image
+        unoptimized
         src={bakgrunn}
         alt=""
         fill
