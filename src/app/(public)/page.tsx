@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { supabaseServer as supabase } from '@/lib/supabase-server'
 import type { GalleryItem, OpeningHour, SpecialHour, SpecialHoursGroup } from '@/types/index'
 import StepCarousel from '@/components/home/StepCarousel'
@@ -12,6 +13,9 @@ import barrieroImg from '@/assets/kaffen/barriero.png'
 import halfAndHalfImg from '@/assets/kaffen/half-and-half.png'
 import gavekortImg from '@/assets/home/gavekort.jpg'
 import gaveposerImg from '@/assets/home/gaveposer.jpg'
+import lukketSelskap1Img from '@/assets/booking/lukket_selskap/lukket-selskap1.jpg'
+import lukketSelskap2Img from '@/assets/booking/lukket_selskap/lukket-selskap2.jpg'
+import lukketSelskap3Img from '@/assets/home/lukket-selskap3.jpg'
 
 export const dynamic = 'force-dynamic'
 
@@ -244,33 +248,39 @@ export default async function Home() {
       <KveldSection />
 
       <div className="relative">
-        <Image unoptimized src={elinPaKaffeImg} alt="" fill className="object-cover" />
+        <div className="absolute inset-0 flex bg-1 *:flex-1 [&>*+*]:-ml-px">
+          <div className="relative hidden md:block">
+            <Image unoptimized src={lukketSelskap1Img} alt="" fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover" />
+          </div>
+          <div className="relative hidden lg:block">
+            <Image unoptimized src={lukketSelskap3Img} alt="" fill sizes="33vw" className="object-cover" />
+          </div>
+          <div className="relative">
+            <Image unoptimized src={lukketSelskap2Img} alt="" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
+          </div>
+        </div>
         <div className="absolute inset-0 bg-1/70" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
-            <div className="order-2 lg:order-1 relative h-72 w-72 lg:h-120 lg:w-120 mx-auto shrink-0">
-              <div className="absolute top-0 left-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image unoptimized src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
-              </div>
-              <div className="absolute bottom-0 right-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-                <Image unoptimized src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
-              </div>
-            </div>
-            <div className="order-1 lg:order-2 max-lg:text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-6">Kaffen vår</h2>
-              <p className="text-4/90 leading-relaxed text-base lg:text-lg mb-6">
-                Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
-                som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
-                både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
-                fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
-              </p>
-              <p className="text-4/90 leading-relaxed text-base lg:text-lg">
-                Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
-                Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
-                og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
-                og det er takket være disse bønnene.
-              </p>
-            </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 leading-tight mb-6 text-center">
+            Konfirmasjon eller annet<br className="max-md:hidden" /> festlig arrangement?
+          </h2>
+          <p className="text-4/90 text-base lg:text-lg leading-relaxed mb-4 text-center max-w-3xl mx-auto">
+            Visste du at du kan ha lukket selskap hos Kokeliko?
+            Vi har arrangert flere konfirmasjoner, 50- 60-70 og 80-årslag, og andre ønskede arrangementer.
+            Da strykes hvite duker og vi omorganiserer lokalet etter ditt ønske. Vi serverer tapasretter etter menyen,
+            men tar også imot andre ønsker dersom du har lyst på noe annet!
+          </p>
+          <p className="text-4/90 text-base lg:text-lg leading-relaxed mb-10 text-center max-w-3xl mx-auto">
+            Hvis du ønsker blomstrende borddekorasjoner samarbeider vi med naboene våre i Verket Blomster,
+            og vi kan bidra med bordkort!
+          </p>
+          <div className="flex justify-center">
+            <Link
+              href="/booking/lukket-selskap"
+              className="inline-block px-6 pt-2 pb-1 lg:px-8 lg:pt-3 lg:pb-2 bg-5 text-4 font-special-elite text-base rounded-lg shadow-sm shadow-1/30 hover:brightness-95 transition-all"
+            >
+              Send oss en forespørsel
+            </Link>
           </div>
         </div>
       </div>
@@ -312,29 +322,66 @@ export default async function Home() {
       </div>
 
       <div className="relative">
-        <Image unoptimized src={elvegangenImg} alt="" fill sizes="100vw" className="object-cover object-[center_20%]" loading="eager" />
+        <Image unoptimized src={elinPaKaffeImg} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-1/70" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-25">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+            <div className="order-2 lg:order-1 relative h-72 w-72 lg:h-120 lg:w-120 mx-auto shrink-0">
+              <div className="absolute top-0 left-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image unoptimized src={barrieroImg} alt="Barriero" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
+              </div>
+              <div className="absolute bottom-0 right-0 w-44 h-44 lg:w-75 lg:h-75 rounded-full overflow-hidden bg-3/80 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                <Image unoptimized src={halfAndHalfImg} alt="Half & Half" fill sizes="(max-width: 1024px) 176px, 300px" className="object-contain p-6" />
+              </div>
+            </div>
+            <div className="order-1 lg:order-2 max-lg:text-center">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-6">Kaffen vår</h2>
+              <p className="text-4/90 leading-relaxed text-base lg:text-lg mb-6">
+                Hos oss bruker vi de beste kaffebønnene fra Solberg Hansen! Espressoen vår heter Half & Half,
+                som er en blanding mellom en lysbrent og mørkbrent espresso. Dette gir en perfekt balanse mellom
+                både fruktighet fra den lysbrente og kraftighet fra den mørkbrente. Resultatet blir en rund og
+                fyldig espresso, med smak av sjokolade, nøtter, mørke bær, perfekt til både latte og americano.
+              </p>
+              <p className="text-4/90 leading-relaxed text-base lg:text-lg">
+                Bønnene vi bruker til filterkaffen heter Barriero, som er en kaffebønnegård i Brasil.
+                Der tørker de bønnene med fruktkjøttet på, noe som bidrar til en spesiell sødme og fyldighet,
+                og helt særegne smaker av sjokolade, nøtter og rosin. Vi får stadig skryt for filterkaffen vår,
+                og det er takket være disse bønnene.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-4">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-6 py-12 md:py-16 lg:py-25">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-16">
             <div className="max-md:text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-4 mb-6">Finn oss</h2>
-              <p className="text-4/90 leading-relaxed text-base lg:text-lg mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-special-elite text-5 mb-6">Finn oss</h2>
+              <p className="text-2 leading-relaxed text-base lg:text-lg mb-4">
                 Du finner oss i Elvegangen 9 på Bærums Verk, rett ovenfor Baker Hansen og ved siden av våre gode naboer
                 i Verket Blomster.
               </p>
-              <p className="text-4/90 leading-relaxed text-base lg:text-lg">
+              <p className="text-2 leading-relaxed text-base lg:text-lg">
                 Vi holder til i et koselig lokale med god plass både inne i varmen, og ute i solveggen,
                 med utsikt til elva!
               </p>
             </div>
-            <div className="relative w-72 h-72 lg:w-100 lg:h-100 rounded-full overflow-hidden shadow-2xl shadow-1/30 mx-auto">
-              <iframe
-                src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&output=embed"
-                className="w-full h-full border-0"
-                loading="lazy"
-                title="Kokeliko kart"
-              />
-              <div className="absolute inset-0 bg-2/5 pointer-events-none" />
+            <div className="relative h-96 w-72 md:h-56 md:w-74 lg:h-90 lg:w-124 mx-auto shrink-0">
+              <div className="absolute top-0 left-0 w-72 h-72 md:w-56 md:h-56 lg:w-90 lg:h-90 rounded-2xl overflow-hidden">
+                <div className="absolute top-[-65%] left-[-75%] w-[200%] h-[200%]">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Kokeliko Kaffebar,+Bærum&z=16&output=embed"
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                    title="Kokeliko kart"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-2/5 pointer-events-none" />
+              </div>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:top-1/2 md:right-0 md:translate-x-0 md:-translate-y-1/2 w-48 h-48 md:w-36 md:h-36 lg:w-68 lg:h-68 rounded-full overflow-hidden opacity-80">
+                <Image unoptimized src={elvegangenImg} alt="" fill sizes="(max-width: 768px) 192px, (max-width: 1024px) 144px, 272px" className="object-cover object-[center_20%]" />
+              </div>
             </div>
           </div>
         </div>
